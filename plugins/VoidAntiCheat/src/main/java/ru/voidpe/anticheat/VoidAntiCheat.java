@@ -214,7 +214,7 @@ public class VoidAntiCheat extends JavaPlugin implements Listener, CommandExecut
      * метод принимает adventure {@code Key} — прямой вызов давал NoSuchMethodError
      * и все проверки оставались на консервативных значениях по умолчанию.
      */
-    private static <T> T registryLookup(org.bukkit.Registry<T> registry, String... keys) {
+    private static <T> T registryLookup(org.bukkit.Registry<?> registry, String... keys) {
         if (registry == null) {
             return null;
         }
