@@ -1079,6 +1079,15 @@ items:
     lore:
       - '&7'
 
+  # minecraft:totem_of_undying | custom_model_data: 12 | модель: funtime/items/talisman_hero
+  minecraft_item_funtime_items_talisman_hero:
+    material: TOTEM_OF_UNDYING
+    model_data_component:
+      floats: [12]
+    name: '&fTalisman Hero'
+    lore:
+      - '&7'
+
   # minecraft:trial_key | custom_model_data: 1 | модель: item/keys/usual_key
   item_funtime_cases_usual_key:
     material: TRIAL_KEY

@@ -1,8 +1,8 @@
 {
-  "pack": "/tmp/java_pack_565w0q2e",
+  "pack": "/tmp/java_pack_rsj4vc1i",
   "entries_total": 390,
-  "entries_unique": 136,
-  "icons": 135,
+  "entries_unique": 137,
+  "icons": 136,
   "java_items": 28,
   "missing_textures": [],
   "validation_errors": [],
@@ -974,7 +974,7 @@
       "file": "shop_talismans.yml",
       "line": 430,
       "material": "TOTEM_OF_UNDYING",
-      "custom_model_data": 2,
+      "custom_model_data": 12,
       "item_model": null,
       "java_item": "minecraft:totem_of_undying",
       "status": "ok"
@@ -2054,6 +2054,13 @@
         "icon": "minecraft_item_funtime_new_year_talisman_grinch",
         "display_handheld": true,
         "source_texture": "assets/minecraft/textures/item/funtime/new_year/talisman_grinch.png"
+      },
+      {
+        "custom_model_data": 12,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_hero",
+        "icon": "minecraft_item_funtime_items_talisman_hero",
+        "display_handheld": true,
+        "source_texture": "talisman_art: перекраска talisman_crusher"
       }
     ],
     "minecraft:trial_key": [

@@ -10,11 +10,13 @@ Bedrock-порт ресурспака и меню **FunTime** для Geyser + Fl
 | `funtime/` | Распакованный Java-пак (локально, в git не нужен — генератор умеет читать `.zip`) |
 | `tools/build_bedrock_pack.py` | Генератор Bedrock-пака и Geyser mappings из Java-пака |
 | `tools/port_deluxemenus.py` | Портирование меню DeluxeMenus (оформление, без изменения функционала) |
+| `tools/talisman_art.py` | Талисманы: перекраска иконок и 3D-фигурка в руке (attachable) |
 | `tools/preview_menu.py` | PNG-превью меню |
 | `tools/build_all.sh` | Пересборка пака, mappings и меню одной командой |
-| `dist/funtime.mcpack` | Готовый Bedrock-ресурспак (135 иконок предметов) |
+| `dist/funtime.mcpack` | Готовый Bedrock-ресурспак (136 иконок предметов + 12 талисманов в руке) |
 | `dist/geyser_mappings.json` | Geyser custom item mappings (v2, `legacy` по `custom_model_data`) |
-| `dist/deluxemenus_items.yml` | 136 заготовок предметов для DeluxeMenus |
+| `dist/deluxemenus_items.yml` | 137 заготовок предметов для DeluxeMenus |
+| `dist/VoidTalismans-config.yml` | Конфиг плагина талисманов: `custom-model-data` 1–12 под иконки |
 | `dist/deluxemenus/` | Портированные меню DeluxeMenus (14 файлов) под Bedrock |
 | `dist/preview/` | PNG-превью меню (как их видит Bedrock) |
 | `menus/` | Исходные меню DeluxeMenus |

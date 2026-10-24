@@ -429,7 +429,7 @@ items:
     - 43
     material: TOTEM_OF_UNDYING
     model_data_component:
-      floats: [2]
+      floats: [12]
     display_name: '&eТалисман героя'
     lore:
       - ''

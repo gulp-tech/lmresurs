@@ -70,12 +70,12 @@
 | Талисман танка | `TOTEM_OF_UNDYING` | `floats: [5]` |
 | Талисман стража | `TOTEM_OF_UNDYING` | `floats: [3]` |
 | Талисман демона | `TOTEM_OF_UNDYING` | `floats: [11]` |
-| Талисман героя | `TOTEM_OF_UNDYING` | `floats: [2]` |
+| Талисман героя | `TOTEM_OF_UNDYING` | `floats: [12]` |
 
 ## Предупреждения
 
 - `shop.yml`: item_model voidspheres:sphere1 — модели нет в FunTime-паке, на Bedrock будет бумага
+- `shop_spheres.yml`: item_model voidspheres:sphere1 — модели нет в FunTime-паке, на Bedrock будет бумага
 - `shop_spheres.yml`: item_model voidspheres:sphere2 — модели нет в FunTime-паке, на Bedrock будет бумага
 - `shop_spheres.yml`: item_model voidspheres:sphere4 — модели нет в FunTime-паке, на Bedrock будет бумага
 - `shop_spheres.yml`: item_model voidspheres:sphere3 — модели нет в FunTime-паке, на Bedrock будет бумага
-- `shop_spheres.yml`: item_model voidspheres:sphere1 — модели нет в FunTime-паке, на Bedrock будет бумага

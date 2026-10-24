@@ -171,7 +171,9 @@ ICON_OVERRIDES: Dict[str, Dict[str, Tuple[str, int]]] = {
         "Зелье скорости": ("POTION", 3),
         "Зелье защиты": ("POTION", 4),
     },
-    # 11 иконок талисманов в паке на 12 талисманов меню -> один повтор
+    # 12 талисманов. CMD совпадают с custom-model-data в config.yml плагина
+    # VoidTalismans: предмет из плагина и предмет в меню выглядят одинаково.
+    # 12 — «герой»: отдельная иконка (генерируется в tools/talisman_art.py).
     "shop_talismans.yml": {
         "Талисман воина": ("TOTEM_OF_UNDYING", 6),
         "Талисман берсерка": ("TOTEM_OF_UNDYING", 8),
@@ -184,7 +186,7 @@ ICON_OVERRIDES: Dict[str, Dict[str, Tuple[str, int]]] = {
         "Талисман танка": ("TOTEM_OF_UNDYING", 5),
         "Талисман стража": ("TOTEM_OF_UNDYING", 3),
         "Талисман демона": ("TOTEM_OF_UNDYING", 11),
-        "Талисман героя": ("TOTEM_OF_UNDYING", 2),
+        "Талисман героя": ("TOTEM_OF_UNDYING", 12),
     },
 }
 

@@ -1,12 +1,12 @@
 # Отчёт конвертации Java → Bedrock
 
-- Пар (предмет, custom_model_data): **136**
-- Уникальных иконок: **135**
+- Пар (предмет, custom_model_data): **137**
+- Уникальных иконок: **136**
 - Java-предметов в mappings: **28**
 - Проблемных текстур: **0**
 - Ошибок самопроверки: **0**
 - Отличий в покрытии legacy ↔ 1.21.4+: **13** (реальных конфликтов: 0)
-- Заготовок DeluxeMenus: **136** (`deluxemenus_items.yml`)
+- Заготовок DeluxeMenus: **137** (`deluxemenus_items.yml`)
 
 ## Предметы
 
@@ -131,6 +131,7 @@
 | `minecraft:totem_of_undying` | 9 | `funtime:minecraft_item_funtime_items_talisman_edge` | `minecraft_item_funtime_items_talisman_edge` | да |
 | `minecraft:totem_of_undying` | 10 | `funtime:minecraft_item_funtime_items_talisman_phoenix` | `minecraft_item_funtime_items_talisman_phoenix` | да |
 | `minecraft:totem_of_undying` | 11 | `funtime:minecraft_item_funtime_new_year_talisman_grinch` | `minecraft_item_funtime_new_year_talisman_grinch` | да |
+| `minecraft:totem_of_undying` | 12 | `funtime:minecraft_item_funtime_items_talisman_hero` | `minecraft_item_funtime_items_talisman_hero` | да |
 | `minecraft:trial_key` | 1 | `funtime:item_funtime_cases_usual_key` | `item_funtime_cases_usual_key` | — |
 | `minecraft:trial_key` | 2 | `funtime:item_funtime_cases_free_key` | `item_funtime_cases_free_key` | — |
 | `minecraft:trial_key` | 3 | `funtime:item_funtime_cases_resource_key` | `item_funtime_cases_resource_key` | — |
@@ -182,7 +183,7 @@
 | `shop_talismans.yml` | 328 | `minecraft:totem_of_undying` | 5 | ok |
 | `shop_talismans.yml` | 362 | `minecraft:totem_of_undying` | 3 | ok |
 | `shop_talismans.yml` | 396 | `minecraft:totem_of_undying` | 11 | ok |
-| `shop_talismans.yml` | 430 | `minecraft:totem_of_undying` | 2 | ok |
+| `shop_talismans.yml` | 430 | `minecraft:totem_of_undying` | 12 | ok |
 
 ## Покрытие оверлеев
 

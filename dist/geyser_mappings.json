@@ -1239,6 +1239,16 @@
           "allow_offhand": true,
           "display_handheld": true
         }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 12,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_hero",
+        "bedrock_options": {
+          "icon": "minecraft_item_funtime_items_talisman_hero",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
       }
     ],
     "minecraft:trial_key": [
