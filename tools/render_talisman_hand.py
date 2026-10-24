@@ -140,8 +140,8 @@ def _quads(geo, anim, hand=True):
     return out, (tw, th)
 
 
-def render(pack_dir: str, slug: str, ppu: int = 22, yaw: float = -30, pitch: float = 16,
-           width_units: float = 9, height_units: float = 8.5, center=(0.0, 24.6, -5.0),
+def render(pack_dir: str, slug: str, ppu: int = 22, yaw: float = 150, pitch: float = 16,
+           width_units: float = 9, height_units: float = 8.5, center=(0.0, 22.0, -4.0),
            hand: bool = False):
     geo_all = json.load(open(os.path.join(pack_dir, "models", "entity", "talisman.geo.json"),
                              encoding="utf-8"))["minecraft:geometry"]
@@ -238,7 +238,7 @@ def main() -> int:
     rows = (len(ITEMS) + cols - 1) // cols
     sheet = Image.new("RGBA", (cols * cell_w + 24, rows * cell_h + 56), (22, 20, 26, 255))
     draw = ImageDraw.Draw(sheet)
-    draw.text((14, 14), "Талисманы в руке — третье лицо, масштаб 1:1 к модели пака", fill=(236, 230, 220, 255), font=font)
+    draw.text((14, 14), "Талисманы в руке — третье лицо, как их видит игрок (масштаб 1:1)", fill=(236, 230, 220, 255), font=font)
 
     for n, (cmd, label, slug) in enumerate(ITEMS):
         img = render(args.pack, slug)

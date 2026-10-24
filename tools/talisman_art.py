@@ -418,9 +418,8 @@ GEO_FILE = os.path.join("models", "entity", "talisman.geo.json")
 ANIM_FILE = os.path.join("animations", "talisman.json")
 ATTACHABLE_DIR = "attachables"
 HAND_SCALE = 0.5                # как у черепов в паке Geyser
-HAND_POS_THIRD = [0, 17, -5]    # подошвы на уровне ладони (череп в паке
-                                # Geyser занимает 20..24 по высоте)
-HAND_POS_FIRST = [2, 16, 4]
+HAND_POS_THIRD = [0, 14.5, -4]  # подошвы в кулаке, фигурка растёт вверх
+HAND_POS_FIRST = [2, 14, 4]
 
 # области спрайта, которые натягиваются на грани кубов: (x, y, w, h)
 REGIONS = {
@@ -607,10 +606,10 @@ def _animations() -> dict:
     return {
         "format_version": "1.8.0",
         "animations": {
-            "animation.talisman.thirdperson_main_hand": pose(HAND_POS_THIRD, 0, 135),
-            "animation.talisman.thirdperson_off_hand": pose(HAND_POS_THIRD, 0, -135),
-            "animation.talisman.firstperson_main_hand": pose(HAND_POS_FIRST, 0, 180),
-            "animation.talisman.firstperson_off_hand": pose(HAND_POS_FIRST, 0, 180),
+            "animation.talisman.thirdperson_main_hand": pose(HAND_POS_THIRD, 0, -45),
+            "animation.talisman.thirdperson_off_hand": pose(HAND_POS_THIRD, 0, 45),
+            "animation.talisman.firstperson_main_hand": pose(HAND_POS_FIRST, 0, 0),
+            "animation.talisman.firstperson_off_hand": pose(HAND_POS_FIRST, 0, 0),
             "animation.talisman.disable": {
                 "loop": True,
                 "override_previous_animation": True,
