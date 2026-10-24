@@ -267,29 +267,48 @@ def set_icon(block: List[str], material: str, cmd: int) -> List[str]:
 
 
 def add_frame_slots(block: List[str], new_slots: List[int]) -> List[str]:
-    """Добавляет слоты в список slots: (сохраняя отступ)."""
-    out: List[str] = []
-    list_indent: Optional[str] = None
-    inserted = False
+    """
+    Дописывает слоты в конец списка slots:/slot: сохраняя ТУ ЖЕ отступку,
+    что у существующих элементов (иначе YAML склеит их в одну строку).
+    """
+    label_idx = None
     for i, line in enumerate(block):
-        out.append(line)
         stripped = line.strip()
-        if stripped.startswith(("slots:", "slot:")) and not inserted:
-            indent = line[: len(line) - len(line.lstrip())]
-            list_indent = indent
-        elif list_indent and stripped.startswith("- ") and not inserted:
+        if stripped.startswith("slots:") or stripped.startswith("slot:"):
+            label_idx = i
+            break
+    if label_idx is None:
+        return block
+
+    label_line = block[label_idx]
+    label_indent = len(label_line) - len(label_line.lstrip())
+
+    # ищем первый элемент списка, чтобы взять его отступку
+    item_indent = None
+    last_item = label_idx
+    for i in range(label_idx + 1, len(block)):
+        line = block[i]
+        stripped = line.strip()
+        if not stripped:
             continue
-        elif list_indent and not stripped.startswith("- ") and not inserted and stripped:
-            # конец списка — вставляем свои слоты перед этой строкой
-            back = out.pop()
-            for slot in new_slots:
-                out.append(f"{list_indent}  - {slot}")
-            out.append(back)
-            inserted = True
-    if not inserted and list_indent:
-        for slot in new_slots:
-            out.append(f"{list_indent}  - {slot}")
-        inserted = True
+        current_indent = len(line) - len(line.lstrip())
+        if stripped.startswith("- ") and current_indent >= label_indent:
+            if item_indent is None:
+                item_indent = current_indent
+            last_item = i
+            continue
+        if item_indent is not None:
+            break
+        if current_indent <= label_indent:
+            break
+
+    if item_indent is None:
+        item_indent = label_indent + 2
+
+    prefix = " " * item_indent
+    out = list(block)
+    for offset, slot in enumerate(new_slots):
+        out.insert(last_item + 1 + offset, f"{prefix}- {slot}")
     return out
 
 
@@ -359,6 +378,45 @@ def add_border(lines: List[str], size: int) -> int:
         insert_at -= 1
     lines[insert_at:insert_at] = ["", *block]
     return len(free)
+
+
+def validate_slots_indent(lines: List[str]) -> List[str]:
+    """
+    Проверяет, что все элементы списков slots:/slot: имеют одинаковый отступ
+    и являются числами. Разный отступ = YAML склеит их в строку вида
+    '44 - 45 - 46', из-за чего DeluxeMenus не сможет загрузить меню.
+    """
+    errors: List[str] = []
+    in_list = False
+    indent = None
+    for lineno, line in enumerate(lines, 1):
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#"):
+            continue
+        lead = len(line) - len(line.lstrip())
+        if stripped.startswith("slots:") or stripped.startswith("slot:"):
+            in_list = True
+            indent = None
+            inline = stripped.split(":", 1)[1].strip()
+            if inline and not inline.isdigit() and not inline.startswith("["):
+                errors.append(f"строка {lineno}: ожидался список слотов, получено '{inline}'")
+            continue
+        if in_list and stripped.startswith("- "):
+            value = stripped[2:].strip()
+            if not value.isdigit():
+                errors.append(f"строка {lineno}: слот не число: '{value}'")
+            if indent is None:
+                indent = lead
+            elif lead != indent:
+                errors.append(
+                    f"строка {lineno}: отступ слота {lead} не совпадает с {indent} "
+                    f"(YAML склеит значения)"
+                )
+            continue
+        if in_list:
+            in_list = False
+            indent = None
+    return errors
 
 
 def port_file(path: str) -> Tuple[List[str], dict]:
@@ -471,7 +529,11 @@ def port_file(path: str) -> Tuple[List[str], dict]:
     if re.search(r"&x(?:&[0-9a-fA-F]){6}", text):
         report["warnings"].append("остались необработанные hex-коды")
 
-    return text.split("\n")[:-1], report
+    result_lines = text.split("\n")[:-1]
+    errors = validate_slots_indent(result_lines)
+    if errors:
+        report["warnings"].extend(errors)
+    return result_lines, report
 
 
 def main(argv: Optional[List[str]] = None) -> int:
