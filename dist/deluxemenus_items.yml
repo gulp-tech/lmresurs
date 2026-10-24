@@ -1,0 +1,1097 @@
+# Автоматически сгенерировано tools/build_bedrock_pack.py
+# Заготовки предметов для DeluxeMenus. Скопируй нужный блок в конфиг меню.
+# material + custom-model-data менять не нужно: Geyser сам подменит иконку
+# на Bedrock-версию из funtime.mcpack через geyser_mappings.json.
+#
+# ВАЖНО (Bedrock): не используй в name/lore символы из private-use области
+# (сдвиги/offset-глифы Java-пака) — в Bedrock они отображаются квадратами.
+
+items:
+  # minecraft:apple | custom_model_data: 1 | модель: funtime/halloween/caramel_apple
+  item_funtime_halloween_caramel_apple:
+    material: APPLE
+    custom-model-data: 1
+    name: '&fCaramel Apple'
+    lore:
+      - '&7'
+
+  # minecraft:beetroot_soup | custom_model_data: 1 | модель: funtime/halloween/mulled_wine
+  item_funtime_halloween_mulled_wine:
+    material: BEETROOT_SOUP
+    custom-model-data: 1
+    name: '&fMulled Wine'
+    lore:
+      - '&7'
+
+  # minecraft:bow | custom_model_data: 1 | модель: funtime/new_year/elf_bow
+  item_funtime_new_year_elf_bow:
+    material: BOW
+    custom-model-data: 1
+    name: '&fElf Bow'
+    lore:
+      - '&7'
+
+  # minecraft:bow | custom_model_data: 2 | модель: funtime/new_year/moon_bow
+  item_funtime_new_year_moon_bow:
+    material: BOW
+    custom-model-data: 2
+    name: '&fMoon Bow'
+    lore:
+      - '&7'
+
+  # minecraft:cookie | custom_model_data: 1 | модель: funtime/halloween/crumble_cookie
+  item_funtime_halloween_crumble_cookie:
+    material: COOKIE
+    custom-model-data: 1
+    name: '&fCrumble Cookie'
+    lore:
+      - '&7'
+
+  # minecraft:cookie | custom_model_data: 2 | модель: funtime/new_year/gingerbread1
+  item_funtime_new_year_gingerbread1:
+    material: COOKIE
+    custom-model-data: 2
+    name: '&fGingerbread1'
+    lore:
+      - '&7'
+
+  # minecraft:cookie | custom_model_data: 3 | модель: funtime/new_year/gingerbread2
+  item_funtime_new_year_gingerbread2:
+    material: COOKIE
+    custom-model-data: 3
+    name: '&fGingerbread2'
+    lore:
+      - '&7'
+
+  # minecraft:cookie | custom_model_data: 4 | модель: funtime/new_year/gingerbread3
+  item_funtime_new_year_gingerbread3:
+    material: COOKIE
+    custom-model-data: 4
+    name: '&fGingerbread3'
+    lore:
+      - '&7'
+
+  # minecraft:firework_rocket | custom_model_data: 1 | модель: funtime/new_year/petard
+  item_funtime_new_year_petard:
+    material: FIREWORK_ROCKET
+    custom-model-data: 1
+    name: '&fPetard'
+    lore:
+      - '&7'
+
+  # minecraft:firework_rocket | custom_model_data: 2 | модель: funtime/new_year/spruce_firework
+  item_funtime_new_year_spruce_firework:
+    material: FIREWORK_ROCKET
+    custom-model-data: 2
+    name: '&fSpruce Firework'
+    lore:
+      - '&7'
+
+  # minecraft:firework_rocket | custom_model_data: 3 | модель: funtime/new_year/sugar_firework
+  item_funtime_new_year_sugar_firework:
+    material: FIREWORK_ROCKET
+    custom-model-data: 3
+    name: '&fSugar Firework'
+    lore:
+      - '&7'
+
+  # minecraft:firework_rocket | custom_model_data: 4 | модель: funtime/new_year/ice_firework
+  item_funtime_new_year_ice_firework:
+    material: FIREWORK_ROCKET
+    custom-model-data: 4
+    name: '&fIce Firework'
+    lore:
+      - '&7'
+
+  # minecraft:firework_rocket | custom_model_data: 5 | модель: funtime/new_year/xmas_firework
+  item_funtime_new_year_xmas_firework:
+    material: FIREWORK_ROCKET
+    custom-model-data: 5
+    name: '&fXmas Firework'
+    lore:
+      - '&7'
+
+  # minecraft:firework_rocket | custom_model_data: 6 | модель: funtime/new_year/magic_firework
+  item_funtime_new_year_magic_firework:
+    material: FIREWORK_ROCKET
+    custom-model-data: 6
+    name: '&fMagic Firework'
+    lore:
+      - '&7'
+
+  # minecraft:firework_rocket | custom_model_data: 7 | модель: funtime/new_year/harmony_firework
+  item_funtime_new_year_harmony_firework:
+    material: FIREWORK_ROCKET
+    custom-model-data: 7
+    name: '&fHarmony Firework'
+    lore:
+      - '&7'
+
+  # minecraft:firework_rocket | custom_model_data: 8 | модель: funtime/new_year/tangerine_firework
+  item_funtime_new_year_tangerine_firework:
+    material: FIREWORK_ROCKET
+    custom-model-data: 8
+    name: '&fTangerine Firework'
+    lore:
+      - '&7'
+
+  # minecraft:glow_berries | custom_model_data: 1 | модель: funtime/new_year/tangerine
+  item_funtime_new_year_tangerine:
+    material: GLOW_BERRIES
+    custom-model-data: 1
+    name: '&fTangerine'
+    lore:
+      - '&7'
+
+  # minecraft:leather_boots | custom_model_data: 1 | модель: funtime/new_year/grinch_boots
+  item_funtime_new_year_grinch_boots:
+    material: LEATHER_BOOTS
+    custom-model-data: 1
+    name: '&fGrinch Boots'
+    lore:
+      - '&7'
+
+  # minecraft:leather_chestplate | custom_model_data: 1 | модель: funtime/new_year/grinch_chestplate
+  item_funtime_new_year_grinch_chestplate:
+    material: LEATHER_CHESTPLATE
+    custom-model-data: 1
+    name: '&fGrinch Chestplate'
+    lore:
+      - '&7'
+
+  # minecraft:leather_helmet | custom_model_data: 1 | модель: funtime/new_year/grinch_helmet
+  item_funtime_new_year_grinch_helmet:
+    material: LEATHER_HELMET
+    custom-model-data: 1
+    name: '&fGrinch Helmet'
+    lore:
+      - '&7'
+
+  # minecraft:leather_helmet | custom_model_data: 2 | модель: funtime/new_year/santa_hat
+  item_funtime_new_year_santa_hat:
+    material: LEATHER_HELMET
+    custom-model-data: 2
+    name: '&fSanta Hat'
+    lore:
+      - '&7'
+
+  # minecraft:leather_leggings | custom_model_data: 1 | модель: funtime/new_year/grinch_leggings
+  item_funtime_new_year_grinch_leggings:
+    material: LEATHER_LEGGINGS
+    custom-model-data: 1
+    name: '&fGrinch Leggings'
+    lore:
+      - '&7'
+
+  # minecraft:mace | custom_model_data: 1 | модель: funtime/new_year/ice_mace
+  item_funtime_new_year_ice_mace:
+    material: MACE
+    custom-model-data: 1
+    name: '&fIce Mace'
+    lore:
+      - '&7'
+
+  # minecraft:nautilus_shell | custom_model_data: 1 | модель: funtime/new_year/christmas_candy1
+  item_funtime_new_year_christmas_candy1:
+    material: NAUTILUS_SHELL
+    custom-model-data: 1
+    name: '&fChristmas Candy1'
+    lore:
+      - '&7'
+
+  # minecraft:nautilus_shell | custom_model_data: 2 | модель: funtime/new_year/christmas_candy2
+  item_funtime_new_year_christmas_candy2:
+    material: NAUTILUS_SHELL
+    custom-model-data: 2
+    name: '&fChristmas Candy2'
+    lore:
+      - '&7'
+
+  # minecraft:nautilus_shell | custom_model_data: 3 | модель: funtime/new_year/christmas_candy3
+  item_funtime_new_year_christmas_candy3:
+    material: NAUTILUS_SHELL
+    custom-model-data: 3
+    name: '&fChristmas Candy3'
+    lore:
+      - '&7'
+
+  # minecraft:nautilus_shell | custom_model_data: 4 | модель: funtime/new_year/christmas_candy4
+  item_funtime_new_year_christmas_candy4:
+    material: NAUTILUS_SHELL
+    custom-model-data: 4
+    name: '&fChristmas Candy4'
+    lore:
+      - '&7'
+
+  # minecraft:netherite_axe | custom_model_data: 1 | модель: funtime/new_year/elf_axe
+  item_funtime_new_year_elf_axe:
+    material: NETHERITE_AXE
+    custom-model-data: 1
+    name: '&fElf Axe'
+    lore:
+      - '&7'
+
+  # minecraft:netherite_boots | custom_model_data: 1 | модель: funtime/new_year/moon_boots
+  item_funtime_new_year_moon_boots:
+    material: NETHERITE_BOOTS
+    custom-model-data: 1
+    name: '&fMoon Boots'
+    lore:
+      - '&7'
+
+  # minecraft:netherite_chestplate | custom_model_data: 1 | модель: funtime/new_year/moon_chestplate
+  item_funtime_new_year_moon_chestplate:
+    material: NETHERITE_CHESTPLATE
+    custom-model-data: 1
+    name: '&fMoon Chestplate'
+    lore:
+      - '&7'
+
+  # minecraft:netherite_helmet | custom_model_data: 1 | модель: funtime/new_year/moon_helmet
+  item_funtime_new_year_moon_helmet:
+    material: NETHERITE_HELMET
+    custom-model-data: 1
+    name: '&fMoon Helmet'
+    lore:
+      - '&7'
+
+  # minecraft:netherite_leggings | custom_model_data: 1 | модель: funtime/new_year/moon_leggings
+  item_funtime_new_year_moon_leggings:
+    material: NETHERITE_LEGGINGS
+    custom-model-data: 1
+    name: '&fMoon Leggings'
+    lore:
+      - '&7'
+
+  # minecraft:netherite_pickaxe | custom_model_data: 1 | модель: funtime/new_year/elf_pickaxe
+  item_funtime_new_year_elf_pickaxe:
+    material: NETHERITE_PICKAXE
+    custom-model-data: 1
+    name: '&fElf Pickaxe'
+    lore:
+      - '&7'
+
+  # minecraft:netherite_sword | custom_model_data: 1 | модель: funtime/new_year/moon_sword
+  item_funtime_new_year_moon_sword:
+    material: NETHERITE_SWORD
+    custom-model-data: 1
+    name: '&fMoon Sword'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 1 | модель: ui/empty
+  item_funtime_empty:
+    material: PAPER
+    custom-model-data: 1
+    name: '&fEmpty'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 2 | модель: ui/cases/usual
+  item_funtime_cases_usual:
+    material: PAPER
+    custom-model-data: 2
+    name: '&fUsual'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 3 | модель: ui/cases/free
+  item_funtime_cases_free:
+    material: PAPER
+    custom-model-data: 3
+    name: '&fFree'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 4 | модель: ui/cases/resource
+  item_funtime_cases_resource:
+    material: PAPER
+    custom-model-data: 4
+    name: '&fResource'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 5 | модель: ui/cases/token
+  item_funtime_cases_token:
+    material: PAPER
+    custom-model-data: 5
+    name: '&fToken'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 6 | модель: ui/cases/rune
+  item_funtime_cases_rune:
+    material: PAPER
+    custom-model-data: 6
+    name: '&fRune'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 7 | модель: ui/cases/ranks
+  item_funtime_cases_ranks:
+    material: PAPER
+    custom-model-data: 7
+    name: '&fRanks'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 8 | модель: ui/cases/enchant
+  item_funtime_cases_enchant:
+    material: PAPER
+    custom-model-data: 8
+    name: '&fEnchant'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 9 | модель: ui/cases/coins
+  item_funtime_cases_coins:
+    material: PAPER
+    custom-model-data: 9
+    name: '&fCoins'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 10 | модель: ui/cases/weapon
+  item_funtime_cases_weapon:
+    material: PAPER
+    custom-model-data: 10
+    name: '&fWeapon'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 11 | модель: ui/cases/armor
+  item_funtime_cases_armor:
+    material: PAPER
+    custom-model-data: 11
+    name: '&fArmor'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 12 | модель: ui/cases/instrument
+  item_funtime_cases_instrument:
+    material: PAPER
+    custom-model-data: 12
+    name: '&fInstrument'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 13 | модель: ui/buttons/auction_back
+  item_funtime_buttons_auction_back:
+    material: PAPER
+    custom-model-data: 13
+    name: '&fAuction Back'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 14 | модель: ui/buttons/auction_categories
+  item_funtime_buttons_auction_categories:
+    material: PAPER
+    custom-model-data: 14
+    name: '&fAuction Categories'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 15 | модель: ui/buttons/auction_refresh
+  item_funtime_buttons_auction_refresh:
+    material: PAPER
+    custom-model-data: 15
+    name: '&fAuction Refresh'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 16 | модель: ui/buttons/auction_update
+  item_funtime_buttons_auction_update:
+    material: PAPER
+    custom-model-data: 16
+    name: '&fAuction Update'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 17 | модель: ui/buttons/auction_vault
+  item_funtime_buttons_auction_vault:
+    material: PAPER
+    custom-model-data: 17
+    name: '&fAuction Vault'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 18 | модель: ui/icons/coins
+  item_funtime_buttons_coins:
+    material: PAPER
+    custom-model-data: 18
+    name: '&fCoins'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 19 | модель: ui/icons/emerald
+  item_funtime_buttons_emerald:
+    material: PAPER
+    custom-model-data: 19
+    name: '&fEmerald'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 20 | модель: ui/buttons/auction_arrow_left
+  item_funtime_buttons_auction_arrow_left:
+    material: PAPER
+    custom-model-data: 20
+    name: '&fAuction Arrow Left'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 21 | модель: ui/buttons/auction_arrow_right
+  item_funtime_buttons_auction_arrow_right:
+    material: PAPER
+    custom-model-data: 21
+    name: '&fAuction Arrow Right'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 22 | модель: ui/icons/info_book
+  item_funtime_buttons_info_book:
+    material: PAPER
+    custom-model-data: 22
+    name: '&fInfo Book'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 23 | модель: ui/icons/back_shadow
+  item_funtime_buttons_back_shadow:
+    material: PAPER
+    custom-model-data: 23
+    name: '&fBack Shadow'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 24 | модель: ui/icons/back_shadow_2
+  item_funtime_buttons_back_shadow_24:
+    material: PAPER
+    custom-model-data: 24
+    name: '&fBack Shadow 2'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 25 | модель: ui/icons/info_shadow
+  item_funtime_buttons_info_shadow:
+    material: PAPER
+    custom-model-data: 25
+    name: '&fInfo Shadow'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 26 | модель: ui/icons/craft_back
+  item_funtime_buttons_craft_back:
+    material: PAPER
+    custom-model-data: 26
+    name: '&fCraft Back'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 27 | модель: ui/icons/info_small
+  item_funtime_buttons_info_small:
+    material: PAPER
+    custom-model-data: 27
+    name: '&fInfo Small'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 28 | модель: ui/icons/donate_book
+  item_funtime_buttons_donate_book:
+    material: PAPER
+    custom-model-data: 28
+    name: '&fDonate Book'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 29 | модель: ui/icons/donate_chest
+  item_funtime_buttons_donate_chest:
+    material: PAPER
+    custom-model-data: 29
+    name: '&fDonate Chest'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 30 | модель: ui/icons/donate_coins
+  item_funtime_buttons_donate_coins:
+    material: PAPER
+    custom-model-data: 30
+    name: '&fDonate Coins'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 31 | модель: ui/buttons/time_morning
+  item_funtime_buttons_time_morning:
+    material: PAPER
+    custom-model-data: 31
+    name: '&fTime Morning'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 32 | модель: ui/buttons/time_day
+  item_funtime_buttons_time_day:
+    material: PAPER
+    custom-model-data: 32
+    name: '&fTime Day'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 33 | модель: ui/buttons/time_sunset
+  item_funtime_buttons_time_sunset:
+    material: PAPER
+    custom-model-data: 33
+    name: '&fTime Sunset'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 34 | модель: ui/buttons/time_night
+  item_funtime_buttons_time_night:
+    material: PAPER
+    custom-model-data: 34
+    name: '&fTime Night'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 35 | модель: ui/buttons/weather_sun
+  item_funtime_buttons_weather_sun:
+    material: PAPER
+    custom-model-data: 35
+    name: '&fWeather Sun'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 36 | модель: ui/buttons/weather_rain
+  item_funtime_buttons_weather_rain:
+    material: PAPER
+    custom-model-data: 36
+    name: '&fWeather Rain'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 37 | модель: ui/buttons/weather_thunder
+  item_funtime_buttons_weather_thunder:
+    material: PAPER
+    custom-model-data: 37
+    name: '&fWeather Thunder'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 38 | модель: ui/buttons/settings_reset
+  item_funtime_buttons_settings_reset:
+    material: PAPER
+    custom-model-data: 38
+    name: '&fSettings Reset'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 39 | модель: ui/cases/eggs
+  item_funtime_cases_eggs:
+    material: PAPER
+    custom-model-data: 39
+    name: '&fEggs'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 40 | модель: ui/cases/traps
+  item_funtime_cases_traps:
+    material: PAPER
+    custom-model-data: 40
+    name: '&fTraps'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 41 | модель: ui/cases/sphere
+  item_funtime_cases_sphere:
+    material: PAPER
+    custom-model-data: 41
+    name: '&fSphere'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 42 | модель: ui/cases/talisman
+  item_funtime_cases_talisman:
+    material: PAPER
+    custom-model-data: 42
+    name: '&fTalisman'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 43 | модель: ui/cases/trim
+  item_funtime_cases_trim:
+    material: PAPER
+    custom-model-data: 43
+    name: '&fTrim'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 44 | модель: ui/tp/home1
+  item_funtime_tp_home1:
+    material: PAPER
+    custom-model-data: 44
+    name: '&fHome1'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 45 | модель: ui/tp/home2
+  item_funtime_tp_home2:
+    material: PAPER
+    custom-model-data: 45
+    name: '&fHome2'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 46 | модель: ui/tp/home3
+  item_funtime_tp_home3:
+    material: PAPER
+    custom-model-data: 46
+    name: '&fHome3'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 47 | модель: ui/tp/home4
+  item_funtime_tp_home4:
+    material: PAPER
+    custom-model-data: 47
+    name: '&fHome4'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 48 | модель: ui/tp/home5
+  item_funtime_tp_home5:
+    material: PAPER
+    custom-model-data: 48
+    name: '&fHome5'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 49 | модель: ui/tp/home6
+  item_funtime_tp_home6:
+    material: PAPER
+    custom-model-data: 49
+    name: '&fHome6'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 50 | модель: ui/tp/home7
+  item_funtime_tp_home7:
+    material: PAPER
+    custom-model-data: 50
+    name: '&fHome7'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 51 | модель: ui/tp/home8
+  item_funtime_tp_home8:
+    material: PAPER
+    custom-model-data: 51
+    name: '&fHome8'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 52 | модель: ui/tp/home9
+  item_funtime_tp_home9:
+    material: PAPER
+    custom-model-data: 52
+    name: '&fHome9'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 53 | модель: ui/tp/home10
+  item_funtime_tp_home10:
+    material: PAPER
+    custom-model-data: 53
+    name: '&fHome10'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 54 | модель: ui/tp/clan1
+  item_funtime_tp_clan1:
+    material: PAPER
+    custom-model-data: 54
+    name: '&fClan1'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 55 | модель: ui/tp/clan2
+  item_funtime_tp_clan2:
+    material: PAPER
+    custom-model-data: 55
+    name: '&fClan2'
+    lore:
+      - '&7'
+
+  # minecraft:paper | custom_model_data: 56 | модель: ui/tp/clan3
+  item_funtime_tp_clan3:
+    material: PAPER
+    custom-model-data: 56
+    name: '&fClan3'
+    lore:
+      - '&7'
+
+  # minecraft:potion | custom_model_data: 1 | модель: funtime/new_year/tangerine_potion
+  item_funtime_new_year_tangerine_potion:
+    material: POTION
+    custom-model-data: 1
+    name: '&fTangerine Potion'
+    lore:
+      - '&7'
+
+  # minecraft:potion | custom_model_data: 2 | модель: funtime/new_year/wine_potion
+  item_funtime_new_year_wine_potion:
+    material: POTION
+    custom-model-data: 2
+    name: '&fWine Potion'
+    lore:
+      - '&7'
+
+  # minecraft:potion | custom_model_data: 3 | модель: funtime/new_year/spruce_potion
+  item_funtime_new_year_spruce_potion:
+    material: POTION
+    custom-model-data: 3
+    name: '&fSpruce Potion'
+    lore:
+      - '&7'
+
+  # minecraft:potion | custom_model_data: 4 | модель: funtime/new_year/elf_potion
+  item_funtime_new_year_elf_potion:
+    material: POTION
+    custom-model-data: 4
+    name: '&fElf Potion'
+    lore:
+      - '&7'
+
+  # minecraft:spider_eye | custom_model_data: 1 | модель: funtime/halloween/gummy_eye
+  item_funtime_halloween_gummy_eye:
+    material: SPIDER_EYE
+    custom-model-data: 1
+    name: '&fGummy Eye'
+    lore:
+      - '&7'
+
+  # minecraft:spider_eye | custom_model_data: 2 | модель: funtime/halloween/candy_1
+  item_funtime_halloween_candy_1:
+    material: SPIDER_EYE
+    custom-model-data: 2
+    name: '&fCandy 1'
+    lore:
+      - '&7'
+
+  # minecraft:spider_eye | custom_model_data: 3 | модель: funtime/halloween/candy_2
+  item_funtime_halloween_candy_2:
+    material: SPIDER_EYE
+    custom-model-data: 3
+    name: '&fCandy 2'
+    lore:
+      - '&7'
+
+  # minecraft:spider_eye | custom_model_data: 4 | модель: funtime/halloween/candy_3
+  item_funtime_halloween_candy_3:
+    material: SPIDER_EYE
+    custom-model-data: 4
+    name: '&fCandy 3'
+    lore:
+      - '&7'
+
+  # minecraft:spider_eye | custom_model_data: 5 | модель: funtime/halloween/candy_4
+  item_funtime_halloween_candy_4:
+    material: SPIDER_EYE
+    custom-model-data: 5
+    name: '&fCandy 4'
+    lore:
+      - '&7'
+
+  # minecraft:spider_eye | custom_model_data: 6 | модель: funtime/halloween/candy_5
+  item_funtime_halloween_candy_5:
+    material: SPIDER_EYE
+    custom-model-data: 6
+    name: '&fCandy 5'
+    lore:
+      - '&7'
+
+  # minecraft:splash_potion | custom_model_data: 1 | модель: funtime/new_year/ice_splash_potion
+  item_funtime_new_year_ice_splash_potion:
+    material: SPLASH_POTION
+    custom-model-data: 1
+    name: '&fIce Splash Potion'
+    lore:
+      - '&7'
+
+  # minecraft:splash_potion | custom_model_data: 2 | модель: funtime/new_year/alcohol_splash_potion
+  item_funtime_new_year_alcohol_splash_potion:
+    material: SPLASH_POTION
+    custom-model-data: 2
+    name: '&fAlcohol Splash Potion'
+    lore:
+      - '&7'
+
+  # minecraft:splash_potion | custom_model_data: 3 | модель: funtime/new_year/tangerine_splash_potion
+  item_funtime_new_year_tangerine_splash_potion:
+    material: SPLASH_POTION
+    custom-model-data: 3
+    name: '&fTangerine Splash Potion'
+    lore:
+      - '&7'
+
+  # minecraft:tipped_arrow | custom_model_data: 1 | модель: funtime/new_year/spruce_arrow
+  item_funtime_new_year_spruce_arrow:
+    material: TIPPED_ARROW
+    custom-model-data: 1
+    name: '&fSpruce Arrow'
+    lore:
+      - '&7'
+
+  # minecraft:tipped_arrow | custom_model_data: 2 | модель: funtime/new_year/firework_arrow
+  item_funtime_new_year_firework_arrow:
+    material: TIPPED_ARROW
+    custom-model-data: 2
+    name: '&fFirework Arrow'
+    lore:
+      - '&7'
+
+  # minecraft:tipped_arrow | custom_model_data: 3 | модель: funtime/new_year/ice_arrow
+  item_funtime_new_year_ice_arrow:
+    material: TIPPED_ARROW
+    custom-model-data: 3
+    name: '&fIce Arrow'
+    lore:
+      - '&7'
+
+  # minecraft:tipped_arrow | custom_model_data: 4 | модель: funtime/new_year/elf_arrow
+  item_funtime_new_year_elf_arrow:
+    material: TIPPED_ARROW
+    custom-model-data: 4
+    name: '&fElf Arrow'
+    lore:
+      - '&7'
+
+  # minecraft:tipped_arrow | custom_model_data: 5 | модель: funtime/new_year/alcohol_arrow
+  item_funtime_new_year_alcohol_arrow:
+    material: TIPPED_ARROW
+    custom-model-data: 5
+    name: '&fAlcohol Arrow'
+    lore:
+      - '&7'
+
+  # minecraft:totem_of_undying | custom_model_data: 1 | модель: funtime/items/talisman_harmony
+  minecraft_item_funtime_items_talisman_harmony:
+    material: TOTEM_OF_UNDYING
+    custom-model-data: 1
+    name: '&fTalisman Harmony'
+    lore:
+      - '&7'
+
+  # minecraft:totem_of_undying | custom_model_data: 2 | модель: funtime/items/talisman_daedalus
+  minecraft_item_funtime_items_talisman_daedalus:
+    material: TOTEM_OF_UNDYING
+    custom-model-data: 2
+    name: '&fTalisman Daedalus'
+    lore:
+      - '&7'
+
+  # minecraft:totem_of_undying | custom_model_data: 3 | модель: funtime/items/talisman_triton
+  minecraft_item_funtime_items_talisman_triton:
+    material: TOTEM_OF_UNDYING
+    custom-model-data: 3
+    name: '&fTalisman Triton'
+    lore:
+      - '&7'
+
+  # minecraft:totem_of_undying | custom_model_data: 4 | модель: funtime/items/talisman_discord
+  minecraft_item_funtime_items_talisman_discord:
+    material: TOTEM_OF_UNDYING
+    custom-model-data: 4
+    name: '&fTalisman Discord'
+    lore:
+      - '&7'
+
+  # minecraft:totem_of_undying | custom_model_data: 5 | модель: funtime/items/talisman_echidna
+  minecraft_item_funtime_items_talisman_echidna:
+    material: TOTEM_OF_UNDYING
+    custom-model-data: 5
+    name: '&fTalisman Echidna'
+    lore:
+      - '&7'
+
+  # minecraft:totem_of_undying | custom_model_data: 6 | модель: funtime/items/talisman_crusher
+  minecraft_item_funtime_items_talisman_crusher:
+    material: TOTEM_OF_UNDYING
+    custom-model-data: 6
+    name: '&fTalisman Crusher'
+    lore:
+      - '&7'
+
+  # minecraft:totem_of_undying | custom_model_data: 7 | модель: funtime/items/talisman_punisher
+  minecraft_item_funtime_items_talisman_punisher:
+    material: TOTEM_OF_UNDYING
+    custom-model-data: 7
+    name: '&fTalisman Punisher'
+    lore:
+      - '&7'
+
+  # minecraft:totem_of_undying | custom_model_data: 8 | модель: funtime/items/talisman_tyrant
+  minecraft_item_funtime_items_talisman_tyrant:
+    material: TOTEM_OF_UNDYING
+    custom-model-data: 8
+    name: '&fTalisman Tyrant'
+    lore:
+      - '&7'
+
+  # minecraft:totem_of_undying | custom_model_data: 9 | модель: funtime/items/talisman_edge
+  minecraft_item_funtime_items_talisman_edge:
+    material: TOTEM_OF_UNDYING
+    custom-model-data: 9
+    name: '&fTalisman Edge'
+    lore:
+      - '&7'
+
+  # minecraft:totem_of_undying | custom_model_data: 10 | модель: funtime/items/talisman_phoenix
+  minecraft_item_funtime_items_talisman_phoenix:
+    material: TOTEM_OF_UNDYING
+    custom-model-data: 10
+    name: '&fTalisman Phoenix'
+    lore:
+      - '&7'
+
+  # minecraft:totem_of_undying | custom_model_data: 11 | модель: funtime/new_year/talisman_grinch
+  minecraft_item_funtime_new_year_talisman_grinch:
+    material: TOTEM_OF_UNDYING
+    custom-model-data: 11
+    name: '&fTalisman Grinch'
+    lore:
+      - '&7'
+
+  # minecraft:trial_key | custom_model_data: 1 | модель: item/keys/usual_key
+  item_funtime_cases_usual_key:
+    material: TRIAL_KEY
+    custom-model-data: 1
+    name: '&fUsual Key'
+    lore:
+      - '&7'
+
+  # minecraft:trial_key | custom_model_data: 2 | модель: item/keys/free_key
+  item_funtime_cases_free_key:
+    material: TRIAL_KEY
+    custom-model-data: 2
+    name: '&fFree Key'
+    lore:
+      - '&7'
+
+  # minecraft:trial_key | custom_model_data: 3 | модель: item/keys/resource_key
+  item_funtime_cases_resource_key:
+    material: TRIAL_KEY
+    custom-model-data: 3
+    name: '&fResource Key'
+    lore:
+      - '&7'
+
+  # minecraft:trial_key | custom_model_data: 4 | модель: item/keys/token_key
+  item_funtime_cases_token_key:
+    material: TRIAL_KEY
+    custom-model-data: 4
+    name: '&fToken Key'
+    lore:
+      - '&7'
+
+  # minecraft:trial_key | custom_model_data: 5 | модель: item/keys/ranks_key
+  item_funtime_cases_ranks_key:
+    material: TRIAL_KEY
+    custom-model-data: 5
+    name: '&fRanks Key'
+    lore:
+      - '&7'
+
+  # minecraft:trial_key | custom_model_data: 6 | модель: item/keys/enchant_key
+  item_funtime_cases_enchant_key:
+    material: TRIAL_KEY
+    custom-model-data: 6
+    name: '&fEnchant Key'
+    lore:
+      - '&7'
+
+  # minecraft:trial_key | custom_model_data: 7 | модель: item/keys/coins_key
+  item_funtime_cases_coins_key:
+    material: TRIAL_KEY
+    custom-model-data: 7
+    name: '&fCoins Key'
+    lore:
+      - '&7'
+
+  # minecraft:trial_key | custom_model_data: 8 | модель: item/keys/weapon_key
+  item_funtime_cases_weapon_key:
+    material: TRIAL_KEY
+    custom-model-data: 8
+    name: '&fWeapon Key'
+    lore:
+      - '&7'
+
+  # minecraft:trial_key | custom_model_data: 9 | модель: item/keys/armor_key
+  item_funtime_cases_armor_key:
+    material: TRIAL_KEY
+    custom-model-data: 9
+    name: '&fArmor Key'
+    lore:
+      - '&7'
+
+  # minecraft:trial_key | custom_model_data: 10 | модель: item/keys/instrument_key
+  item_funtime_cases_instrument_key:
+    material: TRIAL_KEY
+    custom-model-data: 10
+    name: '&fInstrument Key'
+    lore:
+      - '&7'
+
+  # minecraft:trial_key | custom_model_data: 11 | модель: item/keys/eggs_key
+  item_funtime_cases_eggs_key:
+    material: TRIAL_KEY
+    custom-model-data: 11
+    name: '&fEggs Key'
+    lore:
+      - '&7'
+
+  # minecraft:trial_key | custom_model_data: 12 | модель: item/keys/traps_key
+  item_funtime_cases_traps_key:
+    material: TRIAL_KEY
+    custom-model-data: 12
+    name: '&fTraps Key'
+    lore:
+      - '&7'
+
+  # minecraft:trial_key | custom_model_data: 13 | модель: item/keys/sphere_key
+  item_funtime_cases_sphere_key:
+    material: TRIAL_KEY
+    custom-model-data: 13
+    name: '&fSphere Key'
+    lore:
+      - '&7'
+
+  # minecraft:trial_key | custom_model_data: 14 | модель: item/keys/talisman_key
+  item_funtime_cases_talisman_key:
+    material: TRIAL_KEY
+    custom-model-data: 14
+    name: '&fTalisman Key'
+    lore:
+      - '&7'
+
+  # minecraft:trial_key | custom_model_data: 15 | модель: item/keys/trim_key
+  item_funtime_cases_trim_key:
+    material: TRIAL_KEY
+    custom-model-data: 15
+    name: '&fTrim Key'
+    lore:
+      - '&7'
+
+  # minecraft:trident | custom_model_data: 1 | модель: funtime/new_year/santa_staff
+  item_funtime_new_year_santa_staff:
+    material: TRIDENT
+    custom-model-data: 1
+    name: '&fSanta Staff'
+    lore:
+      - '&7'
+
+  # minecraft:wither_skeleton_skull | custom_model_data: 1 | модель: funtime/halloween/draculas_skull
+  item_funtime_halloween_draculas_skull:
+    material: WITHER_SKELETON_SKULL
+    custom-model-data: 1
+    name: '&fDraculas Skull'
+    lore:
+      - '&7'
+

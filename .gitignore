@@ -1,0 +1,8 @@
+# распакованный Java-пак (генератор читает funtime.zip напрямую)
+/funtime/
+
+# промежуточный каталог сборки Bedrock-пака (итог лежит в dist/funtime.mcpack)
+/dist/bedrock_pack/
+
+__pycache__/
+*.pyc

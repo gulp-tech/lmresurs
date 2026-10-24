@@ -1,0 +1,128 @@
+# Пример меню для DeluxeMenus, которое корректно выглядит на Bedrock.
+#
+# Требуется:
+#   - plugins/Geyser-Spigot/packs/funtime.mcpack
+#   - plugins/Geyser-Spigot/custom_mappings/funtime.json   (dist/geyser_mappings.json)
+#   - gameplay.enable-custom-content: true в config.yml Geyser
+#
+# size: 54 — на Bedrock это ровно 6 рядов, без пустых слотов.
+# Никаких private-use символов и шрифтовых префиксов Java-пака в тексте: на Bedrock это квадраты.
+
+menu_title: '&8FunTime &7| Основное меню'
+open_command: menu
+register_command: true
+size: 54
+open_sound: entity.shulker.open
+close_sound: entity.shulker.close
+
+items:
+  # Прозрачная заглушка (paper + CMD 1 = ui/empty) — «пустые» слоты без ванильных предметов
+  filler:
+    material: PAPER
+    custom-model-data: 1
+    slots:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+      - 17
+      - 18
+      - 26
+      - 27
+      - 35
+      - 36
+      - 44
+      - 45
+      - 46
+      - 47
+      - 48
+      - 50
+      - 51
+      - 52
+      - 53
+    name: ' '
+
+  # Кейсы: paper (2..12) — те же номера, что в ресурспаке
+  case_usual:
+    material: PAPER
+    custom-model-data: 2
+    slot: 19
+    name: '&eОбычный кейс'
+    lore:
+      - '&7Открыть обычный кейс'
+    left_click_commands:
+      - '[player] cases open usual'
+      - '[close]'
+
+  case_free:
+    material: PAPER
+    custom-model-data: 3
+    slot: 21
+    name: '&aБесплатный кейс'
+    lore:
+      - '&7Раз в сутки'
+    left_click_commands:
+      - '[player] cases open free'
+
+  case_rank:
+    material: PAPER
+    custom-model-data: 7
+    slot: 23
+    name: '&6Кейс с привилегией'
+    left_click_commands:
+      - '[player] cases open ranks'
+
+  # Ключи: trial_key (1..15)
+  key_usual:
+    material: TRIAL_KEY
+    custom-model-data: 1
+    slot: 29
+    name: '&fКлюч от обычного кейса'
+
+  key_rank:
+    material: TRIAL_KEY
+    custom-model-data: 5
+    slot: 31
+    name: '&6Ключ от кейса с привилегией'
+
+  # Кнопки-иконки: paper (13..17, 20..21, 22, 25..28)
+  auction:
+    material: PAPER
+    custom-model-data: 13
+    slot: 39
+    name: '&bАукцион'
+    left_click_commands:
+      - '[player] auction'
+      - '[close]'
+
+  donate:
+    material: PAPER
+    custom-model-data: 28
+    slot: 41
+    name: '&dДонат'
+    left_click_commands:
+      - '[player] donate'
+      - '[close]'
+
+  settings:
+    material: PAPER
+    custom-model-data: 38
+    slot: 43
+    name: '&7Настройки'
+    left_click_commands:
+      - '[player] settings'
+
+  teleport_home:
+    material: PAPER
+    custom-model-data: 44
+    slot: 49
+    name: '&aТелепорт домой'
+    left_click_commands:
+      - '[player] home'
+      - '[close]'

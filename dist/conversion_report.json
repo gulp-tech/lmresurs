@@ -1,0 +1,1113 @@
+{
+  "pack": "/tmp/java_pack_2ox2xa5u",
+  "entries_total": 390,
+  "entries_unique": 136,
+  "icons": 135,
+  "java_items": 28,
+  "missing_textures": [],
+  "validation_errors": [],
+  "deluxemenus_checks": [],
+  "legacy_vs_definition_mismatches": [
+    {
+      "java_item": "minecraft:bow",
+      "custom_model_data": 1,
+      "legacy": "funtime/new_year/elf_bow",
+      "definition": null,
+      "status": "only_legacy"
+    },
+    {
+      "java_item": "minecraft:bow",
+      "custom_model_data": 2,
+      "legacy": "funtime/new_year/moon_bow",
+      "definition": null,
+      "status": "only_legacy"
+    },
+    {
+      "java_item": "minecraft:leather_boots",
+      "custom_model_data": 1,
+      "legacy": "funtime/new_year/grinch_boots",
+      "definition": null,
+      "status": "only_legacy"
+    },
+    {
+      "java_item": "minecraft:leather_chestplate",
+      "custom_model_data": 1,
+      "legacy": "funtime/new_year/grinch_chestplate",
+      "definition": null,
+      "status": "only_legacy"
+    },
+    {
+      "java_item": "minecraft:leather_helmet",
+      "custom_model_data": 1,
+      "legacy": "funtime/new_year/grinch_helmet",
+      "definition": null,
+      "status": "only_legacy"
+    },
+    {
+      "java_item": "minecraft:leather_helmet",
+      "custom_model_data": 2,
+      "legacy": "funtime/new_year/santa_hat",
+      "definition": null,
+      "status": "only_legacy"
+    },
+    {
+      "java_item": "minecraft:leather_leggings",
+      "custom_model_data": 1,
+      "legacy": "funtime/new_year/grinch_leggings",
+      "definition": null,
+      "status": "only_legacy"
+    },
+    {
+      "java_item": "minecraft:netherite_boots",
+      "custom_model_data": 1,
+      "legacy": "funtime/new_year/moon_boots",
+      "definition": null,
+      "status": "only_legacy"
+    },
+    {
+      "java_item": "minecraft:netherite_chestplate",
+      "custom_model_data": 1,
+      "legacy": "funtime/new_year/moon_chestplate",
+      "definition": null,
+      "status": "only_legacy"
+    },
+    {
+      "java_item": "minecraft:netherite_helmet",
+      "custom_model_data": 1,
+      "legacy": "funtime/new_year/moon_helmet",
+      "definition": null,
+      "status": "only_legacy"
+    },
+    {
+      "java_item": "minecraft:netherite_leggings",
+      "custom_model_data": 1,
+      "legacy": "funtime/new_year/moon_leggings",
+      "definition": null,
+      "status": "only_legacy"
+    },
+    {
+      "java_item": "minecraft:trial_key",
+      "custom_model_data": 15,
+      "legacy": null,
+      "definition": "item/keys/trim_key",
+      "status": "only_definition"
+    },
+    {
+      "java_item": "minecraft:trident",
+      "custom_model_data": 1,
+      "legacy": "funtime/new_year/santa_staff",
+      "definition": null,
+      "status": "only_legacy"
+    }
+  ],
+  "items": {
+    "minecraft:apple": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_halloween_caramel_apple",
+        "icon": "item_funtime_halloween_caramel_apple",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/halloween/caramel_apple.png"
+      }
+    ],
+    "minecraft:beetroot_soup": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_halloween_mulled_wine",
+        "icon": "item_funtime_halloween_mulled_wine",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/halloween/mulled_wine.png"
+      }
+    ],
+    "minecraft:bow": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_elf_bow",
+        "icon": "item_funtime_new_year_elf_bow",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/elf_bow.png"
+      },
+      {
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:item_funtime_new_year_moon_bow",
+        "icon": "item_funtime_new_year_moon_bow",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/moon_bow.png"
+      }
+    ],
+    "minecraft:cookie": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_halloween_crumble_cookie",
+        "icon": "item_funtime_halloween_crumble_cookie",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/halloween/crumble_cookie.png"
+      },
+      {
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:item_funtime_new_year_gingerbread1",
+        "icon": "item_funtime_new_year_gingerbread1",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/gingerbread1.png"
+      },
+      {
+        "custom_model_data": 3,
+        "bedrock_identifier": "funtime:item_funtime_new_year_gingerbread2",
+        "icon": "item_funtime_new_year_gingerbread2",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/gingerbread2.png"
+      },
+      {
+        "custom_model_data": 4,
+        "bedrock_identifier": "funtime:item_funtime_new_year_gingerbread3",
+        "icon": "item_funtime_new_year_gingerbread3",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/gingerbread3.png"
+      }
+    ],
+    "minecraft:firework_rocket": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_petard",
+        "icon": "item_funtime_new_year_petard",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/petard.png"
+      },
+      {
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:item_funtime_new_year_spruce_firework",
+        "icon": "item_funtime_new_year_spruce_firework",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/spruce_firework.png"
+      },
+      {
+        "custom_model_data": 3,
+        "bedrock_identifier": "funtime:item_funtime_new_year_sugar_firework",
+        "icon": "item_funtime_new_year_sugar_firework",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/sugar_firework.png"
+      },
+      {
+        "custom_model_data": 4,
+        "bedrock_identifier": "funtime:item_funtime_new_year_ice_firework",
+        "icon": "item_funtime_new_year_ice_firework",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/ice_firework.png"
+      },
+      {
+        "custom_model_data": 5,
+        "bedrock_identifier": "funtime:item_funtime_new_year_xmas_firework",
+        "icon": "item_funtime_new_year_xmas_firework",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/xmas_firework.png"
+      },
+      {
+        "custom_model_data": 6,
+        "bedrock_identifier": "funtime:item_funtime_new_year_magic_firework",
+        "icon": "item_funtime_new_year_magic_firework",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/magic_firework.png"
+      },
+      {
+        "custom_model_data": 7,
+        "bedrock_identifier": "funtime:item_funtime_new_year_harmony_firework",
+        "icon": "item_funtime_new_year_harmony_firework",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/harmony_firework.png"
+      },
+      {
+        "custom_model_data": 8,
+        "bedrock_identifier": "funtime:item_funtime_new_year_tangerine_firework",
+        "icon": "item_funtime_new_year_tangerine_firework",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/tangerine_firework.png"
+      }
+    ],
+    "minecraft:glow_berries": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_tangerine",
+        "icon": "item_funtime_new_year_tangerine",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/tangerine.png"
+      }
+    ],
+    "minecraft:leather_boots": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_grinch_boots",
+        "icon": "item_funtime_new_year_grinch_boots",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/grinch_boots.png"
+      }
+    ],
+    "minecraft:leather_chestplate": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_grinch_chestplate",
+        "icon": "item_funtime_new_year_grinch_chestplate",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/grinch_chestplate.png"
+      }
+    ],
+    "minecraft:leather_helmet": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_grinch_helmet",
+        "icon": "item_funtime_new_year_grinch_helmet",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/grinch_helmet.png"
+      },
+      {
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:item_funtime_new_year_santa_hat",
+        "icon": "item_funtime_new_year_santa_hat",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/santa_hat.png"
+      }
+    ],
+    "minecraft:leather_leggings": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_grinch_leggings",
+        "icon": "item_funtime_new_year_grinch_leggings",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/grinch_leggings.png"
+      }
+    ],
+    "minecraft:mace": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_ice_mace",
+        "icon": "item_funtime_new_year_ice_mace",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/ice_mace.png"
+      }
+    ],
+    "minecraft:nautilus_shell": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_christmas_candy1",
+        "icon": "item_funtime_new_year_christmas_candy1",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/christmas_candy1.png"
+      },
+      {
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:item_funtime_new_year_christmas_candy2",
+        "icon": "item_funtime_new_year_christmas_candy2",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/christmas_candy2.png"
+      },
+      {
+        "custom_model_data": 3,
+        "bedrock_identifier": "funtime:item_funtime_new_year_christmas_candy3",
+        "icon": "item_funtime_new_year_christmas_candy3",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/christmas_candy3.png"
+      },
+      {
+        "custom_model_data": 4,
+        "bedrock_identifier": "funtime:item_funtime_new_year_christmas_candy4",
+        "icon": "item_funtime_new_year_christmas_candy4",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/christmas_candy4.png"
+      }
+    ],
+    "minecraft:netherite_axe": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_elf_axe",
+        "icon": "item_funtime_new_year_elf_axe",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/elf_axe.png"
+      }
+    ],
+    "minecraft:netherite_boots": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_moon_boots",
+        "icon": "item_funtime_new_year_moon_boots",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/moon_boots.png"
+      }
+    ],
+    "minecraft:netherite_chestplate": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_moon_chestplate",
+        "icon": "item_funtime_new_year_moon_chestplate",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/moon_chestplate.png"
+      }
+    ],
+    "minecraft:netherite_helmet": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_moon_helmet",
+        "icon": "item_funtime_new_year_moon_helmet",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/moon_helmet.png"
+      }
+    ],
+    "minecraft:netherite_leggings": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_moon_leggings",
+        "icon": "item_funtime_new_year_moon_leggings",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/moon_leggings.png"
+      }
+    ],
+    "minecraft:netherite_pickaxe": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_elf_pickaxe",
+        "icon": "item_funtime_new_year_elf_pickaxe",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/elf_pickaxe.png"
+      }
+    ],
+    "minecraft:netherite_sword": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_moon_sword",
+        "icon": "item_funtime_new_year_moon_sword",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/moon_sword.png"
+      }
+    ],
+    "minecraft:paper": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_empty",
+        "icon": "item_funtime_empty",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/empty.png"
+      },
+      {
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:item_funtime_cases_usual",
+        "icon": "item_funtime_cases_usual",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/usual.png"
+      },
+      {
+        "custom_model_data": 3,
+        "bedrock_identifier": "funtime:item_funtime_cases_free",
+        "icon": "item_funtime_cases_free",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/free.png"
+      },
+      {
+        "custom_model_data": 4,
+        "bedrock_identifier": "funtime:item_funtime_cases_resource",
+        "icon": "item_funtime_cases_resource",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/resource.png"
+      },
+      {
+        "custom_model_data": 5,
+        "bedrock_identifier": "funtime:item_funtime_cases_token",
+        "icon": "item_funtime_cases_token",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/token.png"
+      },
+      {
+        "custom_model_data": 6,
+        "bedrock_identifier": "funtime:item_funtime_cases_rune",
+        "icon": "item_funtime_cases_rune",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/rune.png"
+      },
+      {
+        "custom_model_data": 7,
+        "bedrock_identifier": "funtime:item_funtime_cases_ranks",
+        "icon": "item_funtime_cases_ranks",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/ranks.png"
+      },
+      {
+        "custom_model_data": 8,
+        "bedrock_identifier": "funtime:item_funtime_cases_enchant",
+        "icon": "item_funtime_cases_enchant",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/enchant.png"
+      },
+      {
+        "custom_model_data": 9,
+        "bedrock_identifier": "funtime:item_funtime_cases_coins",
+        "icon": "item_funtime_cases_coins",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/coins.png"
+      },
+      {
+        "custom_model_data": 10,
+        "bedrock_identifier": "funtime:item_funtime_cases_weapon",
+        "icon": "item_funtime_cases_weapon",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/weapon.png"
+      },
+      {
+        "custom_model_data": 11,
+        "bedrock_identifier": "funtime:item_funtime_cases_armor",
+        "icon": "item_funtime_cases_armor",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/armor.png"
+      },
+      {
+        "custom_model_data": 12,
+        "bedrock_identifier": "funtime:item_funtime_cases_instrument",
+        "icon": "item_funtime_cases_instrument",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/instrument.png"
+      },
+      {
+        "custom_model_data": 13,
+        "bedrock_identifier": "funtime:item_funtime_buttons_auction_back",
+        "icon": "item_funtime_buttons_auction_back",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/auction_back.png"
+      },
+      {
+        "custom_model_data": 14,
+        "bedrock_identifier": "funtime:item_funtime_buttons_auction_categories",
+        "icon": "item_funtime_buttons_auction_categories",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/auction_categories.png"
+      },
+      {
+        "custom_model_data": 15,
+        "bedrock_identifier": "funtime:item_funtime_buttons_auction_refresh",
+        "icon": "item_funtime_buttons_auction_refresh",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/auction_refresh.png"
+      },
+      {
+        "custom_model_data": 16,
+        "bedrock_identifier": "funtime:item_funtime_buttons_auction_update",
+        "icon": "item_funtime_buttons_auction_update",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/auction_update.png"
+      },
+      {
+        "custom_model_data": 17,
+        "bedrock_identifier": "funtime:item_funtime_buttons_auction_vault",
+        "icon": "item_funtime_buttons_auction_vault",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/auction_vault.png"
+      },
+      {
+        "custom_model_data": 18,
+        "bedrock_identifier": "funtime:item_funtime_buttons_coins",
+        "icon": "item_funtime_buttons_coins",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/coins.png"
+      },
+      {
+        "custom_model_data": 19,
+        "bedrock_identifier": "funtime:item_funtime_buttons_emerald",
+        "icon": "item_funtime_buttons_emerald",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/emerald.png"
+      },
+      {
+        "custom_model_data": 20,
+        "bedrock_identifier": "funtime:item_funtime_buttons_auction_arrow_left",
+        "icon": "item_funtime_buttons_auction_arrow_left",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/auction_arrow_left.png"
+      },
+      {
+        "custom_model_data": 21,
+        "bedrock_identifier": "funtime:item_funtime_buttons_auction_arrow_right",
+        "icon": "item_funtime_buttons_auction_arrow_right",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/auction_arrow_right.png"
+      },
+      {
+        "custom_model_data": 22,
+        "bedrock_identifier": "funtime:item_funtime_buttons_info_book",
+        "icon": "item_funtime_buttons_info_book",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/info_book.png"
+      },
+      {
+        "custom_model_data": 23,
+        "bedrock_identifier": "funtime:item_funtime_buttons_back_shadow",
+        "icon": "item_funtime_buttons_back_shadow",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/back_shadow.png"
+      },
+      {
+        "custom_model_data": 24,
+        "bedrock_identifier": "funtime:item_funtime_buttons_back_shadow_24",
+        "icon": "item_funtime_buttons_back_shadow",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/back_shadow.png"
+      },
+      {
+        "custom_model_data": 25,
+        "bedrock_identifier": "funtime:item_funtime_buttons_info_shadow",
+        "icon": "item_funtime_buttons_info_shadow",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/info_shadow.png"
+      },
+      {
+        "custom_model_data": 26,
+        "bedrock_identifier": "funtime:item_funtime_buttons_craft_back",
+        "icon": "item_funtime_buttons_craft_back",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/craft_back.png"
+      },
+      {
+        "custom_model_data": 27,
+        "bedrock_identifier": "funtime:item_funtime_buttons_info_small",
+        "icon": "item_funtime_buttons_info_small",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/info_small.png"
+      },
+      {
+        "custom_model_data": 28,
+        "bedrock_identifier": "funtime:item_funtime_buttons_donate_book",
+        "icon": "item_funtime_buttons_donate_book",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/donate_book.png"
+      },
+      {
+        "custom_model_data": 29,
+        "bedrock_identifier": "funtime:item_funtime_buttons_donate_chest",
+        "icon": "item_funtime_buttons_donate_chest",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/donate_chest.png"
+      },
+      {
+        "custom_model_data": 30,
+        "bedrock_identifier": "funtime:item_funtime_buttons_donate_coins",
+        "icon": "item_funtime_buttons_donate_coins",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/donate_coins.png"
+      },
+      {
+        "custom_model_data": 31,
+        "bedrock_identifier": "funtime:item_funtime_buttons_time_morning",
+        "icon": "item_funtime_buttons_time_morning",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/time_morning.png"
+      },
+      {
+        "custom_model_data": 32,
+        "bedrock_identifier": "funtime:item_funtime_buttons_time_day",
+        "icon": "item_funtime_buttons_time_day",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/time_day.png"
+      },
+      {
+        "custom_model_data": 33,
+        "bedrock_identifier": "funtime:item_funtime_buttons_time_sunset",
+        "icon": "item_funtime_buttons_time_sunset",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/time_sunset.png"
+      },
+      {
+        "custom_model_data": 34,
+        "bedrock_identifier": "funtime:item_funtime_buttons_time_night",
+        "icon": "item_funtime_buttons_time_night",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/time_night.png"
+      },
+      {
+        "custom_model_data": 35,
+        "bedrock_identifier": "funtime:item_funtime_buttons_weather_sun",
+        "icon": "item_funtime_buttons_weather_sun",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/weather_sun.png"
+      },
+      {
+        "custom_model_data": 36,
+        "bedrock_identifier": "funtime:item_funtime_buttons_weather_rain",
+        "icon": "item_funtime_buttons_weather_rain",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/weather_rain.png"
+      },
+      {
+        "custom_model_data": 37,
+        "bedrock_identifier": "funtime:item_funtime_buttons_weather_thunder",
+        "icon": "item_funtime_buttons_weather_thunder",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/weather_thunder.png"
+      },
+      {
+        "custom_model_data": 38,
+        "bedrock_identifier": "funtime:item_funtime_buttons_settings_reset",
+        "icon": "item_funtime_buttons_settings_reset",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/buttons/settings_reset.png"
+      },
+      {
+        "custom_model_data": 39,
+        "bedrock_identifier": "funtime:item_funtime_cases_eggs",
+        "icon": "item_funtime_cases_eggs",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/eggs.png"
+      },
+      {
+        "custom_model_data": 40,
+        "bedrock_identifier": "funtime:item_funtime_cases_traps",
+        "icon": "item_funtime_cases_traps",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/traps.png"
+      },
+      {
+        "custom_model_data": 41,
+        "bedrock_identifier": "funtime:item_funtime_cases_sphere",
+        "icon": "item_funtime_cases_sphere",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/sphere.png"
+      },
+      {
+        "custom_model_data": 42,
+        "bedrock_identifier": "funtime:item_funtime_cases_talisman",
+        "icon": "item_funtime_cases_talisman",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/talisman.png"
+      },
+      {
+        "custom_model_data": 43,
+        "bedrock_identifier": "funtime:item_funtime_cases_trim",
+        "icon": "item_funtime_cases_trim",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/trim.png"
+      },
+      {
+        "custom_model_data": 44,
+        "bedrock_identifier": "funtime:item_funtime_tp_home1",
+        "icon": "item_funtime_tp_home1",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/tp/home1.png"
+      },
+      {
+        "custom_model_data": 45,
+        "bedrock_identifier": "funtime:item_funtime_tp_home2",
+        "icon": "item_funtime_tp_home2",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/tp/home2.png"
+      },
+      {
+        "custom_model_data": 46,
+        "bedrock_identifier": "funtime:item_funtime_tp_home3",
+        "icon": "item_funtime_tp_home3",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/tp/home3.png"
+      },
+      {
+        "custom_model_data": 47,
+        "bedrock_identifier": "funtime:item_funtime_tp_home4",
+        "icon": "item_funtime_tp_home4",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/tp/home4.png"
+      },
+      {
+        "custom_model_data": 48,
+        "bedrock_identifier": "funtime:item_funtime_tp_home5",
+        "icon": "item_funtime_tp_home5",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/tp/home5.png"
+      },
+      {
+        "custom_model_data": 49,
+        "bedrock_identifier": "funtime:item_funtime_tp_home6",
+        "icon": "item_funtime_tp_home6",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/tp/home6.png"
+      },
+      {
+        "custom_model_data": 50,
+        "bedrock_identifier": "funtime:item_funtime_tp_home7",
+        "icon": "item_funtime_tp_home7",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/tp/home7.png"
+      },
+      {
+        "custom_model_data": 51,
+        "bedrock_identifier": "funtime:item_funtime_tp_home8",
+        "icon": "item_funtime_tp_home8",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/tp/home8.png"
+      },
+      {
+        "custom_model_data": 52,
+        "bedrock_identifier": "funtime:item_funtime_tp_home9",
+        "icon": "item_funtime_tp_home9",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/tp/home9.png"
+      },
+      {
+        "custom_model_data": 53,
+        "bedrock_identifier": "funtime:item_funtime_tp_home10",
+        "icon": "item_funtime_tp_home10",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/tp/home10.png"
+      },
+      {
+        "custom_model_data": 54,
+        "bedrock_identifier": "funtime:item_funtime_tp_clan1",
+        "icon": "item_funtime_tp_clan1",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/tp/clan1.png"
+      },
+      {
+        "custom_model_data": 55,
+        "bedrock_identifier": "funtime:item_funtime_tp_clan2",
+        "icon": "item_funtime_tp_clan2",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/tp/clan2.png"
+      },
+      {
+        "custom_model_data": 56,
+        "bedrock_identifier": "funtime:item_funtime_tp_clan3",
+        "icon": "item_funtime_tp_clan3",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/tp/clan3.png"
+      }
+    ],
+    "minecraft:potion": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_tangerine_potion",
+        "icon": "item_funtime_new_year_tangerine_potion",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/tangerine_potion.png"
+      },
+      {
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:item_funtime_new_year_wine_potion",
+        "icon": "item_funtime_new_year_wine_potion",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/wine_potion.png"
+      },
+      {
+        "custom_model_data": 3,
+        "bedrock_identifier": "funtime:item_funtime_new_year_spruce_potion",
+        "icon": "item_funtime_new_year_spruce_potion",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/spruce_potion.png"
+      },
+      {
+        "custom_model_data": 4,
+        "bedrock_identifier": "funtime:item_funtime_new_year_elf_potion",
+        "icon": "item_funtime_new_year_elf_potion",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/elf_potion.png"
+      }
+    ],
+    "minecraft:spider_eye": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_halloween_gummy_eye",
+        "icon": "item_funtime_halloween_gummy_eye",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/halloween/gummy_eye.png"
+      },
+      {
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:item_funtime_halloween_candy_1",
+        "icon": "item_funtime_halloween_candy_1",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/halloween/candy_1.png"
+      },
+      {
+        "custom_model_data": 3,
+        "bedrock_identifier": "funtime:item_funtime_halloween_candy_2",
+        "icon": "item_funtime_halloween_candy_2",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/halloween/candy_2.png"
+      },
+      {
+        "custom_model_data": 4,
+        "bedrock_identifier": "funtime:item_funtime_halloween_candy_3",
+        "icon": "item_funtime_halloween_candy_3",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/halloween/candy_3.png"
+      },
+      {
+        "custom_model_data": 5,
+        "bedrock_identifier": "funtime:item_funtime_halloween_candy_4",
+        "icon": "item_funtime_halloween_candy_4",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/halloween/candy_4.png"
+      },
+      {
+        "custom_model_data": 6,
+        "bedrock_identifier": "funtime:item_funtime_halloween_candy_5",
+        "icon": "item_funtime_halloween_candy_5",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/halloween/candy_5.png"
+      }
+    ],
+    "minecraft:splash_potion": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_ice_splash_potion",
+        "icon": "item_funtime_new_year_ice_splash_potion",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/ice_splash_potion.png"
+      },
+      {
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:item_funtime_new_year_alcohol_splash_potion",
+        "icon": "item_funtime_new_year_alcohol_splash_potion",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/alcohol_splash_potion.png"
+      },
+      {
+        "custom_model_data": 3,
+        "bedrock_identifier": "funtime:item_funtime_new_year_tangerine_splash_potion",
+        "icon": "item_funtime_new_year_tangerine_splash_potion",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/tangerine_splash_potion.png"
+      }
+    ],
+    "minecraft:tipped_arrow": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_spruce_arrow",
+        "icon": "item_funtime_new_year_spruce_arrow",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/spruce_arrow.png"
+      },
+      {
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:item_funtime_new_year_firework_arrow",
+        "icon": "item_funtime_new_year_firework_arrow",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/firework_arrow.png"
+      },
+      {
+        "custom_model_data": 3,
+        "bedrock_identifier": "funtime:item_funtime_new_year_ice_arrow",
+        "icon": "item_funtime_new_year_ice_arrow",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/ice_arrow.png"
+      },
+      {
+        "custom_model_data": 4,
+        "bedrock_identifier": "funtime:item_funtime_new_year_elf_arrow",
+        "icon": "item_funtime_new_year_elf_arrow",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/elf_arrow.png"
+      },
+      {
+        "custom_model_data": 5,
+        "bedrock_identifier": "funtime:item_funtime_new_year_alcohol_arrow",
+        "icon": "item_funtime_new_year_alcohol_arrow",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/alcohol_arrow.png"
+      }
+    ],
+    "minecraft:totem_of_undying": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_harmony",
+        "icon": "minecraft_item_funtime_items_talisman_harmony",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/items/talisman_harmony.png"
+      },
+      {
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_daedalus",
+        "icon": "minecraft_item_funtime_items_talisman_daedalus",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/items/talisman_daedalus.png"
+      },
+      {
+        "custom_model_data": 3,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_triton",
+        "icon": "minecraft_item_funtime_items_talisman_triton",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/items/talisman_triton.png"
+      },
+      {
+        "custom_model_data": 4,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_discord",
+        "icon": "minecraft_item_funtime_items_talisman_discord",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/items/talisman_discord.png"
+      },
+      {
+        "custom_model_data": 5,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_echidna",
+        "icon": "minecraft_item_funtime_items_talisman_echidna",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/items/talisman_echidna.png"
+      },
+      {
+        "custom_model_data": 6,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_crusher",
+        "icon": "minecraft_item_funtime_items_talisman_crusher",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/items/talisman_crusher.png"
+      },
+      {
+        "custom_model_data": 7,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_punisher",
+        "icon": "minecraft_item_funtime_items_talisman_punisher",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/items/talisman_punisher.png"
+      },
+      {
+        "custom_model_data": 8,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_tyrant",
+        "icon": "minecraft_item_funtime_items_talisman_tyrant",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/items/talisman_tyrant.png"
+      },
+      {
+        "custom_model_data": 9,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_edge",
+        "icon": "minecraft_item_funtime_items_talisman_edge",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/items/talisman_edge.png"
+      },
+      {
+        "custom_model_data": 10,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_phoenix",
+        "icon": "minecraft_item_funtime_items_talisman_phoenix",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/items/talisman_phoenix.png"
+      },
+      {
+        "custom_model_data": 11,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_new_year_talisman_grinch",
+        "icon": "minecraft_item_funtime_new_year_talisman_grinch",
+        "display_handheld": true,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/talisman_grinch.png"
+      }
+    ],
+    "minecraft:trial_key": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_cases_usual_key",
+        "icon": "item_funtime_cases_usual_key",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/usual_key.png"
+      },
+      {
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:item_funtime_cases_free_key",
+        "icon": "item_funtime_cases_free_key",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/free_key.png"
+      },
+      {
+        "custom_model_data": 3,
+        "bedrock_identifier": "funtime:item_funtime_cases_resource_key",
+        "icon": "item_funtime_cases_resource_key",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/resource_key.png"
+      },
+      {
+        "custom_model_data": 4,
+        "bedrock_identifier": "funtime:item_funtime_cases_token_key",
+        "icon": "item_funtime_cases_token_key",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/token_key.png"
+      },
+      {
+        "custom_model_data": 5,
+        "bedrock_identifier": "funtime:item_funtime_cases_ranks_key",
+        "icon": "item_funtime_cases_ranks_key",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/ranks_key.png"
+      },
+      {
+        "custom_model_data": 6,
+        "bedrock_identifier": "funtime:item_funtime_cases_enchant_key",
+        "icon": "item_funtime_cases_enchant_key",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/enchant_key.png"
+      },
+      {
+        "custom_model_data": 7,
+        "bedrock_identifier": "funtime:item_funtime_cases_coins_key",
+        "icon": "item_funtime_cases_coins_key",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/coins_key.png"
+      },
+      {
+        "custom_model_data": 8,
+        "bedrock_identifier": "funtime:item_funtime_cases_weapon_key",
+        "icon": "item_funtime_cases_weapon_key",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/weapon_key.png"
+      },
+      {
+        "custom_model_data": 9,
+        "bedrock_identifier": "funtime:item_funtime_cases_armor_key",
+        "icon": "item_funtime_cases_armor_key",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/armor_key.png"
+      },
+      {
+        "custom_model_data": 10,
+        "bedrock_identifier": "funtime:item_funtime_cases_instrument_key",
+        "icon": "item_funtime_cases_instrument_key",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/instrument_key.png"
+      },
+      {
+        "custom_model_data": 11,
+        "bedrock_identifier": "funtime:item_funtime_cases_eggs_key",
+        "icon": "item_funtime_cases_eggs_key",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/eggs_key.png"
+      },
+      {
+        "custom_model_data": 12,
+        "bedrock_identifier": "funtime:item_funtime_cases_traps_key",
+        "icon": "item_funtime_cases_traps_key",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/traps_key.png"
+      },
+      {
+        "custom_model_data": 13,
+        "bedrock_identifier": "funtime:item_funtime_cases_sphere_key",
+        "icon": "item_funtime_cases_sphere_key",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/sphere_key.png"
+      },
+      {
+        "custom_model_data": 14,
+        "bedrock_identifier": "funtime:item_funtime_cases_talisman_key",
+        "icon": "item_funtime_cases_talisman_key",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/talisman_key.png"
+      },
+      {
+        "custom_model_data": 15,
+        "bedrock_identifier": "funtime:item_funtime_cases_trim_key",
+        "icon": "item_funtime_cases_trim_key",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/cases/trim_key.png"
+      }
+    ],
+    "minecraft:trident": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_santa_staff",
+        "icon": "item_funtime_new_year_santa_staff",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/new_year/santa_staff.png"
+      }
+    ],
+    "minecraft:wither_skeleton_skull": [
+      {
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_halloween_draculas_skull",
+        "icon": "item_funtime_halloween_draculas_skull",
+        "display_handheld": false,
+        "source_texture": "assets/minecraft/textures/item/funtime/halloween/draculas_skull.png"
+      }
+    ]
+  }
+}

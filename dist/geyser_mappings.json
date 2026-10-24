@@ -1,0 +1,1421 @@
+{
+  "format_version": 2,
+  "items": {
+    "minecraft:apple": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_halloween_caramel_apple",
+        "bedrock_options": {
+          "icon": "item_funtime_halloween_caramel_apple",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      }
+    ],
+    "minecraft:beetroot_soup": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_halloween_mulled_wine",
+        "bedrock_options": {
+          "icon": "item_funtime_halloween_mulled_wine",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      }
+    ],
+    "minecraft:bow": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_elf_bow",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_elf_bow",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:item_funtime_new_year_moon_bow",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_moon_bow",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      }
+    ],
+    "minecraft:cookie": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_halloween_crumble_cookie",
+        "bedrock_options": {
+          "icon": "item_funtime_halloween_crumble_cookie",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:item_funtime_new_year_gingerbread1",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_gingerbread1",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 3,
+        "bedrock_identifier": "funtime:item_funtime_new_year_gingerbread2",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_gingerbread2",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 4,
+        "bedrock_identifier": "funtime:item_funtime_new_year_gingerbread3",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_gingerbread3",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      }
+    ],
+    "minecraft:firework_rocket": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_petard",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_petard",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:item_funtime_new_year_spruce_firework",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_spruce_firework",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 3,
+        "bedrock_identifier": "funtime:item_funtime_new_year_sugar_firework",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_sugar_firework",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 4,
+        "bedrock_identifier": "funtime:item_funtime_new_year_ice_firework",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_ice_firework",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 5,
+        "bedrock_identifier": "funtime:item_funtime_new_year_xmas_firework",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_xmas_firework",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 6,
+        "bedrock_identifier": "funtime:item_funtime_new_year_magic_firework",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_magic_firework",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 7,
+        "bedrock_identifier": "funtime:item_funtime_new_year_harmony_firework",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_harmony_firework",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 8,
+        "bedrock_identifier": "funtime:item_funtime_new_year_tangerine_firework",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_tangerine_firework",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      }
+    ],
+    "minecraft:glow_berries": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_tangerine",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_tangerine",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      }
+    ],
+    "minecraft:leather_boots": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_grinch_boots",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_grinch_boots",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      }
+    ],
+    "minecraft:leather_chestplate": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_grinch_chestplate",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_grinch_chestplate",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      }
+    ],
+    "minecraft:leather_helmet": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_grinch_helmet",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_grinch_helmet",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:item_funtime_new_year_santa_hat",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_santa_hat",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      }
+    ],
+    "minecraft:leather_leggings": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_grinch_leggings",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_grinch_leggings",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      }
+    ],
+    "minecraft:mace": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_ice_mace",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_ice_mace",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      }
+    ],
+    "minecraft:nautilus_shell": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_christmas_candy1",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_christmas_candy1",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:item_funtime_new_year_christmas_candy2",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_christmas_candy2",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 3,
+        "bedrock_identifier": "funtime:item_funtime_new_year_christmas_candy3",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_christmas_candy3",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 4,
+        "bedrock_identifier": "funtime:item_funtime_new_year_christmas_candy4",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_christmas_candy4",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      }
+    ],
+    "minecraft:netherite_axe": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_elf_axe",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_elf_axe",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      }
+    ],
+    "minecraft:netherite_boots": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_moon_boots",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_moon_boots",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      }
+    ],
+    "minecraft:netherite_chestplate": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_moon_chestplate",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_moon_chestplate",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      }
+    ],
+    "minecraft:netherite_helmet": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_moon_helmet",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_moon_helmet",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      }
+    ],
+    "minecraft:netherite_leggings": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_moon_leggings",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_moon_leggings",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      }
+    ],
+    "minecraft:netherite_pickaxe": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_elf_pickaxe",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_elf_pickaxe",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      }
+    ],
+    "minecraft:netherite_sword": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_moon_sword",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_moon_sword",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      }
+    ],
+    "minecraft:paper": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_empty",
+        "bedrock_options": {
+          "icon": "item_funtime_empty",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:item_funtime_cases_usual",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_usual",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 3,
+        "bedrock_identifier": "funtime:item_funtime_cases_free",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_free",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 4,
+        "bedrock_identifier": "funtime:item_funtime_cases_resource",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_resource",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 5,
+        "bedrock_identifier": "funtime:item_funtime_cases_token",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_token",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 6,
+        "bedrock_identifier": "funtime:item_funtime_cases_rune",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_rune",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 7,
+        "bedrock_identifier": "funtime:item_funtime_cases_ranks",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_ranks",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 8,
+        "bedrock_identifier": "funtime:item_funtime_cases_enchant",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_enchant",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 9,
+        "bedrock_identifier": "funtime:item_funtime_cases_coins",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_coins",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 10,
+        "bedrock_identifier": "funtime:item_funtime_cases_weapon",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_weapon",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 11,
+        "bedrock_identifier": "funtime:item_funtime_cases_armor",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_armor",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 12,
+        "bedrock_identifier": "funtime:item_funtime_cases_instrument",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_instrument",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 13,
+        "bedrock_identifier": "funtime:item_funtime_buttons_auction_back",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_auction_back",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 14,
+        "bedrock_identifier": "funtime:item_funtime_buttons_auction_categories",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_auction_categories",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 15,
+        "bedrock_identifier": "funtime:item_funtime_buttons_auction_refresh",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_auction_refresh",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 16,
+        "bedrock_identifier": "funtime:item_funtime_buttons_auction_update",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_auction_update",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 17,
+        "bedrock_identifier": "funtime:item_funtime_buttons_auction_vault",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_auction_vault",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 18,
+        "bedrock_identifier": "funtime:item_funtime_buttons_coins",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_coins",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 19,
+        "bedrock_identifier": "funtime:item_funtime_buttons_emerald",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_emerald",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 20,
+        "bedrock_identifier": "funtime:item_funtime_buttons_auction_arrow_left",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_auction_arrow_left",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 21,
+        "bedrock_identifier": "funtime:item_funtime_buttons_auction_arrow_right",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_auction_arrow_right",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 22,
+        "bedrock_identifier": "funtime:item_funtime_buttons_info_book",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_info_book",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 23,
+        "bedrock_identifier": "funtime:item_funtime_buttons_back_shadow",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_back_shadow",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 24,
+        "bedrock_identifier": "funtime:item_funtime_buttons_back_shadow_24",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_back_shadow",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 25,
+        "bedrock_identifier": "funtime:item_funtime_buttons_info_shadow",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_info_shadow",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 26,
+        "bedrock_identifier": "funtime:item_funtime_buttons_craft_back",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_craft_back",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 27,
+        "bedrock_identifier": "funtime:item_funtime_buttons_info_small",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_info_small",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 28,
+        "bedrock_identifier": "funtime:item_funtime_buttons_donate_book",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_donate_book",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 29,
+        "bedrock_identifier": "funtime:item_funtime_buttons_donate_chest",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_donate_chest",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 30,
+        "bedrock_identifier": "funtime:item_funtime_buttons_donate_coins",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_donate_coins",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 31,
+        "bedrock_identifier": "funtime:item_funtime_buttons_time_morning",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_time_morning",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 32,
+        "bedrock_identifier": "funtime:item_funtime_buttons_time_day",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_time_day",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 33,
+        "bedrock_identifier": "funtime:item_funtime_buttons_time_sunset",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_time_sunset",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 34,
+        "bedrock_identifier": "funtime:item_funtime_buttons_time_night",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_time_night",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 35,
+        "bedrock_identifier": "funtime:item_funtime_buttons_weather_sun",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_weather_sun",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 36,
+        "bedrock_identifier": "funtime:item_funtime_buttons_weather_rain",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_weather_rain",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 37,
+        "bedrock_identifier": "funtime:item_funtime_buttons_weather_thunder",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_weather_thunder",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 38,
+        "bedrock_identifier": "funtime:item_funtime_buttons_settings_reset",
+        "bedrock_options": {
+          "icon": "item_funtime_buttons_settings_reset",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 39,
+        "bedrock_identifier": "funtime:item_funtime_cases_eggs",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_eggs",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 40,
+        "bedrock_identifier": "funtime:item_funtime_cases_traps",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_traps",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 41,
+        "bedrock_identifier": "funtime:item_funtime_cases_sphere",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_sphere",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 42,
+        "bedrock_identifier": "funtime:item_funtime_cases_talisman",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_talisman",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 43,
+        "bedrock_identifier": "funtime:item_funtime_cases_trim",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_trim",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 44,
+        "bedrock_identifier": "funtime:item_funtime_tp_home1",
+        "bedrock_options": {
+          "icon": "item_funtime_tp_home1",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 45,
+        "bedrock_identifier": "funtime:item_funtime_tp_home2",
+        "bedrock_options": {
+          "icon": "item_funtime_tp_home2",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 46,
+        "bedrock_identifier": "funtime:item_funtime_tp_home3",
+        "bedrock_options": {
+          "icon": "item_funtime_tp_home3",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 47,
+        "bedrock_identifier": "funtime:item_funtime_tp_home4",
+        "bedrock_options": {
+          "icon": "item_funtime_tp_home4",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 48,
+        "bedrock_identifier": "funtime:item_funtime_tp_home5",
+        "bedrock_options": {
+          "icon": "item_funtime_tp_home5",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 49,
+        "bedrock_identifier": "funtime:item_funtime_tp_home6",
+        "bedrock_options": {
+          "icon": "item_funtime_tp_home6",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 50,
+        "bedrock_identifier": "funtime:item_funtime_tp_home7",
+        "bedrock_options": {
+          "icon": "item_funtime_tp_home7",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 51,
+        "bedrock_identifier": "funtime:item_funtime_tp_home8",
+        "bedrock_options": {
+          "icon": "item_funtime_tp_home8",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 52,
+        "bedrock_identifier": "funtime:item_funtime_tp_home9",
+        "bedrock_options": {
+          "icon": "item_funtime_tp_home9",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 53,
+        "bedrock_identifier": "funtime:item_funtime_tp_home10",
+        "bedrock_options": {
+          "icon": "item_funtime_tp_home10",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 54,
+        "bedrock_identifier": "funtime:item_funtime_tp_clan1",
+        "bedrock_options": {
+          "icon": "item_funtime_tp_clan1",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 55,
+        "bedrock_identifier": "funtime:item_funtime_tp_clan2",
+        "bedrock_options": {
+          "icon": "item_funtime_tp_clan2",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 56,
+        "bedrock_identifier": "funtime:item_funtime_tp_clan3",
+        "bedrock_options": {
+          "icon": "item_funtime_tp_clan3",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      }
+    ],
+    "minecraft:potion": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_tangerine_potion",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_tangerine_potion",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:item_funtime_new_year_wine_potion",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_wine_potion",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 3,
+        "bedrock_identifier": "funtime:item_funtime_new_year_spruce_potion",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_spruce_potion",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 4,
+        "bedrock_identifier": "funtime:item_funtime_new_year_elf_potion",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_elf_potion",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      }
+    ],
+    "minecraft:spider_eye": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_halloween_gummy_eye",
+        "bedrock_options": {
+          "icon": "item_funtime_halloween_gummy_eye",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:item_funtime_halloween_candy_1",
+        "bedrock_options": {
+          "icon": "item_funtime_halloween_candy_1",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 3,
+        "bedrock_identifier": "funtime:item_funtime_halloween_candy_2",
+        "bedrock_options": {
+          "icon": "item_funtime_halloween_candy_2",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 4,
+        "bedrock_identifier": "funtime:item_funtime_halloween_candy_3",
+        "bedrock_options": {
+          "icon": "item_funtime_halloween_candy_3",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 5,
+        "bedrock_identifier": "funtime:item_funtime_halloween_candy_4",
+        "bedrock_options": {
+          "icon": "item_funtime_halloween_candy_4",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 6,
+        "bedrock_identifier": "funtime:item_funtime_halloween_candy_5",
+        "bedrock_options": {
+          "icon": "item_funtime_halloween_candy_5",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      }
+    ],
+    "minecraft:splash_potion": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_ice_splash_potion",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_ice_splash_potion",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:item_funtime_new_year_alcohol_splash_potion",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_alcohol_splash_potion",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 3,
+        "bedrock_identifier": "funtime:item_funtime_new_year_tangerine_splash_potion",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_tangerine_splash_potion",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      }
+    ],
+    "minecraft:tipped_arrow": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_spruce_arrow",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_spruce_arrow",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:item_funtime_new_year_firework_arrow",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_firework_arrow",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 3,
+        "bedrock_identifier": "funtime:item_funtime_new_year_ice_arrow",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_ice_arrow",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 4,
+        "bedrock_identifier": "funtime:item_funtime_new_year_elf_arrow",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_elf_arrow",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 5,
+        "bedrock_identifier": "funtime:item_funtime_new_year_alcohol_arrow",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_alcohol_arrow",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      }
+    ],
+    "minecraft:totem_of_undying": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_harmony",
+        "bedrock_options": {
+          "icon": "minecraft_item_funtime_items_talisman_harmony",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_daedalus",
+        "bedrock_options": {
+          "icon": "minecraft_item_funtime_items_talisman_daedalus",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 3,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_triton",
+        "bedrock_options": {
+          "icon": "minecraft_item_funtime_items_talisman_triton",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 4,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_discord",
+        "bedrock_options": {
+          "icon": "minecraft_item_funtime_items_talisman_discord",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 5,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_echidna",
+        "bedrock_options": {
+          "icon": "minecraft_item_funtime_items_talisman_echidna",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 6,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_crusher",
+        "bedrock_options": {
+          "icon": "minecraft_item_funtime_items_talisman_crusher",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 7,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_punisher",
+        "bedrock_options": {
+          "icon": "minecraft_item_funtime_items_talisman_punisher",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 8,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_tyrant",
+        "bedrock_options": {
+          "icon": "minecraft_item_funtime_items_talisman_tyrant",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 9,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_edge",
+        "bedrock_options": {
+          "icon": "minecraft_item_funtime_items_talisman_edge",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 10,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_phoenix",
+        "bedrock_options": {
+          "icon": "minecraft_item_funtime_items_talisman_phoenix",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 11,
+        "bedrock_identifier": "funtime:minecraft_item_funtime_new_year_talisman_grinch",
+        "bedrock_options": {
+          "icon": "minecraft_item_funtime_new_year_talisman_grinch",
+          "allow_offhand": true,
+          "display_handheld": true
+        }
+      }
+    ],
+    "minecraft:trial_key": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_cases_usual_key",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_usual_key",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 2,
+        "bedrock_identifier": "funtime:item_funtime_cases_free_key",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_free_key",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 3,
+        "bedrock_identifier": "funtime:item_funtime_cases_resource_key",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_resource_key",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 4,
+        "bedrock_identifier": "funtime:item_funtime_cases_token_key",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_token_key",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 5,
+        "bedrock_identifier": "funtime:item_funtime_cases_ranks_key",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_ranks_key",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 6,
+        "bedrock_identifier": "funtime:item_funtime_cases_enchant_key",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_enchant_key",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 7,
+        "bedrock_identifier": "funtime:item_funtime_cases_coins_key",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_coins_key",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 8,
+        "bedrock_identifier": "funtime:item_funtime_cases_weapon_key",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_weapon_key",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 9,
+        "bedrock_identifier": "funtime:item_funtime_cases_armor_key",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_armor_key",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 10,
+        "bedrock_identifier": "funtime:item_funtime_cases_instrument_key",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_instrument_key",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 11,
+        "bedrock_identifier": "funtime:item_funtime_cases_eggs_key",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_eggs_key",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 12,
+        "bedrock_identifier": "funtime:item_funtime_cases_traps_key",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_traps_key",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 13,
+        "bedrock_identifier": "funtime:item_funtime_cases_sphere_key",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_sphere_key",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 14,
+        "bedrock_identifier": "funtime:item_funtime_cases_talisman_key",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_talisman_key",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 15,
+        "bedrock_identifier": "funtime:item_funtime_cases_trim_key",
+        "bedrock_options": {
+          "icon": "item_funtime_cases_trim_key",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      }
+    ],
+    "minecraft:trident": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_new_year_santa_staff",
+        "bedrock_options": {
+          "icon": "item_funtime_new_year_santa_staff",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      }
+    ],
+    "minecraft:wither_skeleton_skull": [
+      {
+        "type": "legacy",
+        "custom_model_data": 1,
+        "bedrock_identifier": "funtime:item_funtime_halloween_draculas_skull",
+        "bedrock_options": {
+          "icon": "item_funtime_halloween_draculas_skull",
+          "allow_offhand": true,
+          "display_handheld": false
+        }
+      }
+    ]
+  }
+}
