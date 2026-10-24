@@ -31,9 +31,28 @@ jobs:
           java-version: '25'
           cache: maven
 
+      - name: Версии инструментов
+        run: |
+          java -version
+          mvn -version
+
       - name: Сборка ${{ matrix.plugin }}
         working-directory: plugins/${{ matrix.plugin }}
-        run: mvn -B -DskipTests package
+        run: |
+          set -o pipefail
+          mvn -B -DskipTests package 2>&1 | tee build.log
+
+      # Логи прогона недоступны снаружи, поэтому ошибки сборки выносим в
+      # аннотации — они видны в интерфейсе Actions и через API.
+      - name: Ошибки сборки в аннотации
+        if: failure()
+        working-directory: plugins/${{ matrix.plugin }}
+        run: |
+          if [ -f build.log ]; then
+            grep -E "^\[ERROR\]|error:|BUILD FAILURE|Could not resolve" build.log | head -25 | sed 's/^/::error::/'
+            echo "---- последние строки ----"
+            tail -40 build.log
+          fi
 
       - name: Проверка jar
         working-directory: plugins/${{ matrix.plugin }}
