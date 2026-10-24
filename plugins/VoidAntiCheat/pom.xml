@@ -6,7 +6,7 @@
 
     <groupId>ru.voidpe</groupId>
     <artifactId>VoidAntiCheat</artifactId>
-    <version>2.0.4</version>
+    <version>2.0.5</version>
     <packaging>jar</packaging>
     <name>VoidAntiCheat</name>
     <description>Bedrock-античит VoidPE 2.0: буферы улик, компенсация джиттера/пинга/TPS, предсказание вертикали, rewind-reach, широкие исключения окружения, раздельные слои детекта/коррекции/наказания.</description>

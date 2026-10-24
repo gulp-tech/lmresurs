@@ -63,3 +63,15 @@ jobs:
           name: ${{ matrix.plugin }}-jar
           path: plugins/${{ matrix.plugin }}/target/*.jar
           if-no-files-found: error
+
+      - name: Публикация в релиз
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG=voidplugins
+          if ! gh release view "$TAG" >/dev/null 2>&1; then
+            gh release create "$TAG" \
+              --title "VoidPE plugins: исправленные сборки" \
+              --notes "Автосборка из plugins/. VoidAntiCheat 2.0.5: убран hoverEvent (падал на Paper 26.x), Registry<?> в lookup."
+          fi
+          gh release upload "$TAG" plugins/*/target/*.jar --clobber
