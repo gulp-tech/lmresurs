@@ -33,7 +33,8 @@ items:
     material: TRIAL_KEY
     model_data_component:
       floats: [14]
-    hide_attributes: true
+    item_flags:
+      - HIDE_ATTRIBUTES
     display_name: '&3Ключ Талисманов &7- &a105 000$'
     lore:
       - ''
@@ -68,7 +69,8 @@ items:
     material: TRIAL_KEY
     model_data_component:
       floats: [3]
-    hide_attributes: true
+    item_flags:
+      - HIDE_ATTRIBUTES
     display_name: '&3Ключ Ресурсов &7- &a98 000$'
     lore:
       - ''
@@ -103,7 +105,8 @@ items:
     material: TRIAL_KEY
     model_data_component:
       floats: [13]
-    hide_attributes: true
+    item_flags:
+      - HIDE_ATTRIBUTES
     display_name: '&3Ключ Сфер &7- &a90 000$'
     lore:
       - ''
@@ -136,7 +139,8 @@ items:
     slots:
     - 25
     material: DRAGON_BREATH
-    hide_attributes: true
+    item_flags:
+      - HIDE_ATTRIBUTES
     display_name: '&aКлюч Зелий &7- &a71 000$'
     lore:
       - ''
@@ -173,7 +177,8 @@ items:
     slots:
     - 28
     material: GOLD_INGOT
-    hide_attributes: true
+    item_flags:
+      - HIDE_ATTRIBUTES
     display_name: '&3Ключ Талисманов &e×5 &7- &a525 000$'
     lore:
       - ''
@@ -209,7 +214,8 @@ items:
     slots:
     - 30
     material: GOLD_INGOT
-    hide_attributes: true
+    item_flags:
+      - HIDE_ATTRIBUTES
     display_name: '&3Ключ Ресурсов &e×5 &7- &a490 000$'
     lore:
       - ''
@@ -245,7 +251,8 @@ items:
     slots:
     - 32
     material: GOLD_INGOT
-    hide_attributes: true
+    item_flags:
+      - HIDE_ATTRIBUTES
     display_name: '&3Ключ Сфер &e×5 &7- &a450 000$'
     lore:
       - ''
@@ -281,7 +288,8 @@ items:
     slots:
     - 34
     material: GOLD_INGOT
-    hide_attributes: true
+    item_flags:
+      - HIDE_ATTRIBUTES
     display_name: '&aКлюч Зелий &e×5 &7- &a355 000$'
     lore:
       - ''

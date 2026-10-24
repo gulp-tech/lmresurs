@@ -173,42 +173,58 @@ bash tools/build_all.sh
 
 # Troubleshooting: ошибки DeluxeMenus
 
-## `IllegalStateException: The plugin classloader for DeluxeMenus has thrown a zip file error`
+## `NumberFormatException: For input string: "44 "` → потом `zip file closed`
 
+Это **одна** проблема, а не две. Цепочка:
+
+1. DeluxeMenus читает меню и падает на разборе `slots`:
+   `java.lang.NumberFormatException: For input string: "44 "` (`DeluxeMenusConfig.loadMenuItems`).
+2. `onEnable` выбрасывает исключение → плагин **отключается** (`Disabling DeluxeMenus`).
+3. Класслоадер отключённого плагина закрывает свой JAR.
+4. Любая команда `/menu` после этого падает уже с
+   `IllegalStateException: zip file closed` — это следствие, а не причина.
+
+Поэтому «zip file closed» **не значит**, что JAR битый: чинить надо YAML.
+Причина `"44 "` — сломанный отступ в списке слотов, из-за которого SnakeYAML
+склеивает элементы в одну строку:
+
+```yaml
+    slots:
+    - 43
+    - 44
+      - 45          # <- отступ на 2 больше
+      - 46
 ```
-Caused by: java.lang.IllegalStateException: zip file closed
-    at org.bukkit.plugin.java.PluginClassLoader.findClass(PluginClassLoader.java:223)
-    at DeluxeMenus-1.14.1-Release .jar//...Menu.openMenu(Menu.java:271)
+
+YAML видит это как `['43', '44 - 45 - 46 - 47 ...']`, а DeluxeMenus делает `Integer.parseInt`
+и падает. Правильно:
+
+```yaml
+    slots:
+    - 43
+    - 44
+    - 45
+    - 46
 ```
 
-**К меню и YAML это не относится.** Это значит, что JAR-файл плагина закрыт или подменён
-уже после запуска сервера: класслоадер Paper держит `JarFile` открытым, и если файл
-на диске заменили/переименовали/залили поверх работающего сервера, при следующей
-ленивой загрузке класса он падает.
+В этом репозитории такое отлавливается автоматически при каждой сборке
+(`normalize_slot_lists` + `validate_strict` + `validate_slots_indent`),
+проверка идёт по всем 14 файлам.
 
-Причины по частоте:
-
-1. Замена `.jar` на **работающем** сервере (обновление версии, повторная загрузка по FTP).
-2. `/reload`, PlugManX и подобные «горячие» перезагрузки.
-3. Прерванная загрузка — файл недокачан и побит.
-4. Кириллица/пробелы в имени файла (в логе видно `DeluxeMenus-1.14.1-Release .jar` —
-   пробел перед `.jar`).
-
-Лечение (полностью останавливать сервер, не `/reload`):
+Проверить свои файлы можно так (нужен python3 + pyyaml):
 
 ```bash
-# 1. остановить сервер
-# 2. удалить старый jar
-rm plugins/DeluxeMenus*.jar
-# 3. залить новый, проверить целостность архива
-unzip -t plugins/DeluxeMenus-1.14.1-Release.jar | tail -2      # должно быть "No errors"
-# 4. имя без пробелов и кириллицы
-# 5. запустить сервер
+python3 - <<'EOF'
+import yaml, glob
+for f in sorted(glob.glob('plugins/DeluxeMenus/gui_menus/*.yml')):
+    d = yaml.safe_load(open(f, encoding='utf-8'))
+    for k, v in d.get('items', {}).items():
+        for s in (v.get('slots') or ([v['slot']] if 'slot' in v else [])):
+            if not isinstance(s, int):
+                print('СЛОМАНО:', f, k, repr(s))
+print('проверка завершена')
+EOF
 ```
-
-Проверка версии: `model_data_component` появился в **DeluxeMenus 1.14.1**; на 1.13.x
-и ниже меню с этой опцией не загрузятся (в консоли будет ошибка разбора конфига).
-Старый вариант — `model_data: 14` (работает только на 1.21.3 и ниже).
 
 ## Меню не загрузилось: `NumberFormatException` / слоты `44 - 45 - 46`
 
@@ -236,3 +252,24 @@ for f in sorted(glob.glob('dist/deluxemenus/*.yml')):
 3. `dist/geyser_mappings.json` → `plugins/Geyser-Spigot/custom_mappings/funtime.json`.
 4. Сервер перезапущен **после** копирования (mappings читаются на старте).
 5. Bedrock-клиент принял пак (Настройки → Хранилище → Пакеты ресурсов).
+
+
+## Быстрая замена меню (одним архивом)
+
+```
+dist/deluxemenus-bedrock.zip      <- распаковать в plugins/DeluxeMenus/gui_menus/ (с заменой)
+dist/deluxemenus-SHA256SUMS.txt   <- контрольные суммы для проверки
+```
+
+Порядок:
+
+1. Остановить сервер.
+2. Распаковать архив в `plugins/DeluxeMenus/gui_menus/` с заменой файлов.
+3. Запустить сервер.
+4. В консоли должно быть `[DeluxeMenus] Enabling DeluxeMenus v1.14.1-Release` **без**
+   `Error occurred while enabling`. Если есть ошибка — файл не тот.
+
+## Гигиена консоли DeluxeMenus 1.14.1
+
+`hide_attributes: true` объявлен устаревшим, портер сам переписывает его в
+`item_flags: [HIDE_ATTRIBUTES]`, поэтому предупреждений в логе больше не будет.

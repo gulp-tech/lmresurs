@@ -380,6 +380,101 @@ def add_border(lines: List[str], size: int) -> int:
     return len(free)
 
 
+def normalize_slot_lists(lines: List[str]) -> Tuple[List[str], int]:
+    """
+    Переписывает все списки `slots:` в канонический вид:
+        <indent лишнего ключа>slots:
+        <indent+2>- N
+    Это гарантирует, что SnakeYAML не склеит элементы в строку вида '44 - 45'
+    (именно это дает NumberFormatException: For input string: "44 ").
+    """
+    _, blocks = split_items(lines)
+    if not blocks:
+        return lines, 0
+
+    changed = 0
+    out = list(lines)
+    # идём с конца, чтобы индексы не съезжали
+    for _key, start, end in reversed(blocks):
+        block = out[start:end]
+        label_idx = None
+        for i, line in enumerate(block):
+            stripped = line.strip()
+            if stripped.startswith("slots:"):
+                label_idx = i
+                break
+        if label_idx is None:
+            continue
+
+        label_line = block[label_idx]
+        label_indent = len(label_line) - len(label_line.lstrip())
+        inline = label_line.strip()[len("slots:"):].strip()
+
+        values: List[int] = []
+        if inline.startswith("[") and inline.endswith("]"):
+            for part in inline.strip("[]").split(","):
+                part = part.strip()
+                if part.lstrip("-").isdigit():
+                    values.append(int(part))
+        elif inline:
+            if inline.lstrip("-").isdigit():
+                values.append(int(inline))
+        # собираем блочные элементы
+        j = label_idx + 1
+        while j < len(block):
+            stripped = block[j].strip()
+            if not stripped:
+                j += 1
+                continue
+            if stripped.startswith("- ") and (len(block[j]) - len(block[j].lstrip())) > label_indent:
+                value = stripped[2:].strip()
+                if value.lstrip("-").isdigit():
+                    values.append(int(value))
+                j += 1
+                continue
+            break
+
+        if not values:
+            continue
+
+        replacement = [f"{' ' * label_indent}slots:"] + [
+            f"{' ' * (label_indent + 2)}- {v}" for v in values
+        ]
+        out[start + label_idx : start + j] = replacement
+        changed += 1
+    return out, changed
+
+
+def modernize_flags(lines: List[str]) -> Tuple[List[str], int]:
+    """hide_attributes: true -> item_flags: [HIDE_ATTRIBUTES] (1.14.1+)."""
+    out = []
+    count = 0
+    for line in lines:
+        stripped = line.strip()
+        if stripped == "hide_attributes: true":
+            indent = line[: len(line) - len(line.lstrip())]
+            out.append(f"{indent}item_flags:")
+            out.append(f"{indent}  - HIDE_ATTRIBUTES")
+            count += 1
+            continue
+        if stripped == "hide_attributes: false":
+            count += 1
+            continue
+        out.append(line)
+    return out, count
+
+
+def validate_strict(lines: List[str]) -> List[str]:
+    """Проверки, из-за которых DeluxeMenus реально падает при загрузке."""
+    errors: List[str] = []
+    for lineno, line in enumerate(lines, 1):
+        if line != line.rstrip():
+            errors.append(f"строка {lineno}: хвостовые пробелы")
+        if "\t" in line:
+            errors.append(f"строка {lineno}: символ табуляции")
+    return errors
+
+
 def validate_slots_indent(lines: List[str]) -> List[str]:
     """
     Проверяет, что все элементы списков slots:/slot: имеют одинаковый отступ
@@ -530,6 +625,14 @@ def port_file(path: str) -> Tuple[List[str], dict]:
         report["warnings"].append("остались необработанные hex-коды")
 
     result_lines = text.split("\n")[:-1]
+    result_lines, normalized = normalize_slot_lists(result_lines)
+    report["slot_lists_normalized"] = normalized
+    result_lines, flags = modernize_flags(result_lines)
+    report["hide_attributes_modernized"] = flags
+
+    strict = validate_strict(result_lines)
+    if strict:
+        report["warnings"].extend(strict)
     errors = validate_slots_indent(result_lines)
     if errors:
         report["warnings"].extend(errors)
@@ -599,7 +702,30 @@ def main(argv: Optional[List[str]] = None) -> int:
     with open(os.path.join(out, "PORT_REPORT.md"), "w", encoding="utf-8") as fh:
         fh.write("\n".join(lines) + "\n")
 
+    # --- один архив для загрузки на сервер + контрольные суммы ---------------------
+    import hashlib
+    import zipfile
+
+    parent = os.path.dirname(out)
+    zip_path = os.path.join(parent, "deluxemenus-bedrock.zip")
+    yml_files = sorted(
+        f for f in os.listdir(out) if f.endswith((".yml", ".yaml"))
+    )
+    with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
+        for name in yml_files:
+            zf.write(os.path.join(out, name), name)
+
+    sums = []
+    for name in yml_files:
+        data = open(os.path.join(out, name), "rb").read()
+        sums.append(f"{hashlib.sha256(data).hexdigest()}  {name}")
+    sums_path = os.path.join(parent, "deluxemenus-SHA256SUMS.txt")
+    with open(sums_path, "w", encoding="utf-8") as fh:
+        fh.write("\n".join(sums) + "\n")
+
     print(f"\nГотово: {out}")
+    print(f"Архив для загрузки: {zip_path} ({len(yml_files)} файлов)")
+    print(f"Контрольные суммы: {sums_path}")
     return 0
 
 

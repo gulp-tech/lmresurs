@@ -8,7 +8,9 @@
     "color_codes_collapsed": 2,
     "frame_slots_added": 0,
     "border_added": 0,
-    "warnings": []
+    "warnings": [],
+    "slot_lists_normalized": 0,
+    "hide_attributes_modernized": 0
   },
   {
     "file": "events.yml",
@@ -19,7 +21,9 @@
     "color_codes_collapsed": 0,
     "frame_slots_added": 9,
     "border_added": 0,
-    "warnings": []
+    "warnings": [],
+    "slot_lists_normalized": 3,
+    "hide_attributes_modernized": 4
   },
   {
     "file": "keys.yml",
@@ -46,7 +50,9 @@
     "color_codes_collapsed": 10,
     "frame_slots_added": 0,
     "border_added": 0,
-    "warnings": []
+    "warnings": [],
+    "slot_lists_normalized": 0,
+    "hide_attributes_modernized": 8
   },
   {
     "file": "menu.yml",
@@ -68,7 +74,9 @@
     "color_codes_collapsed": 48,
     "frame_slots_added": 0,
     "border_added": 26,
-    "warnings": []
+    "warnings": [],
+    "slot_lists_normalized": 0,
+    "hide_attributes_modernized": 0
   },
   {
     "file": "podryvnik.yml",
@@ -79,7 +87,9 @@
     "color_codes_collapsed": 10,
     "frame_slots_added": 0,
     "border_added": 0,
-    "warnings": []
+    "warnings": [],
+    "slot_lists_normalized": 0,
+    "hide_attributes_modernized": 5
   },
   {
     "file": "privat_shop.yml",
@@ -90,7 +100,9 @@
     "color_codes_collapsed": 11,
     "frame_slots_added": 0,
     "border_added": 0,
-    "warnings": []
+    "warnings": [],
+    "slot_lists_normalized": 7,
+    "hide_attributes_modernized": 0
   },
   {
     "file": "shop.yml",
@@ -109,7 +121,9 @@
     "border_added": 0,
     "warnings": [
       "item_model voidspheres:sphere1 — модели нет в FunTime-паке, на Bedrock будет бумага"
-    ]
+    ],
+    "slot_lists_normalized": 0,
+    "hide_attributes_modernized": 0
   },
   {
     "file": "shop_enchants.yml",
@@ -120,7 +134,9 @@
     "color_codes_collapsed": 0,
     "frame_slots_added": 9,
     "border_added": 0,
-    "warnings": []
+    "warnings": [],
+    "slot_lists_normalized": 0,
+    "hide_attributes_modernized": 0
   },
   {
     "file": "shop_items.yml",
@@ -137,7 +153,9 @@
     "color_codes_collapsed": 0,
     "frame_slots_added": 9,
     "border_added": 0,
-    "warnings": []
+    "warnings": [],
+    "slot_lists_normalized": 0,
+    "hide_attributes_modernized": 0
   },
   {
     "file": "shop_pickaxes.yml",
@@ -148,7 +166,9 @@
     "color_codes_collapsed": 0,
     "frame_slots_added": 9,
     "border_added": 0,
-    "warnings": []
+    "warnings": [],
+    "slot_lists_normalized": 0,
+    "hide_attributes_modernized": 0
   },
   {
     "file": "shop_potions.yml",
@@ -180,7 +200,9 @@
     "color_codes_collapsed": 0,
     "frame_slots_added": 9,
     "border_added": 0,
-    "warnings": []
+    "warnings": [],
+    "slot_lists_normalized": 0,
+    "hide_attributes_modernized": 0
   },
   {
     "file": "shop_spheres.yml",
@@ -192,11 +214,13 @@
     "frame_slots_added": 9,
     "border_added": 0,
     "warnings": [
+      "item_model voidspheres:sphere2 — модели нет в FunTime-паке, на Bedrock будет бумага",
       "item_model voidspheres:sphere4 — модели нет в FunTime-паке, на Bedrock будет бумага",
       "item_model voidspheres:sphere3 — модели нет в FunTime-паке, на Bedrock будет бумага",
-      "item_model voidspheres:sphere1 — модели нет в FunTime-паке, на Bedrock будет бумага",
-      "item_model voidspheres:sphere2 — модели нет в FunTime-паке, на Bedrock будет бумага"
-    ]
+      "item_model voidspheres:sphere1 — модели нет в FunTime-паке, на Bedrock будет бумага"
+    ],
+    "slot_lists_normalized": 0,
+    "hide_attributes_modernized": 0
   },
   {
     "file": "shop_talismans.yml",
@@ -268,7 +292,9 @@
     "color_codes_collapsed": 1,
     "frame_slots_added": 0,
     "border_added": 0,
-    "warnings": []
+    "warnings": [],
+    "slot_lists_normalized": 0,
+    "hide_attributes_modernized": 0
   },
   {
     "file": "titles.yml",
@@ -279,6 +305,8 @@
     "color_codes_collapsed": 1,
     "frame_slots_added": 0,
     "border_added": 0,
-    "warnings": []
+    "warnings": [],
+    "slot_lists_normalized": 0,
+    "hide_attributes_modernized": 0
   }
 ]

@@ -11,7 +11,8 @@ items:
     slots:
     - 4
     material: TNT
-    hide_attributes: true
+    item_flags:
+      - HIDE_ATTRIBUTES
     display_name: '&3Инфор&aмация'
     lore:
       - ''
@@ -28,7 +29,8 @@ items:
     slots:
     - 10
     material: TNT
-    hide_attributes: true
+    item_flags:
+      - HIDE_ATTRIBUTES
     display_name: '&3Динамитная шашка &7- &a120 осколков'
     lore:
       - ''
@@ -62,7 +64,8 @@ items:
     slots:
     - 12
     material: TNT
-    hide_attributes: true
+    item_flags:
+      - HIDE_ATTRIBUTES
     display_name: '&3Зажигательный заряд &7- &a135 осколков'
     lore:
       - ''
@@ -97,7 +100,8 @@ items:
     slots:
     - 14
     material: TNT
-    hide_attributes: true
+    item_flags:
+      - HIDE_ATTRIBUTES
     hide_enchantments: true
     display_name: '&3Обсидиановая бомба &7- &a800 осколков'
     lore:
@@ -133,7 +137,8 @@ items:
     slots:
     - 16
     material: TNT
-    hide_attributes: true
+    item_flags:
+      - HIDE_ATTRIBUTES
     hide_enchantments: true
     display_name: '&aТяжёлый фугас &7- &a1550 осколков'
     lore:

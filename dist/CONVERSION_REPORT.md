@@ -156,8 +156,8 @@
 | Меню | Строка | Предмет | CMD | Статус |
 | --- | --- | --- | --- | --- |
 | `keys.yml` | 33 | `minecraft:trial_key` | 14 | ok |
-| `keys.yml` | 68 | `minecraft:trial_key` | 3 | ok |
-| `keys.yml` | 103 | `minecraft:trial_key` | 13 | ok |
+| `keys.yml` | 69 | `minecraft:trial_key` | 3 | ok |
+| `keys.yml` | 105 | `minecraft:trial_key` | 13 | ok |
 | `menu.yml` | 14 | `minecraft:paper` | 22 | ok |
 | `menu.yml` | 96 | `minecraft:paper` | 29 | ok |
 | `shop.yml` | 111 | `minecraft:paper` | 42 | ok |
