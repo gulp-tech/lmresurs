@@ -64,6 +64,13 @@ jobs:
           path: plugins/${{ matrix.plugin }}/target/*.jar
           if-no-files-found: error
 
+      - name: Собрать архив с конфигами
+        run: |
+          mkdir -p upload
+          cp -r plugins/configs upload/configs
+          cp docs/PLUGINS_FIX_AND_TUNING.md upload/ 2>/dev/null || true
+          (cd upload && zip -r ../voidplugins-configs.zip .)
+
       - name: Публикация в релиз
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -74,4 +81,4 @@ jobs:
               --title "VoidPE plugins: исправленные сборки" \
               --notes "Автосборка из plugins/. VoidAntiCheat 2.0.5: убран hoverEvent (падал на Paper 26.x), Registry<?> в lookup."
           fi
-          gh release upload "$TAG" plugins/*/target/*.jar --clobber
+          gh release upload "$TAG" plugins/*/target/*.jar voidplugins-configs.zip --clobber

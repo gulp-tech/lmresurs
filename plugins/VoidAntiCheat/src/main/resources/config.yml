@@ -98,11 +98,16 @@ settings:
   bedrock-reach-extra-blocks: 0.10
 
   # Алерты персоналу: кулдаун одинаковых алертов по игроку+проверке.
-  alert-cooldown-ms: 2500
-  alert-min-vl: 1.0
+  # Оптимизация: алерт по игроку+проверке не чаще раза в 5 секунд.
+  alert-cooldown-ms: 5000
+  # Оптимизация: не шуметь на одиночных подозрениях (VL 1.0 давал поток).
+  alert-min-vl: 2.0
   log-console: true
   log-file: true
-  staff-alerts: true
+  # Алерты в игре выключены: в 2.0.4 они падали с NoSuchMethodError
+  # (hoverEvent убран из Adventure) и спамили лог на каждый блок.
+  # В сборке 2.0.5+ баг исправлен — можно поставить true.
+  staff-alerts: false
   debug: false
 
 # Компенсация сети. Джиттер считается по интервалам move-пакетов, потому
