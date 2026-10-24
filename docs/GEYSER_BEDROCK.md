@@ -101,9 +101,14 @@ Floodgate отдельно настраивать не нужно: mappings и �
 "binding": "c.item_slot == 'head' ? 'head' : q.item_slot_to_bone_name(c.item_slot)"
 ```
 
-Без `binding` модель не привязывается к кости руки и висит мимо ладони — именно
-поэтому прошлые попытки вставали криво. Дальше идёт цепочка
-`root → root_x → root_y → root_z`, кубы лежат на дочерней кости `figure`.
+Без `binding` модель не привязывается к кости руки и висит мимо ладони. Дальше идёт
+цепочка `root → root_x → root_y → root_z`, кубы лежат на дочерней кости `figure`.
+
+> **Важно про наклон.** В паке Geyser у `root_x` стоит `45°` — для кубика-черепа это
+> незаметно, а фигурку заваливает набок. Поэтому у талисманов `root_x` и `root_z`
+> равны `0`: фигурка стоит вертикально, `root_y` только разворачивает её лицом
+> от игрока. Если фигурка кажется слишком большой — уменьшить `HAND_SCALE`
+> в `tools/talisman_art.py`.
 
 ```
 models/entity/talisman.geo.json    geometry.talisman: кубы фигурки + binding
@@ -122,7 +127,7 @@ textures/items/<icon_name>_3d.png  ×12, атлас 64×64: спрайт + св�
    в `plugins/VoidTalismans/config.yml` (или перенести строки `custom-model-data: N`).
 4. Проверка: `/talisman give <ник> crusher 1` — в инвентаре иконка, в руке фигурка.
 
-**Версия пака — `1.4.0`.**
+**Версия пака — `1.5.0`.**
 
 Мокап: `dist/preview/talismans-hand-mock.png` (`tools/make_talisman_preview.py`).
 

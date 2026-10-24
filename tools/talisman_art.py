@@ -124,32 +124,62 @@ def _box(grid: Grid, x0: int, y0: int, x1: int, y1: int, color: Color) -> None:
                 grid[y][x] = color
 
 
+def _part(grid: Grid, x0: int, y0: int, x1: int, y1: int, p: dict) -> None:
+    """
+    Деталь фигурки с объёмом: сверху светлее, снизу темнее, правый край в тени,
+    левый — на свету. Без этого фигурка выглядит плоской заливкой.
+    """
+    height = max(1, y1 - y0)
+    for y in range(y0, y1 + 1):
+        t = (y - y0) / height
+        if t < 0.28:
+            c = p["lt"]
+        elif t > 0.72:
+            c = p["dk"]
+        else:
+            c = p["base"]
+        for x in range(x0, x1 + 1):
+            if x == x1 and x1 > x0:
+                grid[y][x] = p["dk"]
+            elif x == x0 and x1 > x0 + 1:
+                grid[y][x] = p["lt"]
+            else:
+                grid[y][x] = c
+
+
 def _body(grid: Grid, p: dict) -> None:
     """Фигурка: ноги, торс, руки, голова, лицо."""
-    _box(grid, 11, 23, 14, 29, p["dk"])          # левая нога
-    _box(grid, 17, 23, 20, 29, p["dk"])          # правая нога
-    _box(grid, 11, 29, 14, 30, p["dd"])          # ботинки
+    _part(grid, 11, 23, 14, 29, p)          # левая нога
+    _part(grid, 17, 23, 20, 29, p)          # правая нога
+    _box(grid, 11, 29, 14, 30, p["dd"])     # ботинки
     _box(grid, 17, 29, 20, 30, p["dd"])
 
-    _box(grid, 11, 13, 20, 23, p["base"])        # торс
-    _box(grid, 11, 13, 20, 14, p["lt"])          # блик сверху
-    _box(grid, 11, 21, 20, 23, p["dk"])          # тень снизу
-    _box(grid, 15, 16, 16, 20, GOLD)             # застёжка на груди
+    _part(grid, 11, 13, 20, 22, p)          # торс
+    _box(grid, 11, 13, 20, 13, GOLD_D)      # воротник
+    _box(grid, 14, 15, 17, 15, GOLD)        # застёжка
+    _box(grid, 15, 16, 16, 20, GOLD_D)      # планка
+    _box(grid, 15, 16, 16, 16, GOLD)
 
-    _box(grid, 8, 14, 10, 22, p["dk"])           # левая рука
-    _box(grid, 21, 14, 23, 22, p["dk"])          # правая рука
-    _box(grid, 8, 14, 10, 14, p["base"])
-    _box(grid, 21, 14, 23, 14, p["base"])
+    _part(grid, 8, 14, 10, 22, p)           # левая рука
+    _part(grid, 21, 14, 23, 22, p)          # правая рука
+    _box(grid, 8, 21, 10, 22, p["dd"])      # перчатки
+    _box(grid, 21, 21, 23, 22, p["dd"])
 
-    _box(grid, 10, 4, 21, 13, p["base"])         # голова
-    _box(grid, 10, 4, 21, 5, p["lt"])
-    _box(grid, 10, 12, 21, 13, p["dk"])
+    _part(grid, 10, 4, 21, 13, p)           # голова
+    _box(grid, 10, 4, 21, 4, p["hi"])       # блик на макушке
+    _box(grid, 12, 5, 19, 5, p["hi"])       # свет на лбу
 
-    _box(grid, 12, 8, 14, 11, WHITE)             # глаза
-    _box(grid, 17, 8, 19, 11, WHITE)
-    _box(grid, 13, 9, 14, 11, (40, 30, 44, 255))
-    _box(grid, 17, 9, 18, 11, (40, 30, 44, 255))
-    _box(grid, 14, 12, 17, 12, p["dd"])          # рот
+    # лицо
+    _box(grid, 12, 8, 14, 10, WHITE)        # белки
+    _box(grid, 17, 8, 19, 10, WHITE)
+    _box(grid, 13, 8, 14, 10, (58, 42, 66, 255))
+    _box(grid, 17, 8, 18, 10, (58, 42, 66, 255))
+    _box(grid, 12, 8, 12, 8, (255, 255, 255, 255))   # блик в глазу
+    _box(grid, 17, 8, 17, 8, (255, 255, 255, 255))
+    _box(grid, 15, 9, 16, 11, p["dd"])      # нос
+    _box(grid, 14, 12, 17, 12, p["dd"])     # рот
+    _box(grid, 10, 7, 10, 12, p["dk"])      # тень сбоку лица
+    _box(grid, 21, 7, 21, 12, p["dk"])
 
 
 def _top(grid: Grid, kind: str, p: dict) -> None:
@@ -445,8 +475,11 @@ def _geometry() -> dict:
 
 def _animations() -> dict:
     """
-    Числа — из пака Geyser для голов игроков (там они подобраны так, чтобы
-    предмет стоял в ладони). Меняется только масштаб: фигурка выше головы.
+    Положение в ладони — по образцу пака Geyser для голов игроков, но БЕЗ
+    наклонов: у черепа куб, ему поворот незаметен, а фигурка от `root_x: 45`
+    заваливается набок (ровно это и было видно на скриншоте). Поэтому
+    root_x и root_z = 0: фигурка стоит вертикально, root_y только разворачивает
+    её лицом от игрока.
     """
     def pose(position, rot_x, rot_y, root_z=None):
         bones = {
@@ -461,10 +494,10 @@ def _animations() -> dict:
     return {
         "format_version": "1.8.0",
         "animations": {
-            "animation.talisman.thirdperson_main_hand": pose([0, 12, -4], 45, 135),
-            "animation.talisman.thirdperson_off_hand": pose([0, 12, -4], 45, -135),
-            "animation.talisman.firstperson_main_hand": pose([2, 16, 4], 180, 135, 45),
-            "animation.talisman.firstperson_off_hand": pose([2, 16, 4], 180, 135, 45),
+            "animation.talisman.thirdperson_main_hand": pose([0, 13, -3], 0, 135),
+            "animation.talisman.thirdperson_off_hand": pose([0, 13, -3], 0, -135),
+            "animation.talisman.firstperson_main_hand": pose([2, 15, 3], 0, 20),
+            "animation.talisman.firstperson_off_hand": pose([2, 15, 3], 0, 20),
             "animation.talisman.disable": {
                 "loop": True,
                 "override_previous_animation": True,
