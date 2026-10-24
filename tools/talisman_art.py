@@ -336,26 +336,50 @@ def icon_png(slug: str) -> bytes:
     return encode_png(S, S, _grid_to_bytes(render_icon(slug), S))
 
 
+# служебные плашки атласа: (x, y, w, h) — однотонные заливки для орнамента
+SWATCH = {
+    "light": (32, 0, 16, 16),
+    "dark": (32, 16, 16, 16),
+    "gold": (48, 0, 8, 16),
+    "bone": (56, 0, 8, 16),
+    "steel": (48, 16, 8, 16),
+    "wood": (56, 16, 8, 16),
+}
+MATERIAL = {
+    "gold": (232, 186, 70, 255),
+    "bone": (238, 228, 204, 255),
+    "steel": (172, 180, 198, 255),
+    "wood": (122, 82, 46, 255),
+}
+
+
 def atlas_png(slug: str) -> bytes:
     """
-    Атлас 64×64 для 3D-модели: слева сверху спрайт (лицо), справа сверху
-    светлая заливка (верхние грани), снизу тёмная (боковины и низ).
-    За счёт этого кубы выглядят объёмными, а лицо остаётся рисунком.
+    Атлас 64×64: слева сверху спрайт (лицо и одежда), справа — однотонные
+    плашки: светлая и тёмная грани фигурки, золото, кость, сталь, дерево.
+    Из них собирается орнамент 3D-модели (корона, рога, шлем, крылья…).
     """
     p = _ramp(TALISMANS[slug]["color"])
-    light = p["hi"]
-    dark = p["dd"]
     grid = render_icon(slug)
 
     canvas: Grid = [[None] * TEX for _ in range(TEX)]
+    fills = {k: v for k, v in SWATCH.items()}
     for y in range(TEX):
         for x in range(TEX):
-            if x < S and y < S:
-                canvas[y][x] = grid[y][x]
-            elif x >= S and y < S:
-                canvas[y][x] = light
-            else:
-                canvas[y][x] = dark
+            canvas[y][x] = grid[y][x] if (x < S and y < S) else None
+
+    for key, color in (
+        ("light", p["lt"]),
+        ("dark", p["dd"]),
+        ("gold", MATERIAL["gold"]),
+        ("bone", MATERIAL["bone"]),
+        ("steel", MATERIAL["steel"]),
+        ("wood", MATERIAL["wood"]),
+    ):
+        x0, y0, w, h = fills[key]
+        for y in range(y0, y0 + h):
+            for x in range(x0, x0 + w):
+                canvas[y][x] = color
     return encode_png(TEX, TEX, _grid_to_bytes(canvas, TEX))
 
 
@@ -393,7 +417,10 @@ def hero_icon() -> Tuple[str, bytes]:
 GEO_FILE = os.path.join("models", "entity", "talisman.geo.json")
 ANIM_FILE = os.path.join("animations", "talisman.json")
 ATTACHABLE_DIR = "attachables"
-HAND_SCALE = 0.5
+HAND_SCALE = 0.5                # как у черепов в паке Geyser
+HAND_POS_THIRD = [0, 17, -5]    # подошвы на уровне ладони (череп в паке
+                                # Geyser занимает 20..24 по высоте)
+HAND_POS_FIRST = [2, 16, 4]
 
 # области спрайта, которые натягиваются на грани кубов: (x, y, w, h)
 REGIONS = {
@@ -406,70 +433,156 @@ REGIONS = {
 
 def _faces(region: Tuple[int, int, int, int], depth: int) -> dict:
     """
-    Передняя и задняя грани — вырез из спрайта, бока и низ — тёмная заливка,
-    верх — светлая (они лежат в правой половине атласа).
+    Передняя грань — вырез из спрайта (лицо, одежда), сзади и с боков —
+    тёмная плашка, сверху — светлая.
     """
     px, py, w, h = region
+    lx, ly = SWATCH["light"][:2]
+    dx, dy = SWATCH["dark"][:2]
     return {
         "north": {"uv": [px, py], "uv_size": [w, h]},
-        "south": {"uv": [px, py], "uv_size": [w, h]},
-        "east": {"uv": [S, S], "uv_size": [depth, h]},
-        "west": {"uv": [S, S], "uv_size": [depth, h]},
-        "up": {"uv": [S, 0], "uv_size": [w, depth]},
-        "down": {"uv": [S, S], "uv_size": [w, depth]},
+        "south": {"uv": [dx, dy], "uv_size": [w, h]},
+        "east": {"uv": [dx, dy], "uv_size": [depth, h]},
+        "west": {"uv": [dx, dy], "uv_size": [depth, h]},
+        "up": {"uv": [lx, ly], "uv_size": [w, depth]},
+        "down": {"uv": [dx, dy], "uv_size": [w, depth]},
+    }
+
+
+def _solid(key: str) -> dict:
+    """Все шесть граней — одна однотонная плашка материала."""
+    x, y = SWATCH[key][:2]
+    return {f: {"uv": [x, y], "uv_size": [1, 1]}
+            for f in ("north", "south", "east", "west", "up", "down")}
+
+
+def _cube(origin, size, material: str) -> dict:
+    return {"origin": list(origin), "size": list(size), "uv": _solid(material)}
+
+
+def _ornaments(top: str, gear: str) -> List[dict]:
+    """
+    Головной убор и снаряжение — то, что отличает талисманы в руке так же,
+    как на иконке. Всё из тех же плашек, что и в атласе.
+    """
+    cubes: List[dict] = []
+    if top == "crown":
+        cubes.append(_cube([-2.6, 11.4, -1.6], [5.2, 1.0, 3.2], "gold"))
+        cubes.append(_cube([-2.6, 12.4, -1.1], [1.0, 1.2, 2.2], "gold"))
+        cubes.append(_cube([1.6, 12.4, -1.1], [1.0, 1.2, 2.2], "gold"))
+        cubes.append(_cube([-0.5, 12.4, -1.1], [1.0, 0.9, 2.2], "gold"))
+    elif top == "horns":
+        cubes.append(_cube([-3.4, 11.0, -1.0], [1.0, 2.0, 1.0], "bone"))
+        cubes.append(_cube([2.4, 11.0, -1.0], [1.0, 2.0, 1.0], "bone"))
+        cubes.append(_cube([-3.9, 12.4, -0.7], [0.9, 0.9, 0.9], "bone"))
+        cubes.append(_cube([3.0, 12.4, -0.7], [0.9, 0.9, 0.9], "bone"))
+    elif top == "halo":
+        cubes.append(_cube([-2.6, 12.3, -1.7], [5.2, 0.5, 0.6], "gold"))   # перед
+        cubes.append(_cube([-2.6, 12.3, 1.1], [5.2, 0.5, 0.6], "gold"))    # зад
+        cubes.append(_cube([-2.6, 12.3, -1.1], [0.6, 0.5, 2.2], "gold"))   # лево
+        cubes.append(_cube([2.0, 12.3, -1.1], [0.6, 0.5, 2.2], "gold"))    # право
+    elif top == "helm":
+        cubes.append(_cube([-3.3, 11.0, -1.8], [6.6, 1.1, 3.6], "steel"))
+        cubes.append(_cube([-3.3, 8.6, -1.8], [0.7, 2.5, 2.4], "steel"))
+        cubes.append(_cube([2.6, 8.6, -1.8], [0.7, 2.5, 2.4], "steel"))
+        cubes.append(_cube([-1.0, 8.8, -2.0], [2.0, 0.5, 0.5], "steel"))
+        cubes.append(_cube([-0.4, 9.4, -2.1], [0.8, 1.6, 0.5], "steel"))
+    elif top == "hood":
+        cubes.append(_cube([-3.3, 8.4, 1.2], [6.6, 3.4, 0.8], "dark"))
+        cubes.append(_cube([-3.3, 11.6, -1.7], [6.6, 0.9, 3.7], "dark"))
+        cubes.append(_cube([-3.3, 8.4, -1.7], [0.7, 3.2, 3.0], "dark"))
+        cubes.append(_cube([2.6, 8.4, -1.7], [0.7, 3.2, 3.0], "dark"))
+    elif top == "hat":
+        cubes.append(_cube([-4.2, 11.2, -2.2], [8.4, 0.6, 4.4], "wood"))
+        cubes.append(_cube([-2.2, 11.8, -1.7], [4.4, 1.4, 3.4], "wood"))
+        cubes.append(_cube([-2.2, 10.9, -1.8], [4.4, 0.4, 3.6], "gold"))
+
+    if gear == "wings":
+        cubes.append(_cube([-4.8, 5.4, 1.3], [2.2, 5.0, 0.6], "dark"))
+        cubes.append(_cube([2.6, 5.4, 1.3], [2.2, 5.0, 0.6], "dark"))
+        cubes.append(_cube([-5.6, 7.6, 1.3], [1.4, 2.4, 0.6], "dark"))
+        cubes.append(_cube([4.2, 7.6, 1.3], [1.4, 2.4, 0.6], "dark"))
+    elif gear == "cape":
+        cubes.append(_cube([-2.8, 2.6, 1.3], [5.6, 6.0, 0.6], "dark"))
+        cubes.append(_cube([-3.4, 2.2, 1.3], [6.8, 0.8, 0.6], "gold"))
+    elif gear == "shield":
+        cubes.append(_cube([-5.2, 4.0, -1.3], [1.0, 4.6, 2.6], "steel"))
+        cubes.append(_cube([-5.3, 5.8, -0.9], [1.2, 1.2, 1.8], "gold"))
+    elif gear == "staff":
+        cubes.append(_cube([4.0, 1.2, -0.9], [0.8, 10.0, 0.8], "wood"))
+        cubes.append(_cube([3.6, 10.6, -1.3], [1.6, 1.6, 1.6], "gold"))
+    elif gear == "sword":
+        cubes.append(_cube([3.9, 3.4, -0.8], [0.7, 6.4, 0.7], "steel"))
+        cubes.append(_cube([3.4, 2.8, -1.2], [1.7, 0.6, 1.5], "gold"))
+        cubes.append(_cube([3.9, 1.6, -0.8], [0.7, 1.2, 0.7], "wood"))
+    elif gear == "daggers":
+        cubes.append(_cube([3.7, 5.0, -0.7], [0.6, 3.2, 0.6], "steel"))
+        cubes.append(_cube([-4.3, 5.0, -0.7], [0.6, 3.2, 0.6], "steel"))
+    elif gear == "axe":
+        cubes.append(_cube([3.9, 1.4, -0.7], [0.7, 7.2, 0.7], "wood"))
+        cubes.append(_cube([2.7, 6.6, -1.1], [2.6, 2.2, 1.6], "steel"))
+        cubes.append(_cube([2.4, 6.9, -1.3], [2.2, 1.6, 0.4], "gold"))
+    elif gear == "bow":
+        cubes.append(_cube([-4.6, 3.0, -0.6], [0.7, 7.4, 0.7], "wood"))
+        cubes.append(_cube([-4.9, 9.4, -0.6], [1.3, 1.0, 1.0], "wood"))
+        cubes.append(_cube([-4.9, 2.4, -0.6], [1.3, 1.0, 1.0], "wood"))
+    elif gear == "pauldrons":
+        cubes.append(_cube([-4.2, 7.4, -1.4], [1.6, 2.2, 3.0], "steel"))
+        cubes.append(_cube([2.6, 7.4, -1.4], [1.6, 2.2, 3.0], "steel"))
+    return cubes
+
+
+BODY_CUBES = [
+    # origin, size, область спрайта: фигурка симметрична относительно x = 0
+    # и стоит на y = 1 — растёт вверх от ладони
+    ([-3, 8, -1.5], [6, 3.5, 3], "head"),
+    ([-2.5, 4.5, -1.5], [5, 3.5, 3], "torso"),
+    ([-3.5, 4.5, -1.5], [1, 3, 3], "arm"),
+    ([2.5, 4.5, -1.5], [1, 3, 3], "arm"),
+    ([-2.5, 1, -1.5], [2, 3.5, 3], "leg"),
+    ([0.5, 1, -1.5], [2, 3.5, 3], "leg"),
+]
+
+
+def _geometry_for(slug: str) -> dict:
+    """
+    Своя модель на каждый талисман: одна и та же фигурка плюс убор и
+    снаряжение. Цепочка костей как в паке Geyser для голов игроков —
+    без `binding` у `root` модель не привязывается к кости руки.
+    """
+    p = TALISMANS[slug]
+    cubes = [{"origin": o, "size": sz, "uv": _faces(REGIONS[k], 3)}
+             for (o, sz, k) in BODY_CUBES]
+    cubes += _ornaments(p["top"], p["gear"])
+    return {
+        "description": {
+            "identifier": f"geometry.talisman.{slug}",
+            "texture_width": TEX,
+            "texture_height": TEX,
+            "visible_bounds_width": 3,
+            "visible_bounds_height": 3,
+            "visible_bounds_offset": [0, 1, 0],
+        },
+        "bones": [
+            {
+                "name": "root",
+                "binding": "c.item_slot == 'head' ? 'head' : "
+                           "q.item_slot_to_bone_name(c.item_slot)",
+                "pivot": [0, 8, 0],
+            },
+            {"name": "root_x", "parent": "root", "pivot": [0, 8, 0]},
+            {"name": "root_y", "parent": "root_x", "pivot": [0, 8, 0]},
+            {"name": "root_z", "parent": "root_y", "pivot": [0, 8, 0]},
+            {"name": "figure", "parent": "root_z", "pivot": [0, 8, 0], "cubes": cubes},
+        ],
     }
 
 
 def _geometry() -> dict:
-    """
-    Структура как в паке Geyser для голов игроков: цепочка root → root_x →
-    root_y → root_z, кубы на дочерней кости. У `root` есть `binding` —
-    без него модель не привязывается к кости руки и висит мимо ладони.
-    """
+    """Все 12 моделей одним файлом — по одной на талисман."""
     return {
         "format_version": "1.16.0",
-        "minecraft:geometry": [
-            {
-                "description": {
-                    "identifier": "geometry.talisman",
-                    "texture_width": TEX,
-                    "texture_height": TEX,
-                    "visible_bounds_width": 3,
-                    "visible_bounds_height": 3,
-                    "visible_bounds_offset": [0, 1, 0],
-                },
-                "bones": [
-                    {
-                        "name": "root",
-                        "binding": "c.item_slot == 'head' ? 'head' : "
-                                   "q.item_slot_to_bone_name(c.item_slot)",
-                        "pivot": [0, 8, 0],
-                    },
-                    {"name": "root_x", "parent": "root", "pivot": [0, 8, 0]},
-                    {"name": "root_y", "parent": "root_x", "pivot": [0, 8, 0]},
-                    {"name": "root_z", "parent": "root_y", "pivot": [0, 8, 0]},
-                    {
-                        "name": "figure",
-                        "parent": "root_z",
-                        "pivot": [0, 24, 0],
-                        "cubes": [
-                            {"origin": [-4, 18, -1], "size": [8, 5, 2],
-                             "uv": _faces(REGIONS["head"], 2)},
-                            {"origin": [-3, 12, -1], "size": [6, 6, 2],
-                             "uv": _faces(REGIONS["torso"], 2)},
-                            {"origin": [-5, 12, -1], "size": [2, 5, 2],
-                             "uv": _faces(REGIONS["arm"], 2)},
-                            {"origin": [3, 12, -1], "size": [2, 5, 2],
-                             "uv": _faces(REGIONS["arm"], 2)},
-                            {"origin": [-3, 8, -1], "size": [3, 4, 2],
-                             "uv": _faces(REGIONS["leg"], 2)},
-                            {"origin": [0, 8, -1], "size": [3, 4, 2],
-                             "uv": _faces(REGIONS["leg"], 2)},
-                        ],
-                    },
-                ],
-            }
-        ],
+        "minecraft:geometry": [_geometry_for(slug) for slug in TALISMANS],
     }
 
 
@@ -494,10 +607,10 @@ def _animations() -> dict:
     return {
         "format_version": "1.8.0",
         "animations": {
-            "animation.talisman.thirdperson_main_hand": pose([0, 13, -3], 0, 135),
-            "animation.talisman.thirdperson_off_hand": pose([0, 13, -3], 0, -135),
-            "animation.talisman.firstperson_main_hand": pose([2, 15, 3], 0, 20),
-            "animation.talisman.firstperson_off_hand": pose([2, 15, 3], 0, 20),
+            "animation.talisman.thirdperson_main_hand": pose(HAND_POS_THIRD, 0, 135),
+            "animation.talisman.thirdperson_off_hand": pose(HAND_POS_THIRD, 0, -135),
+            "animation.talisman.firstperson_main_hand": pose(HAND_POS_FIRST, 0, 180),
+            "animation.talisman.firstperson_off_hand": pose(HAND_POS_FIRST, 0, 180),
             "animation.talisman.disable": {
                 "loop": True,
                 "override_previous_animation": True,
@@ -543,7 +656,7 @@ def build_hand_models(pack_dir: str, icon_names: List[str], namespace: str) -> L
                             "default": f"textures/items/{name}_3d",
                             "enchanted": "textures/misc/enchanted_item_glint",
                         },
-                        "geometry": {"default": "geometry.talisman"},
+                        "geometry": {"default": f"geometry.talisman.{slug_of(name)}"},
                         "scripts": {
                             "pre_animation": [
                                 "v.main_hand = c.item_slot == 'main_hand';",

@@ -214,10 +214,10 @@
     "frame_slots_added": 9,
     "border_added": 0,
     "warnings": [
-      "item_model voidspheres:sphere1 — модели нет в FunTime-паке, на Bedrock будет бумага",
+      "item_model voidspheres:sphere2 — модели нет в FunTime-паке, на Bedrock будет бумага",
       "item_model voidspheres:sphere4 — модели нет в FunTime-паке, на Bedrock будет бумага",
       "item_model voidspheres:sphere3 — модели нет в FunTime-паке, на Bedrock будет бумага",
-      "item_model voidspheres:sphere2 — модели нет в FunTime-паке, на Bedrock будет бумага"
+      "item_model voidspheres:sphere1 — модели нет в FunTime-паке, на Bedrock будет бумага"
     ],
     "slot_lists_normalized": 0,
     "hide_attributes_modernized": 0

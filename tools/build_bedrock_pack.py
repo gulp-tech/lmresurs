@@ -665,7 +665,7 @@ def build(args: argparse.Namespace) -> int:
 
     namespace = args.namespace
     pack_name = args.pack_name
-    version = [1, 5, 0]   # поднимать при любом изменении графики
+    version = [1, 6, 0]   # поднимать при любом изменении графики
 
     manifest = {
         "format_version": 2,
