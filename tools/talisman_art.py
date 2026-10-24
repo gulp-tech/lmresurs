@@ -663,8 +663,8 @@ GEO_FILE = os.path.join("models", "entity", "talisman.geo.json")
 ANIM_FILE = os.path.join("animations", "talisman.json")
 ATTACHABLE_DIR = "attachables"
 HAND_SCALE = 0.58
-HAND_POS_THIRD = [0, 16.4, -7]  # подошвы на ладони, фигурка вынесена
-                               # вперёд, чтобы не тонула в бедре
+HAND_POS_THIRD = [0, 17.0, -6.5]  # подошвы на верхушке кулака,
+                                  # фигурка вынесена вперёд от бедра
 HAND_POS_FIRST = [2, 14, 4]
 
 # области спрайта, которые натягиваются на грани кубов: (x, y, w, h)
