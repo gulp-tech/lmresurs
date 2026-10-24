@@ -6,7 +6,7 @@
 
     <groupId>ru.voidpe</groupId>
     <artifactId>VoidTab</artifactId>
-    <version>1.16.4</version>
+    <version>1.16.5</version>
     <packaging>jar</packaging>
     <name>VoidTab</name>
     <description>Компактный скорборд (таб) для Geyser/Floodgate сервера VoidPE: монеты (Vault), осколки (PlayerPoints), привилегия, У/С, время в игре + кастомные иконки из Bedrock-ресурспака.</description>

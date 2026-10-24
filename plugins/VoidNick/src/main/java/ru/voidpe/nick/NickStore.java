@@ -45,6 +45,8 @@ final class NickStore {
         String primaryGroup = "";
         boolean balanceSaved;
         double balance;
+        /** Ник сменён «на лету»: данные не трогались, откат только возвращает ник. */
+        boolean displayOnly;
         List<String> applied = new ArrayList<>();
 
         String date() {
@@ -102,6 +104,7 @@ final class NickStore {
             entry.primaryGroup = section.getString("primary-group", "");
             entry.balanceSaved = section.getBoolean("balance-saved", false);
             entry.balance = section.getDouble("balance", 0.0);
+            entry.displayOnly = section.getBoolean("display-only", false);
             entry.applied = new ArrayList<>(section.getStringList("applied"));
             entries.put(entry.uuid, entry);
         }
@@ -122,6 +125,7 @@ final class NickStore {
             data.set(base + ".primary-group", entry.primaryGroup);
             data.set(base + ".balance-saved", entry.balanceSaved);
             data.set(base + ".balance", entry.balance);
+            data.set(base + ".display-only", entry.displayOnly);
             data.set(base + ".applied", entry.applied);
         }
         write(data, dataFile);

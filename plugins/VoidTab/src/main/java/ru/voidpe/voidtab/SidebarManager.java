@@ -283,7 +283,7 @@ public final class SidebarManager {
         text = text.replace("{device}", deviceName(player));
 
         Map<String, String> values = new HashMap<>();
-        values.put("player", player.getName());
+        values.put("player", plugin.nicks().name(player));
         values.put("group", group);
         values.put("group_icon", rankIconChar(player));
         values.put("group_raw", groupRaw);

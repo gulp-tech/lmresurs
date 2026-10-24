@@ -30,6 +30,7 @@ public final class VoidTab extends JavaPlugin implements Listener, CommandExecut
 
     private Hooks hooks;
     private SidebarManager sidebar;
+    private NickBridge nickBridge;
     private NametagManager nametag;
     private BukkitTask task;
     private boolean warnedNoFloodgate;
@@ -41,6 +42,7 @@ public final class VoidTab extends JavaPlugin implements Listener, CommandExecut
         migrateConfig();
         hooks = new Hooks(getLogger());
         sidebar = new SidebarManager(this);
+        nickBridge = new NickBridge(this);
         nametag = new NametagManager(this);
 
         getServer().getPluginManager().registerEvents(this, this);
@@ -138,6 +140,11 @@ public final class VoidTab extends JavaPlugin implements Listener, CommandExecut
 
     public SidebarManager sidebar() {
         return sidebar;
+    }
+
+    /** Мост к VoidNick: новый ник переименованного игрока. */
+    public NickBridge nicks() {
+        return nickBridge;
     }
 
     public NametagManager nametag() {

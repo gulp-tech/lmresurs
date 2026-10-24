@@ -189,11 +189,16 @@ public final class VoidNick extends JavaPlugin implements CommandExecutor, TabCo
         }
         OfflinePlayer target = resolve(oldName);
         if (target == null) {
+            String hint = getConfig().getString("messages.unknown-player-hint",
+                    "&7Не нашёл. Попробуй с префиксом Floodgate (&f.MUSD38&7) или UUID игрока: &f/voidnick set <uuid> <новый>");
             sender.sendMessage(text("messages.unknown-player", "%player%", oldName));
+            sender.sendMessage(LegacyComponentSerializer.legacySection().deserialize(TextUtil.color(hint)));
             return;
         }
         UUID uuid = target.getUniqueId();
-        if (Bukkit.getPlayer(uuid) != null) {
+        Player online = Bukkit.getPlayer(uuid);
+        boolean allowOnline = getConfig().getBoolean("rename.allow-online", true);
+        if (online != null && !allowOnline) {
             sender.sendMessage(text("messages.player-online", "%player%", oldName));
             return;
         }
@@ -208,6 +213,25 @@ public final class VoidNick extends JavaPlugin implements CommandExecutor, TabCo
             return;
         }
         String realName = target.getName() != null ? target.getName() : oldName;
+
+        if (online != null) {
+            // Игрок в игре: файлы playerdata/stats переносить нельзя, поэтому
+            // меняем только отображение — чат, таб, ник над головой, скорборд.
+            // Прогресс, права и деньги остаются на месте.
+            NickStore.Entry entry = new NickStore.Entry();
+            entry.uuid = uuid;
+            entry.original = realName;
+            entry.current = newName;
+            entry.changedAt = System.currentTimeMillis();
+            entry.displayOnly = true;
+            entry.applied.add("ник сменён онлайн, данные не тронуты");
+            store.put(entry);
+            store.save();
+            applyTo(online, newName);
+            store.journal("SET-ONLINE " + realName + " → " + newName);
+            sender.sendMessage(text("messages.renamed-online", "%old%", realName, "%new%", newName));
+            return;
+        }
 
         NickStore.Entry entry = new NickStore.Entry();
         entry.uuid = uuid;
@@ -283,7 +307,19 @@ public final class VoidNick extends JavaPlugin implements CommandExecutor, TabCo
         }
         OfflinePlayer target = Bukkit.getOfflinePlayer(entry.uuid);
         String realName = target.getName() != null ? target.getName() : entry.original;
-        if (Bukkit.getPlayer(entry.uuid) != null) {
+        Player onlineNow = Bukkit.getPlayer(entry.uuid);
+        if (entry.displayOnly) {
+            // Возвращать нечего: данные не трогали — просто снимаем подмену ника.
+            store.remove(entry.uuid);
+            store.save();
+            if (onlineNow != null) {
+                applyTo(onlineNow, realName);
+            }
+            store.journal("REVERT-ONLINE " + entry.current + " → " + realName);
+            sender.sendMessage(text("messages.reverted", "%player%", realName, "%original%", entry.original));
+            return;
+        }
+        if (onlineNow != null) {
             sender.sendMessage(text("messages.player-online", "%player%", realName));
             return;
         }
@@ -386,6 +422,16 @@ public final class VoidNick extends JavaPlugin implements CommandExecutor, TabCo
         for (Player player : Bukkit.getOnlinePlayers()) {
             applyDisplay(player);
         }
+    }
+
+    /** Применить ник игроку немедленно (в том числе когда он в игре). */
+    private void applyTo(Player player, String nick) {
+        if (player == null || nick == null) {
+            return;
+        }
+        player.setDisplayName(nick);
+        player.setPlayerListName(nick);
+        rewriteScoreboard(player.getName(), nick);
     }
 
     private void applyDisplay(Player player) {
@@ -532,18 +578,114 @@ public final class VoidNick extends JavaPlugin implements CommandExecutor, TabCo
 
     // ------------------------------------------------------------------ мелочи
 
+    /**
+     * Ищет игрока по нику. Одного hasPlayedBefore() мало: у Bedrock-игроков
+     * (Floodgate) запись часто отсутствует в usercache.json, и плагин отвечал
+     * «ни разу не заходил» на человека, который только что вышел. Поэтому
+     * проверяем несколько признаков подряд.
+     */
     private OfflinePlayer resolve(String name) {
-        NickStore.Entry entry = store.byName(name);
+        if (name == null || name.isBlank()) {
+            return null;
+        }
+        String raw = name.trim();
+
+        // 1. Уже переименованный — берём сохранённый UUID.
+        NickStore.Entry entry = store.byName(raw);
         if (entry != null) {
             return Bukkit.getOfflinePlayer(entry.uuid);
         }
-        Player online = Bukkit.getPlayerExact(name);
-        if (online != null) {
-            return online;
+
+        // 2. UUID напрямую: /voidnick set 069a79f4-44e9-... popa222
+        UUID direct = parseUuid(raw);
+        if (direct != null) {
+            return Bukkit.getOfflinePlayer(direct);
         }
-        OfflinePlayer offline = Bukkit.getOfflinePlayer(name);
-        if (offline != null && (offline.hasPlayedBefore() || offline.isOnline())) {
-            return offline;
+
+        // 3. Онлайн — по точному нику, затем без учёта регистра.
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            if (matchesName(online.getName(), raw)) {
+                return online;
+            }
+        }
+
+        // 4. Офлайн по списку заходивших: сравниваем и с префиксом, и без него.
+        for (OfflinePlayer offline : Bukkit.getOfflinePlayers()) {
+            if (offline.getName() != null && matchesName(offline.getName(), raw)) {
+                return offline;
+            }
+        }
+
+        // 5. Профиль по имени — даже если hasPlayedBefore() врёт, данные игрока
+        //    могут лежать в мире (playerdata/stats), это достаточный признак.
+        OfflinePlayer profile = Bukkit.getOfflinePlayer(raw);
+        if (profile != null && (profile.hasPlayedBefore() || profile.isOnline()
+                || hasSaveData(profile.getUniqueId()))) {
+            return profile;
+        }
+
+        // 6. Floodgate/Geyser: их API знает UUID Bedrock-игрока, даже если ядро нет.
+        UUID bedrock = floodgateUuid(raw);
+        if (bedrock != null) {
+            return Bukkit.getOfflinePlayer(bedrock);
+        }
+        return null;
+    }
+
+    /** Ники Floodgate идут с префиксом (по умолчанию точка): .MUSD38 == MUSD38. */
+    private boolean matchesName(String actual, String wanted) {
+        if (actual == null || wanted == null) {
+            return false;
+        }
+        if (actual.equalsIgnoreCase(wanted)) {
+            return true;
+        }
+        return stripPrefix(actual).equalsIgnoreCase(stripPrefix(wanted));
+    }
+
+    private String stripPrefix(String name) {
+        if (name == null || name.isEmpty()) {
+            return name;
+        }
+        char first = name.charAt(0);
+        if ((first == '.' || first == '*' || first == '-' || first == '_') && name.length() > 1) {
+            return name.substring(1);
+        }
+        return name;
+    }
+
+    private UUID parseUuid(String raw) {
+        try {
+            return UUID.fromString(raw);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
+
+    /** Есть ли в мире сохранение игрока: playerdata/*.dat, stats, advancements. */
+    private boolean hasSaveData(UUID uuid) {
+        File folder = worldFolder();
+        if (folder == null || uuid == null) {
+            return false;
+        }
+        return new File(folder, "playerdata/" + uuid + ".dat").isFile()
+                || new File(folder, "stats/" + uuid + ".json").isFile()
+                || new File(folder, "advancements/" + uuid + ".json").isFile();
+    }
+
+    /** UUID Bedrock-игрока из Floodgate, затем Geyser. Оба вызова необязательны. */
+    private UUID floodgateUuid(String name) {
+        try {
+            Class<?> apiClass = Class.forName("org.geysermc.floodgate.api.FloodgateApi");
+            Object api = apiClass.getMethod("getInstance").invoke(null);
+            Object result = apiClass.getMethod("getUuidFor", String.class).invoke(api, name);
+            Object value = result instanceof java.util.concurrent.CompletableFuture<?> future
+                    ? future.get(2, java.util.concurrent.TimeUnit.SECONDS) : result;
+            if (value instanceof UUID uuid) {
+                return uuid;
+            }
+        } catch (Throwable ignored) {
+            // Floodgate нет или версия API другая — идём дальше
         }
         return null;
     }

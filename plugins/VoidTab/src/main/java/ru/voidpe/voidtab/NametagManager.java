@@ -107,7 +107,17 @@ public final class NametagManager {
 
         Component prefixComponent = component(
                 TextUtil.color(plugin.getConfig().getString("nametag.prefix-color", "&f")) + prefix);
+        // Игрок переименован через VoidNick: командой-префиксом в скорборде он
+        // уже занят (VoidNick переносит туда НОВЫЙ ник). Если сейчас добавить
+        // ещё и настоящий, префикс достанется невидимой строке. Поэтому
+        // переименованным ставим ник и значок через display/list name, а
+        // команды не трогаем — так ник и привилегия видны одновременно.
+        String effective = plugin.nicks().name(player);
+        boolean renamed = !effective.equals(player.getName());
         for (Scoreboard board : allBoards()) {
+            if (renamed) {
+                break;
+            }
             ensureHealthObjective(board);
             Team team = board.getTeam(teamName(player));
             if (team == null) {
@@ -125,10 +135,12 @@ public final class NametagManager {
         // forceNames нужен после смены префикса LuckPerms: Geyser мог закэшировать
         // старое имя, поэтому периодически пересылаем display/list name принудительно.
         if ((changed || forceNames) && plugin.getConfig().getBoolean("nametag.use-display-name", true)) {
-            Component name = Component.text(prefix).append(Component.text(player.getName()));
+            // Ник берём из VoidNick (если игрок переименован), иначе — настоящий.
+            String nick = effective;
+            Component name = Component.text(prefix).append(Component.text(nick));
             player.displayName(name);
             String tabName = TextUtil.color(
-                    plugin.getConfig().getString("nametag.prefix-color", "&f")) + prefix + player.getName()
+                    plugin.getConfig().getString("nametag.prefix-color", "&f")) + prefix + nick
                     + TextUtil.color(titleSuffix);
             if (plugin.getConfig().getBoolean("nametag.device-name-in-tab", true)) {
                 tabName += TextUtil.color(" &7(" + plugin.sidebar().deviceName(player) + ")");
