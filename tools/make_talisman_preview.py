@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """
-Мокап «талисман в руке» для проверки глазами.
+Мокап «талисман в руке» — грубая проверка глазами до захода в игру.
 
-Настоящий 3D-рендер в руке делает клиент Bedrock (attachable из funtime.mcpack),
-поэтому здесь — приблизительный 2.5D-вид: фигурка из пака + её золотой торец
-(тот же, что в textures/item/*.png). Нужен только чтобы сверить силуэты и цвета
-до захода в игру.
+Настоящий вид в руке рисует клиент Bedrock по attachable (плоская фигурка на
+ванильной анимации `animation.bow.wield`). Здесь фигурка просто кладётся на
+ладонь в трёх ракурсах, чтобы сверить размер и читаемость.
 
-Требует Pillow. Не обязателен для сервера.
+Требует Pillow. Для сервера не нужен.
 
     python3 tools/make_talisman_preview.py --pack dist/bedrock_pack --out dist/preview
 """
@@ -22,35 +21,21 @@ try:
 except ImportError:  # pragma: no cover
     raise SystemExit("Нужен Pillow: pip install pillow")
 
-# порядок как в меню shop_talismans.yml (по CMD)
-ORDER = [
-    ("life", 1, "talisman_harmony"),
-    ("fury", 2, "talisman_daedalus"),
-    ("guard", 3, "talisman_triton"),
-    ("wanderer", 4, "talisman_discord"),
-    ("tank", 5, "talisman_echidna"),
-    ("warrior", 6, "talisman_crusher"),
-    ("assassin", 7, "talisman_punisher"),
-    ("berserk", 8, "talisman_tyrant"),
-    ("hunter", 9, "talisman_edge"),
-    ("runner", 10, "talisman_phoenix"),
-    ("demon", 11, "new_year_talisman_grinch"),
-    ("hero", 12, "talisman_hero"),
+# CMD -> (подпись, имя иконки в паке)
+ITEMS = [
+    (1, "жизни", "minecraft_item_funtime_items_talisman_harmony"),
+    (2, "ярости", "minecraft_item_funtime_items_talisman_daedalus"),
+    (3, "стража", "minecraft_item_funtime_items_talisman_triton"),
+    (4, "странника", "minecraft_item_funtime_items_talisman_discord"),
+    (5, "танка", "minecraft_item_funtime_items_talisman_echidna"),
+    (6, "воина", "minecraft_item_funtime_items_talisman_crusher"),
+    (7, "убийцы", "minecraft_item_funtime_items_talisman_punisher"),
+    (8, "берсерка", "minecraft_item_funtime_items_talisman_tyrant"),
+    (9, "охотника", "minecraft_item_funtime_items_talisman_edge"),
+    (10, "бегуна", "minecraft_item_funtime_items_talisman_phoenix"),
+    (11, "демона", "minecraft_item_funtime_new_year_talisman_grinch"),
+    (12, "героя", "minecraft_item_funtime_items_talisman_hero"),
 ]
-SLUG = {
-    "talisman_harmony": "minecraft_item_funtime_items_talisman_harmony",
-    "talisman_daedalus": "minecraft_item_funtime_items_talisman_daedalus",
-    "talisman_triton": "minecraft_item_funtime_items_talisman_triton",
-    "talisman_discord": "minecraft_item_funtime_items_talisman_discord",
-    "talisman_echidna": "minecraft_item_funtime_items_talisman_echidna",
-    "talisman_crusher": "minecraft_item_funtime_items_talisman_crusher",
-    "talisman_punisher": "minecraft_item_funtime_items_talisman_punisher",
-    "talisman_tyrant": "minecraft_item_funtime_items_talisman_tyrant",
-    "talisman_edge": "minecraft_item_funtime_items_talisman_edge",
-    "talisman_phoenix": "minecraft_item_funtime_items_talisman_phoenix",
-    "new_year_talisman_grinch": "minecraft_item_funtime_new_year_talisman_grinch",
-    "talisman_hero": "minecraft_item_funtime_items_talisman_hero",
-}
 
 
 def main() -> int:
@@ -59,45 +44,45 @@ def main() -> int:
     parser.add_argument("--out", default="dist/preview")
     args = parser.parse_args()
 
-    scale = 7
+    scale = 6
     cell = 16 * scale
-    pad = 26
+    pad_x, pad_y, label = 16, 26, 22
     cols = 6
-    rows = (len(ORDER) + cols - 1) // cols
-    width = cols * (cell + pad * 2)
-    height = rows * (cell + pad * 2) + 16
+    rows = (len(ITEMS) + cols - 1) // cols
+    width = cols * (cell + pad_x * 2 + 34)
+    height = rows * (cell + pad_y + label) + 24
     sheet = Image.new("RGBA", (width, height), (22, 20, 26, 255))
     draw = ImageDraw.Draw(sheet)
     try:
-        font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 14)
+        font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 13)
     except OSError:
         font = ImageFont.load_default()
 
-    for index, (title, cmd, key) in enumerate(ORDER):
-        path = os.path.join(args.pack, "textures", "items", f"{SLUG[key]}.png")
+    missing = 0
+    for index, (cmd, title, icon) in enumerate(ITEMS):
+        path = os.path.join(args.pack, "textures", "items", f"{icon}.png")
         if not os.path.isfile(path):
+            missing += 1
             continue
         art = Image.open(path).convert("RGBA").resize((cell, cell), Image.NEAREST)
 
         col, row = index % cols, index // cols
-        x = col * (cell + pad * 2) + pad
-        y = row * (cell + pad * 2) + pad
+        x = col * (cell + pad_x * 2 + 34) + pad_x
+        y = row * (cell + pad_y + label) + pad_y
 
-        # золотое ребро = то же, что торец модели в руке (сдвиг вправо-вниз)
-        edge = Image.new("RGBA", (cell, cell), (0, 0, 0, 0))
-        edge.paste((214, 172, 72, 255), (0, 0, cell, cell), art)
-        shadow = Image.new("RGBA", (cell, cell), (0, 0, 0, 0))
-        shadow.paste((0, 0, 0, 120), (0, 0, cell, cell), art)
-        sheet.alpha_composite(shadow, (x + 7, y + 9))
-        sheet.alpha_composite(edge, (x + 6, y + 7))
-        sheet.alpha_composite(edge, (x + 3, y + 3))
-        sheet.alpha_composite(art, (x, y))
-        draw.text((x, y + cell + 6), f"{title} · CMD {cmd}", font=font, fill=(220, 220, 228, 255))
+        # «ладонь» — тёмная плашка, чтобы видеть реальный размер фигурки в руке
+        draw.rounded_rectangle(
+            [x - 8, y - 6, x + cell + 8, y + cell + 10], radius=6, fill=(46, 40, 52, 255)
+        )
+        # наклон как у плоского предмета в руке
+        tilted = art.rotate(-14, resample=Image.NEAREST, expand=False)
+        sheet.alpha_composite(tilted, (x, y))
+        draw.text((x, y + cell + 8), f"{title} · CMD {cmd}", font=font, fill=(220, 220, 228, 255))
 
     os.makedirs(args.out, exist_ok=True)
     out_path = os.path.join(args.out, "talismans-hand-mock.png")
     sheet.save(out_path)
-    print("OK:", out_path)
+    print(f"OK: {out_path}" + (f" (нет иконок: {missing})" if missing else ""))
     return 0
 
 

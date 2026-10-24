@@ -632,32 +632,28 @@ def build(args: argparse.Namespace) -> int:
         entry_icon[(item_id, cmd)] = icon_name
         entry_handheld[(item_id, cmd)] = info.handheld
 
-    # ---- талисманы: перекраска + 12-й талисман «герой» -----------------------------
+    # ---- талисманы: свои текстуры + 12-й талисман «герой» ---------------------------
     # В Java-паке 11 иконок талисманов, а в меню их 12 (у «героя» была иконка ярости).
-    # Здесь иконки дорабатываются (золотой контур, объём) и появляется отдельный «герой»;
+    # Иконки перерисовываются в tools/talisman_art.py (свой цвет, головной убор,
+    # эмблема и снаряжение у каждого), там же рисуется 12-й талисман.
     # CMD 12 должен совпадать с custom-model-data в конфиге плагина VoidTalismans.
     import talisman_art
 
-    restyled = talisman_art.restyle_icons(icons)
-    hero_icon: Optional[str] = None
-    crusher_key = next(
-        (key for key, icon in entry_icon.items() if icon.endswith("talisman_crusher")), None
+    redrawn = talisman_art.redraw_icons(icons)
+    hero_icon, hero_png = talisman_art.hero_icon()
+    icons[hero_icon] = hero_png
+    icon_sources[hero_icon] = "talisman_art: нарисован (герой)"
+    hero_key = ("minecraft:totem_of_undying", TALISMAN_HERO_CMD)
+    by_key[hero_key] = CmdEntry(
+        java_item=hero_key[0],
+        cmd=hero_key[1],
+        model="funtime/items/talisman_hero",
+        source="legacy",
+        overlay="base",
     )
-    if crusher_key is not None:
-        hero_icon = "minecraft_item_funtime_items_talisman_hero"
-        icons[hero_icon] = talisman_art.make_hero(icons[entry_icon[crusher_key]])
-        icon_sources[hero_icon] = "talisman_art: перекраска talisman_crusher"
-        hero_key = ("minecraft:totem_of_undying", TALISMAN_HERO_CMD)
-        by_key[hero_key] = CmdEntry(
-            java_item=hero_key[0],
-            cmd=hero_key[1],
-            model="funtime/items/talisman_hero",
-            source="legacy",
-            overlay="base",
-        )
-        entry_icon[hero_key] = hero_icon
-        entry_handheld[hero_key] = True
-    log(f"Талисманы: перекрашено {len(restyled)}, герой: {hero_icon or 'нет'}")
+    entry_icon[hero_key] = hero_icon
+    entry_handheld[hero_key] = True
+    log(f"Талисманы: перерисовано {len(redrawn)}, добавлен «герой» (CMD {TALISMAN_HERO_CMD})")
 
     log(f"Иконок: {len(icons)} (уникальных текстур)")
 
@@ -669,7 +665,7 @@ def build(args: argparse.Namespace) -> int:
 
     namespace = args.namespace
     pack_name = args.pack_name
-    version = [1, 1, 0]   # поднимать при любом изменении графики
+    version = [1, 2, 0]   # поднимать при любом изменении графики
 
     manifest = {
         "format_version": 2,
@@ -719,10 +715,10 @@ def build(args: argparse.Namespace) -> int:
     if os.path.isfile(pack_icon):
         shutil.copyfile(pack_icon, os.path.join(build_dir, "pack_icon.png"))
 
-    # ---- 3D-талисманы в руке (attachable) -----------------------------------------
-    talisman_icons = [name for name in icons if talisman_art.is_talisman(name)]
+    # ---- талисманы в руке (attachable) --------------------------------------------
+    talisman_icons = [name for name in icons if talisman_art.slug_of(name)]
     talisman_3d = talisman_art.build_attachables(build_dir, talisman_icons, icons, namespace)
-    log(f"3D-модель в руке: {len(talisman_3d)} талисманов")
+    log(f"Модель в руке: {len(talisman_3d)} талисманов")
 
     # ---- Geyser mappings ----------------------------------------------------------
     items_map: Dict[str, List[dict]] = defaultdict(list)
