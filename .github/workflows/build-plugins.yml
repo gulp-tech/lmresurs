@@ -1,0 +1,46 @@
+name: build-voidplugins
+
+# Сборка исправленных и оптимизированных плагинов VoidPE.
+# Запуск: вручную (Actions -> build-voidplugins -> Run workflow) или пушем
+# изменений в plugins/**. Готовые jar-файлы кладутся в релиз "voidplugins".
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'plugins/**'
+      - '.github/workflows/build-plugins.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        plugin:
+          - VoidAntiCheat
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+
+      - name: Сборка ${{ matrix.plugin }}
+        working-directory: plugins/${{ matrix.plugin }}
+        run: mvn -B -DskipTests package
+
+      - name: Проверка jar
+        working-directory: plugins/${{ matrix.plugin }}
+        run: ls -la target/*.jar
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.plugin }}-jar
+          path: plugins/${{ matrix.plugin }}/target/*.jar
+          if-no-files-found: error
