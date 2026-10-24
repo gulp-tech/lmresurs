@@ -1,0 +1,11 @@
+name: probe
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/probe.yml'
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "ok"
