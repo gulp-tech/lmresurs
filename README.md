@@ -10,7 +10,7 @@ Bedrock-порт ресурспака и меню **FunTime** для Geyser + Fl
 | `funtime/` | Распакованный Java-пак (локально, в git не нужен — генератор умеет читать `.zip`) |
 | `tools/build_bedrock_pack.py` | Генератор Bedrock-пака и Geyser mappings из Java-пака |
 | `tools/port_deluxemenus.py` | Портирование меню DeluxeMenus (оформление, без изменения функционала) |
-| `tools/talisman_art.py` | Талисманы: иконки 32×32 и 12 объёмных фигурок в руке (attachable) |
+| `tools/talisman_art.py` | Талисманы: иконки 64×64 и 12 объёмных фигурок в руке (attachable) |
 | `tools/render_talisman_hand.py` | Оффлайн-рендер фигурок «в руке» для превью (нужен Pillow) |
 | `tools/preview_menu.py` | PNG-превью меню |
 | `tools/build_all.sh` | Пересборка пака, mappings и меню одной командой |

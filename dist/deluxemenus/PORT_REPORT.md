@@ -76,6 +76,6 @@
 
 - `shop.yml`: item_model voidspheres:sphere1 — модели нет в FunTime-паке, на Bedrock будет бумага
 - `shop_spheres.yml`: item_model voidspheres:sphere4 — модели нет в FunTime-паке, на Bedrock будет бумага
+- `shop_spheres.yml`: item_model voidspheres:sphere1 — модели нет в FunTime-паке, на Bedrock будет бумага
 - `shop_spheres.yml`: item_model voidspheres:sphere2 — модели нет в FunTime-паке, на Bedrock будет бумага
 - `shop_spheres.yml`: item_model voidspheres:sphere3 — модели нет в FunTime-паке, на Bedrock будет бумага
-- `shop_spheres.yml`: item_model voidspheres:sphere1 — модели нет в FunTime-паке, на Bedrock будет бумага
