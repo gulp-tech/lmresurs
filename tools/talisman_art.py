@@ -1,156 +1,271 @@
 #!/usr/bin/env python3
 """
-Талисманы: перекраска иконок FunTime и (не)модель в руке.
+Талисманы: свои иконки 32×32 и объёмная фигурка в руке.
 
-ПОЧЕМУ ТАК.
+Две вещи, которые здесь важны.
 
-* Иконки. В Java-паке FunTime 11 талисманов нарисованы одной золотистой фигуркой
-  с мелкими отличиями — в слоте меню они неразличимы. Полностью перерисовывать
-  их не нужно (пользователь просил «как на FunTime, только немного изменить»),
-  поэтому берётся ОРИГИНАЛЬНЫЙ спрайт FunTime и перекрашивается: у каждого
-  талисмана свой оттенок, насыщенность чуть выше, добавлены обводка и объём.
-  Силуэт, корона, глаза и все детали остаются ровно как в FunTime.
+1. ИКОНКИ РИСУЮТСЯ С НУЛЯ (32×32, с бликами, тенями и обводкой). У каждого
+   талисмана свой силуэт: цвет, головной убор (корона, рога, шлем, капюшон,
+   шляпа, нимб) и снаряжение в руках (меч, топор, кинжалы, лук, посох, щит,
+   крылья, плащ). Это не перекраска FunTime — рисунок свой.
 
-* Рука. У Bedrock кастомный предмет из Geyser — это обычная плоская иконка
-  (`minecraft:icon`); Geyser НЕ создаёт для него attachable и не делает
-  3D-модель. Наши attachables были единственной причиной, почему фигурка
-  висела в руке криво: своя геометрия + своя анимация не совпадают с тем, как
-  игра держит предмет. Поэтому attachables больше не генерируются, и в руке
-  предмет выглядит ровно так же, как в Java-версии FunTime — плоской иконкой
-  в ладони.
+2. В РУКЕ — НАСТОЯЩАЯ 3D-ФИГУРКА. Плоская иконка в руке выглядит наклейкой,
+   поэтому собирается attachable из кубов (голова, торс, руки, ноги).
+   Схема взята из пака, который Geyser генерирует сам для голов игроков
+   (`skull_resource_pack`), — там есть главное, чего не хватало раньше:
+
+       "binding": "c.item_slot == 'head' ? 'head' : q.item_slot_to_bone_name(c.item_slot)"
+
+   Без `binding` модель не привязана к кости руки и висит мимо ладони —
+   именно поэтому прошлые попытки вставали криво. Дальше идёт цепочка
+   root → root_x → root_y → root_z, а кубы лежат на дочерней кости.
+
+Зависимости: только стандартная библиотека Python 3.
 """
 
 from __future__ import annotations
 
-import colorsys
+import json
 import os
 import struct
 import zlib
 from typing import Dict, List, Optional, Tuple
 
-# --------------------------------------------------------------------------------------
-# Цветовая схема: slug -> (оттенок 0..1, насыщенность x, яркость x)
-# --------------------------------------------------------------------------------------
+S = 32            # размер иконки
+TEX = 64          # атлас для 3D: 0..31 — спрайт, 32..63 — служебные заливки
 
-SCHEMES: Dict[str, Tuple[int, int, int]] = {
-    "harmony": (74, 200, 110),     # Талисман жизни     — зелёный
-    "daedalus": (222, 62, 66),     # Талисман ярости    — красный
-    "triton": (72, 132, 232),      # Талисман стража    — синий
-    "discord": (148, 92, 226),     # Талисман странника — фиолетовый
-    "echidna": (138, 148, 166),    # Талисман танка     — стальной
-    "crusher": (208, 62, 74),      # Талисман воина     — багряный
-    "punisher": (60, 132, 92),     # Талисман убийцы    — тёмно-зелёный
-    "tyrant": (238, 128, 46),      # Талисман берсерка  — оранжевый
-    "edge": (162, 110, 62),        # Талисман охотника  — коричневый
-    "phoenix": (86, 196, 232),     # Талисман бегуна    — голубой
-    "grinch": (150, 34, 54),       # Талисман демона    — тёмно-красный
-    "hero": (238, 196, 78),        # Талисман героя     — золотой
+Color = Tuple[int, int, int, int]
+Grid = List[List[Optional[Color]]]
+
+GOLD = (246, 200, 80, 255)
+GOLD_D = (196, 150, 46, 255)
+STEEL = (214, 220, 232, 255)
+STEEL_D = (158, 166, 182, 255)
+WOOD = (124, 84, 48, 255)
+BONE = (240, 230, 208, 255)
+BONE_D = (212, 200, 180, 255)
+WHITE = (250, 248, 240, 255)
+INK = (20, 14, 26, 240)
+
+# slug -> (основной цвет, верх, снаряжение)
+TALISMANS: Dict[str, dict] = {
+    "life":     dict(color=(72, 186, 108), top="halo",  gear="none"),
+    "fury":     dict(color=(206, 62, 62),  top="horns", gear="none"),
+    "guard":    dict(color=(66, 122, 214), top="helm",  gear="shield"),
+    "wanderer": dict(color=(140, 92, 214), top="hood",  gear="staff"),
+    "tank":     dict(color=(132, 142, 158), top="helm", gear="pauldrons"),
+    "warrior":  dict(color=(196, 58, 74),  top="crown", gear="sword"),
+    "assassin": dict(color=(44, 108, 82),  top="hood",  gear="daggers"),
+    "berserk":  dict(color=(226, 120, 44), top="horns", gear="axe"),
+    "hunter":   dict(color=(146, 102, 60), top="hat",   gear="bow"),
+    "runner":   dict(color=(66, 176, 216), top="none",  gear="wings"),
+    "demon":    dict(color=(126, 30, 48),  top="horns", gear="wings"),
+    "hero":     dict(color=(230, 184, 66), top="crown", gear="cape"),
 }
 
-HERO_SOURCE = "crusher"        # из какой фигурки FunTime делается «герой»
-HERO_ICON_NAME = "minecraft_item_funtime_items_talisman_hero"
+# имена моделей FunTime -> slug. В Java-паке талисманы названы по-своему
+# (harmony, daedalus, crusher…), а в меню у них другие названия — вот соответствие.
+# CMD 1..12 совпадает с model_data_component в shop_talismans.yml.
+FUNTIME_SLUGS: Dict[str, str] = {
+    "harmony": "life",        # 1  Талисман жизни
+    "daedalus": "fury",       # 2  Талисман ярости
+    "triton": "guard",        # 3  Талисман стража
+    "discord": "wanderer",    # 4  Талисман странника
+    "echidna": "tank",        # 5  Талисман танка
+    "crusher": "warrior",     # 6  Талисман воина
+    "punisher": "assassin",   # 7  Талисман убийцы
+    "tyrant": "berserk",      # 8  Талисман берсерка
+    "edge": "hunter",         # 9  Талисман охотника
+    "phoenix": "runner",      # 10 Талисман бегуна
+    "grinch": "demon",        # 11 Талисман демона
+    "hero": "hero",           # 12 Талисман героя
+}
 
-# Пиксели с насыщенностью ниже порога (белки глаз, стальные блики) не перекрашиваем.
-DESATURATED_KEEP = 0.18
+# slug -> id талисмана в конфиге плагина VoidTalismans
+PLUGIN_IDS = {
+    "life": "phoenix", "fury": "echidna", "guard": "triton", "wanderer": "harmony",
+    "tank": "sources", "warrior": "crusher", "assassin": "cobra", "berserk": "punisher",
+    "hunter": "vepr", "runner": "grani", "demon": "satan", "hero": "absolut",
+}
+
+# CMD каждого талисмана (совпадает с shop_talismans.yml и VoidTalismans-config.yml)
+CMD_BY_SLUG = {
+    "life": 1, "fury": 2, "guard": 3, "wanderer": 4, "tank": 5, "warrior": 6,
+    "assassin": 7, "berserk": 8, "hunter": 9, "runner": 10, "demon": 11, "hero": 12,
+}
 
 
 # --------------------------------------------------------------------------------------
-# PNG: чтение (палитровые спрайты FunTime) и запись
+# Палитра-градиент
 # --------------------------------------------------------------------------------------
 
-def _paeth(a: int, b: int, c: int) -> int:
-    p = a + b - c
-    pa, pb, pc = abs(p - a), abs(p - b), abs(p - c)
-    if pa <= pb and pa <= pc:
-        return a
-    if pb <= pc:
-        return b
-    return c
+def _clamp8(v: float) -> int:
+    return 0 if v < 0 else 255 if v > 255 else int(round(v))
 
 
-def _unfilter(raw: bytes, width: int, height: int, channels: int) -> bytearray:
-    out = bytearray(height * width * channels)
-    stride = width * channels
-    prev = bytearray(stride)
-    pos = 0
-    for y in range(height):
-        ftype = raw[pos]
-        pos += 1
-        line = bytearray(raw[pos:pos + stride])
-        pos += stride
-        if ftype == 1:
-            for i in range(channels, stride):
-                line[i] = (line[i] + line[i - channels]) & 0xFF
-        elif ftype == 2:
-            for i in range(stride):
-                line[i] = (line[i] + prev[i]) & 0xFF
-        elif ftype == 3:
-            for i in range(stride):
-                left = line[i - channels] if i >= channels else 0
-                line[i] = (line[i] + ((left + prev[i]) >> 1)) & 0xFF
-        elif ftype == 4:
-            for i in range(stride):
-                left = line[i - channels] if i >= channels else 0
-                upleft = prev[i - channels] if i >= channels else 0
-                line[i] = (line[i] + _paeth(left, prev[i], upleft)) & 0xFF
-        elif ftype != 0:
-            raise ValueError(f"неизвестный PNG-фильтр: {ftype}")
-        out[y * stride:(y + 1) * stride] = line
-        prev = line
+def _ramp(base: Tuple[int, int, int]) -> dict:
+    r, g, b = base
+    f = lambda k: (_clamp8(r * k), _clamp8(g * k), _clamp8(b * k), 255)
+    return dict(hi=f(1.40), lt=f(1.16), base=(r, g, b, 255), dk=f(0.72), dd=f(0.48))
+
+
+# --------------------------------------------------------------------------------------
+# Рисование
+# --------------------------------------------------------------------------------------
+
+def _blank() -> Grid:
+    return [[None] * S for _ in range(S)]
+
+
+def _box(grid: Grid, x0: int, y0: int, x1: int, y1: int, color: Color) -> None:
+    for y in range(min(y0, y1), max(y0, y1) + 1):
+        for x in range(min(x0, x1), max(x0, x1) + 1):
+            if 0 <= x < S and 0 <= y < S:
+                grid[y][x] = color
+
+
+def _body(grid: Grid, p: dict) -> None:
+    """Фигурка: ноги, торс, руки, голова, лицо."""
+    _box(grid, 11, 23, 14, 29, p["dk"])          # левая нога
+    _box(grid, 17, 23, 20, 29, p["dk"])          # правая нога
+    _box(grid, 11, 29, 14, 30, p["dd"])          # ботинки
+    _box(grid, 17, 29, 20, 30, p["dd"])
+
+    _box(grid, 11, 13, 20, 23, p["base"])        # торс
+    _box(grid, 11, 13, 20, 14, p["lt"])          # блик сверху
+    _box(grid, 11, 21, 20, 23, p["dk"])          # тень снизу
+    _box(grid, 15, 16, 16, 20, GOLD)             # застёжка на груди
+
+    _box(grid, 8, 14, 10, 22, p["dk"])           # левая рука
+    _box(grid, 21, 14, 23, 22, p["dk"])          # правая рука
+    _box(grid, 8, 14, 10, 14, p["base"])
+    _box(grid, 21, 14, 23, 14, p["base"])
+
+    _box(grid, 10, 4, 21, 13, p["base"])         # голова
+    _box(grid, 10, 4, 21, 5, p["lt"])
+    _box(grid, 10, 12, 21, 13, p["dk"])
+
+    _box(grid, 12, 8, 14, 11, WHITE)             # глаза
+    _box(grid, 17, 8, 19, 11, WHITE)
+    _box(grid, 13, 9, 14, 11, (40, 30, 44, 255))
+    _box(grid, 17, 9, 18, 11, (40, 30, 44, 255))
+    _box(grid, 14, 12, 17, 12, p["dd"])          # рот
+
+
+def _top(grid: Grid, kind: str, p: dict) -> None:
+    if kind == "crown":
+        _box(grid, 10, 1, 21, 3, GOLD)
+        _box(grid, 10, 3, 21, 3, GOLD_D)
+        for x in (10, 13, 17, 20):
+            _box(grid, x, 0, x, 1, GOLD)
+    elif kind == "horns":
+        _box(grid, 8, 2, 9, 4, BONE)
+        _box(grid, 22, 2, 23, 4, BONE)
+        _box(grid, 7, 1, 8, 2, BONE_D)
+        _box(grid, 23, 1, 24, 2, BONE_D)
+    elif kind == "helm":
+        # закрытый шлем: металл по куполу, открытое лицо и нащёчники
+        _box(grid, 10, 2, 21, 5, STEEL)
+        _box(grid, 10, 2, 21, 3, (240, 244, 252, 255))
+        _box(grid, 9, 6, 10, 6, STEEL_D)       # козырёк
+        _box(grid, 21, 6, 22, 6, STEEL_D)
+        _box(grid, 10, 6, 10, 11, STEEL_D)     # нащёчники
+        _box(grid, 21, 6, 21, 11, STEEL_D)
+        _box(grid, 15, 3, 16, 4, GOLD)         # гребень
+    elif kind == "hood":
+        _box(grid, 9, 2, 22, 6, p["dd"])
+        _box(grid, 9, 2, 22, 3, p["dk"])
+        _box(grid, 9, 7, 10, 13, p["dd"])
+        _box(grid, 21, 7, 22, 13, p["dd"])
+    elif kind == "halo":
+        _box(grid, 11, 0, 20, 1, (255, 246, 170, 255))
+        _box(grid, 11, 0, 11, 1, (206, 255, 212, 255))
+        _box(grid, 20, 0, 20, 1, (206, 255, 212, 255))
+    elif kind == "hat":
+        _box(grid, 6, 1, 25, 3, (114, 80, 46, 255))
+        _box(grid, 10, 3, 21, 4, (96, 68, 38, 255))
+        _box(grid, 6, 1, 7, 3, GOLD_D)
+
+
+def _gear(grid: Grid, kind: str, p: dict) -> None:
+    if kind == "sword":
+        _box(grid, 25, 4, 26, 17, STEEL)
+        _box(grid, 25, 4, 25, 17, STEEL_D)
+        _box(grid, 23, 17, 28, 18, GOLD)
+        _box(grid, 25, 19, 26, 23, WOOD)
+    elif kind == "axe":
+        _box(grid, 24, 6, 28, 11, STEEL)
+        _box(grid, 24, 6, 28, 7, (240, 244, 252, 255))
+        _box(grid, 25, 12, 26, 26, WOOD)
+    elif kind == "daggers":
+        _box(grid, 25, 6, 26, 14, STEEL)
+        _box(grid, 24, 14, 27, 15, GOLD_D)
+        _box(grid, 5, 6, 6, 14, STEEL)
+        _box(grid, 4, 14, 7, 15, GOLD_D)
+    elif kind == "bow":
+        _box(grid, 4, 5, 5, 25, WOOD)
+        _box(grid, 3, 4, 4, 6, WOOD)
+        _box(grid, 3, 24, 4, 26, WOOD)
+        _box(grid, 6, 5, 6, 25, (226, 226, 226, 255))
+    elif kind == "staff":
+        _box(grid, 25, 4, 26, 26, WOOD)
+        _box(grid, 23, 1, 28, 4, (198, 150, 255, 255))
+        _box(grid, 25, 0, 26, 1, (236, 214, 255, 255))
+    elif kind == "shield":
+        _box(grid, 3, 12, 7, 24, STEEL)
+        _box(grid, 3, 12, 7, 13, GOLD_D)
+        _box(grid, 3, 23, 7, 24, GOLD_D)
+        _box(grid, 5, 16, 5, 21, STEEL_D)
+    elif kind == "pauldrons":
+        _box(grid, 6, 13, 9, 16, STEEL)
+        _box(grid, 22, 13, 25, 16, STEEL)
+        _box(grid, 6, 13, 9, 13, GOLD_D)
+        _box(grid, 22, 13, 25, 13, GOLD_D)
+    elif kind == "wings":
+        _box(grid, 2, 12, 7, 22, p["lt"])
+        _box(grid, 24, 12, 29, 22, p["lt"])
+        _box(grid, 2, 12, 2, 22, p["dk"])
+        _box(grid, 29, 12, 29, 22, p["dk"])
+        _box(grid, 3, 13, 6, 14, p["hi"])
+        _box(grid, 25, 13, 28, 14, p["hi"])
+    elif kind == "cape":
+        _box(grid, 3, 13, 8, 27, GOLD_D)
+        _box(grid, 23, 13, 28, 27, GOLD_D)
+        _box(grid, 3, 13, 8, 14, (255, 238, 150, 255))
+        _box(grid, 23, 13, 28, 14, (255, 238, 150, 255))
+
+
+def _outline(grid: Grid) -> Grid:
+    """Тёмный контур по силуэту — фигурка читается на любом фоне."""
+    def solid(x: int, y: int) -> bool:
+        return 0 <= x < S and 0 <= y < S and grid[y][x] is not None
+
+    out = [row[:] for row in grid]
+    for y in range(S):
+        for x in range(S):
+            if solid(x, y):
+                continue
+            if solid(x - 1, y) or solid(x + 1, y) or solid(x, y - 1) or solid(x, y + 1):
+                out[y][x] = INK
     return out
 
 
-def decode_png(data: bytes) -> Tuple[int, int, bytearray]:
-    if data[:8] != b"\x89PNG\r\n\x1a\n":
-        raise ValueError("не PNG")
-    pos = 8
-    palette = b""
-    trns = b""
-    idat = b""
-    width = height = 0
-    color_type = 0
-    while pos < len(data):
-        (length,) = struct.unpack(">I", data[pos:pos + 4])
-        tag = data[pos + 4:pos + 8]
-        payload = data[pos + 8:pos + 8 + length]
-        pos += 12 + length
-        if tag == b"IHDR":
-            width, height, depth, color_type, _c, _f, interlace = struct.unpack(
-                ">IIBBBBB", payload
-            )
-            if depth != 8 or interlace != 0:
-                raise ValueError("только 8-битные PNG без интерлейса")
-        elif tag == b"PLTE":
-            palette = payload
-        elif tag == b"tRNS":
-            trns = payload
-        elif tag == b"IDAT":
-            idat += payload
-        elif tag == b"IEND":
-            break
-    channels = {0: 1, 2: 3, 3: 1, 4: 2, 6: 4}[color_type]
-    pixels = _unfilter(zlib.decompress(idat), width, height, channels)
+def render_icon(slug: str) -> Grid:
+    spec = TALISMANS[slug]
+    p = _ramp(spec["color"])
+    grid = _blank()
+    if spec["gear"] in ("wings", "cape"):
+        _gear(grid, spec["gear"], p)      # за спиной
+    _body(grid, p)
+    if spec["gear"] not in ("wings", "cape"):
+        _gear(grid, spec["gear"], p)
+    _top(grid, spec["top"], p)
+    return _outline(grid)
 
-    rgba = bytearray(width * height * 4)
-    for i in range(width * height):
-        if color_type == 6:
-            rgba[i * 4:i * 4 + 4] = pixels[i * 4:i * 4 + 4]
-        elif color_type == 2:
-            r, g, b = pixels[i * 3:i * 3 + 3]
-            rgba[i * 4:i * 4 + 4] = bytes((r, g, b, 255))
-        elif color_type == 3:
-            idx = pixels[i]
-            r, g, b = palette[idx * 3:idx * 3 + 3] if idx * 3 + 2 < len(palette) else (0, 0, 0)
-            a = trns[idx] if idx < len(trns) else 255
-            rgba[i * 4:i * 4 + 4] = bytes((r, g, b, a))
-        elif color_type == 4:
-            g, a = pixels[i * 2:i * 2 + 2]
-            rgba[i * 4:i * 4 + 4] = bytes((g, g, g, a))
-        else:
-            g = pixels[i]
-            rgba[i * 4:i * 4 + 4] = bytes((g, g, g, 255))
-    return width, height, rgba
 
+# --------------------------------------------------------------------------------------
+# PNG
+# --------------------------------------------------------------------------------------
 
 def encode_png(width: int, height: int, rgba: bytes) -> bytes:
     raw = bytearray()
@@ -175,132 +290,275 @@ def encode_png(width: int, height: int, rgba: bytes) -> bytes:
     )
 
 
-# --------------------------------------------------------------------------------------
-# Перекраска
-# --------------------------------------------------------------------------------------
-
-def _clamp8(value: float) -> int:
-    return 0 if value < 0 else 255 if value > 255 else int(round(value))
-
-
-MIX = 0.78          # сила перекраски: 0 — оригинал FunTime, 1 — чистый цвет
-
-
-def recolor(width: int, height: int, rgba: bytearray, base: Tuple[int, int, int]) -> bytearray:
-    """
-    Перекрашивает спрайт FunTime в цвет талисмана, СМЕШИВАЯ его с оригиналом.
-
-    * тонированный вариант = цвет талисмана, разложенный по яркости исходника;
-    * результат = 78 % тона + 22 % оригинала: рисунок, корона, складки и лицо
-      FunTime остаются читаемыми, но у каждого талисмана свой цвет;
-    * золотые детали и белки глаз не тонируются совсем — иначе лицо
-      «заливается» цветом и фигурка превращается в пятно.
-    """
-    out = bytearray(rgba)
-    br, bg, bb = base
-    for i in range(0, len(rgba), 4):
-        r, g, b, a = rgba[i:i + 4]
-        if a < 32:
-            continue
-        lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255.0
-        h, l, sat = colorsys.rgb_to_hls(r / 255, g / 255, b / 255)
-        if (lum > 0.84 and sat < 0.25) or (sat > 0.30 and 0.07 <= h <= 0.17 and lum > 0.35):
-            continue                                  # белки глаз / золото FunTime
-        tint = (br * (0.30 + 1.45 * lum), bg * (0.30 + 1.45 * lum), bb * (0.30 + 1.45 * lum))
-        out[i:i + 4] = bytes((
-            _clamp8(r * (1 - MIX) + tint[0] * MIX),
-            _clamp8(g * (1 - MIX) + tint[1] * MIX),
-            _clamp8(b * (1 - MIX) + tint[2] * MIX),
-            a,
-        ))
-    return out
-
-
-def outline(width: int, height: int, rgba: bytearray) -> bytearray:
-    """
-    Тёмная обводка по внешнему контуру: на сером фоне сундука фигурка
-    перестаёт сливаться и читается как предмет, а не как пятно.
-    """
-    alpha = lambda x, y: rgba[(y * width + x) * 4 + 3]
-    out = bytearray(rgba)
-    for y in range(height):
-        for x in range(width):
-            if alpha(x, y) >= 32:
+def _grid_to_bytes(grid: Grid, size: int) -> bytearray:
+    out = bytearray(size * size * 4)
+    for y in range(size):
+        for x in range(size):
+            c = grid[y][x]
+            if c is None:
                 continue
-            near = ((x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1))
-            if any(
-                0 <= nx < width and 0 <= ny < height and alpha(nx, ny) >= 128
-                for nx, ny in near
-            ):
-                i = (y * width + x) * 4
-                out[i:i + 4] = bytes((26, 18, 32, 150))
+            i = (y * size + x) * 4
+            out[i:i + 4] = bytes(c)
     return out
+
+
+def icon_png(slug: str) -> bytes:
+    return encode_png(S, S, _grid_to_bytes(render_icon(slug), S))
+
+
+def atlas_png(slug: str) -> bytes:
+    """
+    Атлас 64×64 для 3D-модели: слева сверху спрайт (лицо), справа сверху
+    светлая заливка (верхние грани), снизу тёмная (боковины и низ).
+    За счёт этого кубы выглядят объёмными, а лицо остаётся рисунком.
+    """
+    p = _ramp(TALISMANS[slug]["color"])
+    light = p["hi"]
+    dark = p["dd"]
+    grid = render_icon(slug)
+
+    canvas: Grid = [[None] * TEX for _ in range(TEX)]
+    for y in range(TEX):
+        for x in range(TEX):
+            if x < S and y < S:
+                canvas[y][x] = grid[y][x]
+            elif x >= S and y < S:
+                canvas[y][x] = light
+            else:
+                canvas[y][x] = dark
+    return encode_png(TEX, TEX, _grid_to_bytes(canvas, TEX))
 
 
 def slug_of(icon_name: str) -> Optional[str]:
-    for slug in SCHEMES:
-        if icon_name.endswith(f"talisman_{slug}"):
+    """Имя иконки из mappings -> slug (harmony -> life, grinch -> demon и т.д.)."""
+    for funtime, slug in FUNTIME_SLUGS.items():
+        if icon_name.endswith(f"talisman_{funtime}"):
             return slug
     return None
 
 
-def restyle_icons(icons: Dict[str, bytes]) -> List[str]:
-    """Перекрашивает иконки талисманов на месте. Возвращает список имён."""
+HERO_ICON_NAME = "minecraft_item_funtime_items_talisman_hero"
+
+
+def redraw_icons(icons: Dict[str, bytes]) -> List[str]:
+    """Подменяет иконки талисманов на нарисованные (CMD и id не меняются)."""
     touched: List[str] = []
     for name in sorted(icons):
         slug = slug_of(name)
-        if not slug or slug == "hero":
+        if not slug:
             continue
-        try:
-            width, height, rgba = decode_png(icons[name])
-        except ValueError:
-            continue
-        rgba = recolor(width, height, rgba, SCHEMES[slug])
-        icons[name] = encode_png(width, height, outline(width, height, rgba))
+        icons[name] = icon_png(slug)
         touched.append(name)
     return touched
 
 
-def hero_icon(icons: Dict[str, bytes]) -> Optional[Tuple[str, bytes]]:
-    """12-й талисман: золотая версия фигурки воина (в FunTime её не было)."""
-    source = next((n for n in icons if n.endswith(f"talisman_{HERO_SOURCE}")), None)
-    if source is None:
-        return None
-    width, height, rgba = decode_png(icons[source])
-    rgba = recolor(width, height, rgba, SCHEMES["hero"])
-    return HERO_ICON_NAME, encode_png(width, height, outline(width, height, rgba))
+def hero_icon() -> Tuple[str, bytes]:
+    return HERO_ICON_NAME, icon_png("hero")
 
 
 # --------------------------------------------------------------------------------------
-# Самопроверка: python3 tools/talisman_art.py <funtime.zip> --out /tmp/talismans
+# 3D-модель в руке
+# --------------------------------------------------------------------------------------
+
+GEO_FILE = os.path.join("models", "entity", "talisman.geo.json")
+ANIM_FILE = os.path.join("animations", "talisman.json")
+ATTACHABLE_DIR = "attachables"
+HAND_SCALE = 0.5
+
+# области спрайта, которые натягиваются на грани кубов: (x, y, w, h)
+REGIONS = {
+    "head":  (10, 4, 12, 10),
+    "torso": (11, 13, 10, 10),
+    "arm":   (8, 14, 3, 8),
+    "leg":   (11, 23, 4, 7),
+}
+
+
+def _faces(region: Tuple[int, int, int, int], depth: int) -> dict:
+    """
+    Передняя и задняя грани — вырез из спрайта, бока и низ — тёмная заливка,
+    верх — светлая (они лежат в правой половине атласа).
+    """
+    px, py, w, h = region
+    return {
+        "north": {"uv": [px, py], "uv_size": [w, h]},
+        "south": {"uv": [px, py], "uv_size": [w, h]},
+        "east": {"uv": [S, S], "uv_size": [depth, h]},
+        "west": {"uv": [S, S], "uv_size": [depth, h]},
+        "up": {"uv": [S, 0], "uv_size": [w, depth]},
+        "down": {"uv": [S, S], "uv_size": [w, depth]},
+    }
+
+
+def _geometry() -> dict:
+    """
+    Структура как в паке Geyser для голов игроков: цепочка root → root_x →
+    root_y → root_z, кубы на дочерней кости. У `root` есть `binding` —
+    без него модель не привязывается к кости руки и висит мимо ладони.
+    """
+    return {
+        "format_version": "1.16.0",
+        "minecraft:geometry": [
+            {
+                "description": {
+                    "identifier": "geometry.talisman",
+                    "texture_width": TEX,
+                    "texture_height": TEX,
+                    "visible_bounds_width": 3,
+                    "visible_bounds_height": 3,
+                    "visible_bounds_offset": [0, 1, 0],
+                },
+                "bones": [
+                    {
+                        "name": "root",
+                        "binding": "c.item_slot == 'head' ? 'head' : "
+                                   "q.item_slot_to_bone_name(c.item_slot)",
+                        "pivot": [0, 8, 0],
+                    },
+                    {"name": "root_x", "parent": "root", "pivot": [0, 8, 0]},
+                    {"name": "root_y", "parent": "root_x", "pivot": [0, 8, 0]},
+                    {"name": "root_z", "parent": "root_y", "pivot": [0, 8, 0]},
+                    {
+                        "name": "figure",
+                        "parent": "root_z",
+                        "pivot": [0, 24, 0],
+                        "cubes": [
+                            {"origin": [-4, 18, -1], "size": [8, 5, 2],
+                             "uv": _faces(REGIONS["head"], 2)},
+                            {"origin": [-3, 12, -1], "size": [6, 6, 2],
+                             "uv": _faces(REGIONS["torso"], 2)},
+                            {"origin": [-5, 12, -1], "size": [2, 5, 2],
+                             "uv": _faces(REGIONS["arm"], 2)},
+                            {"origin": [3, 12, -1], "size": [2, 5, 2],
+                             "uv": _faces(REGIONS["arm"], 2)},
+                            {"origin": [-3, 8, -1], "size": [3, 4, 2],
+                             "uv": _faces(REGIONS["leg"], 2)},
+                            {"origin": [0, 8, -1], "size": [3, 4, 2],
+                             "uv": _faces(REGIONS["leg"], 2)},
+                        ],
+                    },
+                ],
+            }
+        ],
+    }
+
+
+def _animations() -> dict:
+    """
+    Числа — из пака Geyser для голов игроков (там они подобраны так, чтобы
+    предмет стоял в ладони). Меняется только масштаб: фигурка выше головы.
+    """
+    def pose(position, rot_x, rot_y, root_z=None):
+        bones = {
+            "root": {"scale": [HAND_SCALE, HAND_SCALE, HAND_SCALE], "position": position},
+            "root_x": {"rotation": [rot_x, 0, 0]},
+            "root_y": {"rotation": [0, rot_y, 0]},
+        }
+        if root_z is not None:
+            bones["root_z"] = {"rotation": [root_z, 0, 0]}
+        return {"loop": True, "bones": bones}
+
+    return {
+        "format_version": "1.8.0",
+        "animations": {
+            "animation.talisman.thirdperson_main_hand": pose([0, 12, -4], 45, 135),
+            "animation.talisman.thirdperson_off_hand": pose([0, 12, -4], 45, -135),
+            "animation.talisman.firstperson_main_hand": pose([2, 16, 4], 180, 135, 45),
+            "animation.talisman.firstperson_off_hand": pose([2, 16, 4], 180, 135, 45),
+            "animation.talisman.disable": {
+                "loop": True,
+                "override_previous_animation": True,
+                "bones": {"root": {"scale": 0}},
+            },
+        },
+    }
+
+
+def _write_json(path: str, payload: dict) -> None:
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+    with open(path, "w", encoding="utf-8") as fh:
+        json.dump(payload, fh, ensure_ascii=False, indent=2)
+
+
+def build_hand_models(pack_dir: str, icon_names: List[str], namespace: str) -> List[str]:
+    """Геометрия, анимации и по attachable на каждый талисман."""
+    names = [n for n in sorted(set(icon_names)) if slug_of(n)]
+    if not names:
+        return []
+
+    _write_json(os.path.join(pack_dir, GEO_FILE), _geometry())
+    _write_json(os.path.join(pack_dir, ANIM_FILE), _animations())
+
+    for name in names:
+        tex_path = os.path.join(pack_dir, "textures", "items", f"{name}_3d.png")
+        os.makedirs(os.path.dirname(tex_path), exist_ok=True)
+        with open(tex_path, "wb") as fh:
+            fh.write(atlas_png(slug_of(name)))  # type: ignore[arg-type]
+
+        _write_json(
+            os.path.join(pack_dir, ATTACHABLE_DIR, f"{name}.json"),
+            {
+                "format_version": "1.10.0",
+                "minecraft:attachable": {
+                    "description": {
+                        "identifier": f"{namespace}:{name}",
+                        "materials": {
+                            "default": "entity_alphatest",
+                            "enchanted": "entity_alphatest_glint",
+                        },
+                        "textures": {
+                            "default": f"textures/items/{name}_3d",
+                            "enchanted": "textures/misc/enchanted_item_glint",
+                        },
+                        "geometry": {"default": "geometry.talisman"},
+                        "scripts": {
+                            "pre_animation": [
+                                "v.main_hand = c.item_slot == 'main_hand';",
+                                "v.off_hand = c.item_slot == 'off_hand';",
+                                "v.head = c.item_slot == 'head';",
+                            ],
+                            "animate": [
+                                {"thirdperson_main_hand": "v.main_hand && !c.is_first_person"},
+                                {"thirdperson_off_hand": "v.off_hand && !c.is_first_person"},
+                                {"thirdperson_head": "v.head && !c.is_first_person"},
+                                {"firstperson_main_hand": "v.main_hand && c.is_first_person"},
+                                {"firstperson_off_hand": "v.off_hand && c.is_first_person"},
+                                {"firstperson_head": "c.is_first_person && v.head"},
+                            ],
+                        },
+                        "animations": {
+                            "thirdperson_main_hand": "animation.talisman.thirdperson_main_hand",
+                            "thirdperson_off_hand": "animation.talisman.thirdperson_off_hand",
+                            "thirdperson_head": "animation.talisman.disable",
+                            "firstperson_main_hand": "animation.talisman.firstperson_main_hand",
+                            "firstperson_off_hand": "animation.talisman.firstperson_off_hand",
+                            "firstperson_head": "animation.talisman.disable",
+                        },
+                        "render_controllers": ["controller.render.item_default"],
+                    }
+                },
+            },
+        )
+    return names
+
+
+# --------------------------------------------------------------------------------------
+# Самопроверка: python3 tools/talisman_art.py --out /tmp/talismans
 # --------------------------------------------------------------------------------------
 
 def _selfcheck() -> int:
     import sys
-    import zipfile
 
-    if len(sys.argv) < 2:
-        print("нужен путь к funtime.zip")
-        return 2
     out_dir = "/tmp/talismans"
     if "--out" in sys.argv:
         out_dir = sys.argv[sys.argv.index("--out") + 1]
     os.makedirs(out_dir, exist_ok=True)
-
-    icons: Dict[str, bytes] = {}
-    with zipfile.ZipFile(sys.argv[1]) as zf:
-        for info in zf.namelist():
-            if "talisman_" in info and info.endswith(".png") and "/cases/" not in info:
-                icons[os.path.basename(info)[:-4]] = zf.read(info)
-
-    for name in restyle_icons(icons):
-        with open(os.path.join(out_dir, f"{name}.png"), "wb") as fh:
-            fh.write(icons[name])
-    hero = hero_icon(icons)
-    if hero:
-        with open(os.path.join(out_dir, f"{hero[0]}.png"), "wb") as fh:
-            fh.write(hero[1])
-    print(f"OK: {len(icons)} иконок -> {out_dir}")
+    for slug in TALISMANS:
+        with open(os.path.join(out_dir, f"{slug}.png"), "wb") as fh:
+            fh.write(icon_png(slug))
+        with open(os.path.join(out_dir, f"{slug}_3d.png"), "wb") as fh:
+            fh.write(atlas_png(slug))
+    print(f"OK: {len(TALISMANS)} иконок 32×32 + атласы 64×64 -> {out_dir}")
     return 0
 
 

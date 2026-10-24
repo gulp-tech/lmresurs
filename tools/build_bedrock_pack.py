@@ -632,33 +632,28 @@ def build(args: argparse.Namespace) -> int:
         entry_icon[(item_id, cmd)] = icon_name
         entry_handheld[(item_id, cmd)] = info.handheld
 
-    # ---- талисманы: перекраска спрайтов FunTime + 12-й «герой» ----------------------
+    # ---- талисманы: свои иконки + 12-й «герой» --------------------------------------
     # В Java-паке 11 талисманов, а в меню их 12 (у «героя» была иконка «ярости»).
-    # Спрайты FunTime перекрашиваются в tools/talisman_art.py: силуэт, корона и лицо
-    # остаются как в оригинале, меняется цвет. CMD 12 должен совпадать
-    # с custom-model-data в конфиге плагина VoidTalismans.
-    #
-    # Attachable-моделей здесь СОЗНАТЕЛЬНО нет: Geyser рисует кастомный предмет
-    # обычной плоской иконкой, и любая своя геометрия в руке встаёт криво.
+    # Иконки рисуются с нуля в tools/talisman_art.py (32×32, свой силуэт и цвет),
+    # там же рисуется 12-й талисман. CMD 12 должен совпадать с custom-model-data
+    # в конфиге плагина VoidTalismans.
     import talisman_art
 
-    recolored = talisman_art.restyle_icons(icons)
-    hero = talisman_art.hero_icon(icons)
-    if hero is not None:
-        hero_name, hero_png = hero
-        icons[hero_name] = hero_png
-        icon_sources[hero_name] = "talisman_art: золотая версия talisman_crusher"
-        hero_key = ("minecraft:totem_of_undying", TALISMAN_HERO_CMD)
-        by_key[hero_key] = CmdEntry(
-            java_item=hero_key[0],
-            cmd=hero_key[1],
-            model="funtime/items/talisman_hero",
-            source="legacy",
-            overlay="base",
-        )
-        entry_icon[hero_key] = hero_name
-        entry_handheld[hero_key] = True
-    log(f"Талисманы: перекрашено {len(recolored)}, «герой» {'добавлен' if hero else 'нет'}")
+    redrawn = talisman_art.redraw_icons(icons)
+    hero_name, hero_png = talisman_art.hero_icon()
+    icons[hero_name] = hero_png
+    icon_sources[hero_name] = "talisman_art: нарисован (герой)"
+    hero_key = ("minecraft:totem_of_undying", TALISMAN_HERO_CMD)
+    by_key[hero_key] = CmdEntry(
+        java_item=hero_key[0],
+        cmd=hero_key[1],
+        model="funtime/items/talisman_hero",
+        source="legacy",
+        overlay="base",
+    )
+    entry_icon[hero_key] = hero_name
+    entry_handheld[hero_key] = True
+    log(f"Талисманы: нарисовано иконок {len(redrawn)}, добавлен «герой» (CMD {TALISMAN_HERO_CMD})")
 
     log(f"Иконок: {len(icons)} (уникальных текстур)")
 
@@ -670,7 +665,7 @@ def build(args: argparse.Namespace) -> int:
 
     namespace = args.namespace
     pack_name = args.pack_name
-    version = [1, 3, 0]   # поднимать при любом изменении графики
+    version = [1, 4, 0]   # поднимать при любом изменении графики
 
     manifest = {
         "format_version": 2,
@@ -719,6 +714,14 @@ def build(args: argparse.Namespace) -> int:
     pack_icon = os.path.join(pack_root, "pack.png")
     if os.path.isfile(pack_icon):
         shutil.copyfile(pack_icon, os.path.join(build_dir, "pack_icon.png"))
+
+    # ---- 3D-фигурки в руке ---------------------------------------------------------
+    # Иконка в слоте — плоский спрайт, а в руке нужна объёмная фигурка. Attachable
+    # с binding к кости руки (см. tools/talisman_art.py) — единственный способ
+    # получить объём: Geyser сам моделей для кастомных предметов не делает.
+    talisman_names = [name for name in icons if talisman_art.slug_of(name)]
+    hand_models = talisman_art.build_hand_models(build_dir, talisman_names, namespace)
+    log(f"3D-модель в руке: {len(hand_models)} талисманов")
 
     # ---- Geyser mappings ----------------------------------------------------------
     items_map: Dict[str, List[dict]] = defaultdict(list)
