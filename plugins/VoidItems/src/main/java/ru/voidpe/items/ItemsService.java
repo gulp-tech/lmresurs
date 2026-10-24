@@ -122,6 +122,10 @@ public final class ItemsService implements Listener {
         }
         // пока пыль действует: повторно выпитый инвиз не прячет, белая обводка (свечение) не гаснет
         Bukkit.getScheduler().runTaskTimer(plugin, () -> {
+            // Пустая карта — обычное состояние: не создаём копию и не крутим цикл впустую.
+            if (revealed.isEmpty()) {
+                return;
+            }
             long now = System.currentTimeMillis();
             for (UUID uuid : new ArrayList<>(revealed.keySet())) {
                 Long until = revealed.get(uuid);

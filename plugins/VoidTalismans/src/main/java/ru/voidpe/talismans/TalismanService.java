@@ -36,6 +36,23 @@ public final class TalismanService {
     private final NamespacedKey idKey;
     private final Map<String, Talisman> talismans = new LinkedHashMap<>();
 
+    /** Кэш Attribute по строковому ключу: без него на каждый refresh шёл поиск в реестре. */
+    private final Map<String, Attribute> attributeCache = new HashMap<>();
+
+    /**
+     * Между перезаходами модификаторы не сохраняются, поэтому чистить хвосты
+     * старого FaralTalismans достаточно один раз за сессию. До этого
+     * stripLegacyModifiers проходил весь реестр атрибутов на каждый тик
+     * обновления и на каждого игрока — самая дорогая часть refresh().
+     */
+    private final java.util.Set<java.util.UUID> legacyStripped =
+            java.util.Collections.newSetFromMap(new java.util.concurrent.ConcurrentHashMap<>());
+
+    private Attribute attribute(String key) {
+        return attributeCache.computeIfAbsent(key,
+                k -> Registry.ATTRIBUTE.get(NamespacedKey.minecraft(k)));
+    }
+
     public TalismanService(VoidTalismans plugin) {
         this.plugin = plugin;
         this.idKey = new NamespacedKey(plugin, "talisman_id");
@@ -238,6 +255,9 @@ public final class TalismanService {
 
     /** Снять модификаторы со старым namespace faraltalismans (остались от старой версии плагина). */
     private void stripLegacyModifiers(Player player) {
+        if (!legacyStripped.add(player.getUniqueId())) {
+            return; // в этой сессии уже проверили — модификаторы сами не вернутся
+        }
         for (Attribute attribute : Registry.ATTRIBUTE) {
             AttributeInstance instance = player.getAttribute(attribute);
             if (instance == null) {
@@ -303,13 +323,19 @@ public final class TalismanService {
     public void refresh(Player player) {
         stripLegacyModifiers(player);
         List<Talisman> active = activeTalismans(player);
-        int duration = plugin.getConfig().getInt("settings.refresh-interval-ticks", 40) + 100;
+        int interval = Math.max(10, plugin.getConfig().getInt("settings.refresh-interval-ticks", 40));
+        int duration = interval + 100;
         boolean particles = plugin.getConfig().getBoolean("settings.effect-particles", false);
         for (Talisman t : active) {
             for (Talisman.EffectDef e : t.effects()) {
                 PotionEffect current = player.getPotionEffect(e.type());
                 if (current != null && current.getAmplifier() > e.amplifier()) {
                     continue; // не перебиваем более сильный эффект из другого источника
+                }
+                // Эффект ещё проживёт до следующего обновления — заново не выдаём:
+                // каждый addPotionEffect отправляет пакет клиенту (и на Bedrock тоже).
+                if (current != null && current.getDuration() > interval) {
+                    continue;
                 }
                 player.addPotionEffect(new PotionEffect(e.type(), duration, e.amplifier(), true, particles, true), false);
             }
@@ -320,7 +346,7 @@ public final class TalismanService {
             List<Talisman.AttributeDef> defs = t.attributes();
             for (int ai = 0; ai < defs.size(); ai++) {
                 Talisman.AttributeDef a = defs.get(ai);
-                Attribute attribute = Registry.ATTRIBUTE.get(NamespacedKey.minecraft(a.attributeKey()));
+                Attribute attribute = attribute(a.attributeKey());
                 if (attribute == null) {
                     continue;
                 }
@@ -357,12 +383,13 @@ public final class TalismanService {
 
     /** Игрок вышел: снять все атрибут-модификаторы талисманов. */
     public void clearAttributes(Player player) {
+        legacyStripped.remove(player.getUniqueId());
         stripLegacyModifiers(player);
         for (Talisman t : talismans.values()) {
             List<Talisman.AttributeDef> defs = t.attributes();
             for (int ai = 0; ai < defs.size(); ai++) {
                 Talisman.AttributeDef a = defs.get(ai);
-                Attribute attribute = Registry.ATTRIBUTE.get(NamespacedKey.minecraft(a.attributeKey()));
+                Attribute attribute = attribute(a.attributeKey());
                 if (attribute == null) {
                     continue;
                 }

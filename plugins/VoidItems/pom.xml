@@ -6,7 +6,7 @@
 
     <groupId>ru.voidpe</groupId>
     <artifactId>VoidItems</artifactId>
-    <version>1.8.6</version>
+    <version>1.8.7</version>
     <packaging>jar</packaging>
     <name>VoidItems</name>
     <description>Кастомные предметы как на FunTime для Bedrock-сервера VoidPE: трапка, явная пыль, дезориентация, лом спавнеров, особые зелья и изумрудная броня. Запретные зоны — миры и регионы WorldGuard. Всё настраивается в config.yml.</description>

@@ -77,6 +77,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -147,6 +148,7 @@ public class VoidAntiCheat extends JavaPlugin implements Listener, CommandExecut
     @Override
     public void onEnable() {
         saveDefaultConfig();
+        confCache.clear();
         loadCheckSettings();
         loadLagLimits();
         // Реестры — единственное место, зависящее от версии API. Если в новой
@@ -288,20 +290,45 @@ public class VoidAntiCheat extends JavaPlugin implements Listener, CommandExecut
 
     // ------------------------------------------------------------ конфиг-хелперы
 
+    /**
+     * Кэш значений конфига. Проверки вызываются на каждый пакет движения,
+     * а каждый getConfig().getX("a.b.c") — это split строки по точкам и обход
+     * карт. На Bedrock-сервере это десятки тысяч вызовов в секунду, поэтому
+     * значения читаются один раз и сбрасываются при перезагрузке конфига.
+     */
+    private final Map<String, Object> confCache = new ConcurrentHashMap<>();
+
+    private Object confRaw(String path, Object fallback) {
+        Object cached = confCache.get(path);
+        if (cached != null) {
+            return cached;
+        }
+        Object value = getConfig().get(path);
+        if (value == null) {
+            value = fallback;
+        }
+        confCache.put(path, value);
+        return value;
+    }
+
     private boolean confBool(String path, boolean fallback) {
-        return getConfig().getBoolean(path, fallback);
+        Object value = confRaw(path, fallback);
+        return value instanceof Boolean b ? b : fallback;
     }
 
     private int confInt(String path, int fallback) {
-        return getConfig().getInt(path, fallback);
+        Object value = confRaw(path, fallback);
+        return value instanceof Number n ? n.intValue() : fallback;
     }
 
     private long confLong(String path, long fallback) {
-        return getConfig().getLong(path, fallback);
+        Object value = confRaw(path, fallback);
+        return value instanceof Number n ? n.longValue() : fallback;
     }
 
     private double confDouble(String path, double fallback) {
-        return getConfig().getDouble(path, fallback);
+        Object value = confRaw(path, fallback);
+        return value instanceof Number n ? n.doubleValue() : fallback;
     }
 
     private Component comp(String legacy) {
@@ -2050,6 +2077,7 @@ public class VoidAntiCheat extends JavaPlugin implements Listener, CommandExecut
         switch (sub) {
             case "reload" -> {
                 reloadConfig();
+                confCache.clear();
                 loadCheckSettings();
                 loadLagLimits();
                 tell(sender, "reloaded");

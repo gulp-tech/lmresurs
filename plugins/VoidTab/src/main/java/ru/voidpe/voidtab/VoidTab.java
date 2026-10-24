@@ -322,6 +322,7 @@ public final class VoidTab extends JavaPlugin implements Listener, CommandExecut
                 return true;
             }
             reloadConfig();
+            sidebar.invalidateConfigCache();
             hooks.refreshLuckPermsMeta();
             startTask();
             Bukkit.getOnlinePlayers().forEach(online -> {

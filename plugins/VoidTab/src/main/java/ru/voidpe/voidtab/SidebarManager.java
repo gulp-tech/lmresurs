@@ -38,6 +38,31 @@ public final class SidebarManager {
     private static final int MAX_LINES = 15;
     private static final char[] ENTRY_CODES = "0123456789abcde".toCharArray();
 
+    /**
+     * Кэш «медленных» значений конфига. render() вызывается на каждую из 15
+     * строк для каждого игрока каждые update-interval-ticks; читать при этом
+     * секции и парсить числа из конфига — лишняя работа на ровном месте.
+     * Сбрасывается в updateAll() (раз в тик обновления) и при /voidtab reload.
+     */
+    private volatile List<String> iconNames;
+    private volatile String titleLogo;
+
+    public void invalidateConfigCache() {
+        iconNames = null;
+        titleLogo = null;
+    }
+
+    private List<String> iconNames() {
+        List<String> cached = iconNames;
+        if (cached != null) {
+            return cached;
+        }
+        var section = plugin.getConfig().getConfigurationSection("icons");
+        cached = section == null ? List.of() : List.copyOf(section.getKeys(false));
+        iconNames = cached;
+        return cached;
+    }
+
     private final VoidTab plugin;
     private final Map<UUID, List<String>> cache = new HashMap<>();
     private final Set<UUID> hidden = new HashSet<>();
@@ -80,6 +105,7 @@ public final class SidebarManager {
     }
 
     public void updateAll() {
+        invalidateConfigCache();
         for (Player player : Bukkit.getOnlinePlayers()) {
             update(player, false);
         }
@@ -153,7 +179,12 @@ public final class SidebarManager {
     private String renderTitle(Player player) {
         // Заголовок — маленькая картинка VoidPE из ресурспака: полоса глифов \uE010..\uE017,
         // высота ровно одна строка, как обычный текст, только текстурой.
+        // Строка зависит только от конфига, поэтому считается один раз.
         if (plugin.getConfig().getBoolean("scoreboard.title-logo.enabled", true)) {
+            String cached = titleLogo;
+            if (cached != null) {
+                return cached;
+            }
             try {
                 int start = Integer.parseInt(
                         plugin.getConfig().getString("scoreboard.title-logo.start-code", "E010").trim(), 16);
@@ -163,7 +194,9 @@ public final class SidebarManager {
                 for (int i = 0; i < count; i++) {
                     logo.append(new String(Character.toChars(start + i)));
                 }
-                return logo.toString();
+                String built = logo.toString();
+                titleLogo = built;
+                return built;
             } catch (IllegalArgumentException ignored) {
                 // битый конфиг — упадём на текстовый заголовок ниже
             }
@@ -177,8 +210,7 @@ public final class SidebarManager {
         String text = raw;
 
         // иконки: {icon:coin} и т.д.
-        for (String name : plugin.getConfig().getConfigurationSection("icons") == null
-                ? Set.<String>of() : plugin.getConfig().getConfigurationSection("icons").getKeys(false)) {
+        for (String name : iconNames()) {
             String token = "{icon:" + name + "}";
             if (text.contains(token)) {
                 text = text.replace(token, iconChar(name));

@@ -6,7 +6,7 @@
 
     <groupId>ru.voidpe</groupId>
     <artifactId>VoidClans</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
     <packaging>jar</packaging>
     <name>VoidClans</name>
     <description>Кланы для Bedrock-сервера VoidPE: банк (Vault), роли с настройкой прав, приглашения, клан-чат, дом клана и удобное меню. Всё настраивается в config.yml.</description>

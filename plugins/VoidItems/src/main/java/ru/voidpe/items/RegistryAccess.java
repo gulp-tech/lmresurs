@@ -58,7 +58,7 @@ public final class RegistryAccess {
     }
 
     @SuppressWarnings("unchecked")
-    private static <T> T search(Registry<T> registry, String full) {
+    private static <T> T search(Registry<?> registry, String full) {
         Object byBukkitKey = invokeGet(registry, NamespacedKey.class,
                 NamespacedKey.fromString(full));
         if (byBukkitKey != null) {

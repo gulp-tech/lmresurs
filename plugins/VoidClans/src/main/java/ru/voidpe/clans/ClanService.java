@@ -247,7 +247,23 @@ public final class ClanService implements Listener {
         plugin.getLogger().info("Загружено кланов: " + clans.size());
     }
 
+    /** Есть несохранённые изменения (начисление опыта), запись — по таймеру. */
+    private volatile boolean dirty;
+
+    /** Пометить данные изменёнными без немедленной записи на диск. */
+    public void markDirty() {
+        dirty = true;
+    }
+
+    /** Записать файл, только если есть несохранённые изменения. */
+    public void flushIfDirty() {
+        if (dirty) {
+            saveData();
+        }
+    }
+
     public void saveData() {
+        dirty = false;
         try {
             YamlConfiguration yaml = new YamlConfiguration();
             for (Map.Entry<String, Clan> e : clans.entrySet()) {
@@ -276,23 +292,40 @@ public final class ClanService implements Listener {
         }
     }
 
-    // ------------------------------------------------------------------ помощники
-    public Clan clanOf(UUID uuid) {
-        for (Clan clan : clans.values()) {
-            if (clan.members.containsKey(uuid)) {
-                return clan;
+    /**
+     * Индекс «игрок → клан». Раньше clanOf/clanKeyOf перебирали ВСЕ кланы и
+     * карты участников, а вызываются они на каждое событие (опыт, чат, урон).
+     * Индекс перестраивается после загрузки и при любом изменении состава —
+     * это дешевле, чем линейный поиск в горячем пути.
+     */
+    private final Map<UUID, String> memberIndex = new HashMap<>();
+
+    public void rebuildMemberIndex() {
+        memberIndex.clear();
+        for (Map.Entry<String, Clan> e : clans.entrySet()) {
+            for (UUID uuid : e.getValue().members.keySet()) {
+                memberIndex.put(uuid, e.getKey());
             }
         }
-        return null;
+    }
+
+    // ------------------------------------------------------------------ помощники
+    public Clan clanOf(UUID uuid) {
+        String key = clanKeyOf(uuid);
+        return key == null ? null : clans.get(key);
     }
 
     public String clanKeyOf(UUID uuid) {
-        for (Map.Entry<String, Clan> e : clans.entrySet()) {
-            if (e.getValue().members.containsKey(uuid)) {
-                return e.getKey();
+        String key = memberIndex.get(uuid);
+        if (key != null && clans.containsKey(key)) {
+            Clan clan = clans.get(key);
+            if (clan.members.containsKey(uuid)) {
+                return key;
             }
         }
-        return null;
+        // индекс разошёлся с данными (например, клан создан старым кодом) — чиним
+        rebuildMemberIndex();
+        return memberIndex.get(uuid);
     }
 
     public Clan byName(String name) {
@@ -864,7 +897,9 @@ public final class ClanService implements Listener {
                 homesUnlocked = true;
             }
         }
-        saveData();
+        // Было saveData() на каждое начисление опыта, то есть запись файла
+        // на каждый сломанный блок и убийство. Теперь пишет таймер в плагине.
+        markDirty();
         if (leveled) {
             for (UUID member : clan.members.keySet()) {
                 Player online = Bukkit.getPlayer(member);

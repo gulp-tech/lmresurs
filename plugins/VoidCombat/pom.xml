@@ -6,7 +6,7 @@
 
     <groupId>ru.voidpe</groupId>
     <artifactId>VoidCombat</artifactId>
-    <version>1.2.3</version>
+    <version>1.2.4</version>
     <packaging>jar</packaging>
     <name>VoidCombat</name>
     <description>Режим боя для Bedrock-сервера VoidPE: PvP-метка, кулдауны яблок, зелий исцеления и кастомных предметов, запрет фейерверков в бою. Всё настраивается в config.yml.</description>

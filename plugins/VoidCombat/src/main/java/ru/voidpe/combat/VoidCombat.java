@@ -75,6 +75,11 @@ public final class VoidCombat extends JavaPlugin implements Listener, CommandExe
 
     private final Map<UUID, Long> combatUntil = new HashMap<>();
     private final Map<UUID, BossBar> combatBars = new HashMap<>();
+    /** Последняя показанная секунда — чтобы не пересобирать текст каждые 0.5 с. */
+    private final Map<UUID, Integer> barSeconds = new HashMap<>();
+    /** Кэш цветов/стиля боссбара: без него valueOf() шёл на каждый тик. */
+    private BossBar.Color cachedBarColor;
+    private BossBar.Overlay cachedBarOverlay;
     private final Map<UUID, Map<String, Long>> cooldownUntil = new HashMap<>();
     private final Map<UUID, Map<String, Long>> lastBlockMessage = new HashMap<>();
     private BukkitTask timerTask;
@@ -266,6 +271,7 @@ public final class VoidCombat extends JavaPlugin implements Listener, CommandExe
             zones.add(row);
         }
         data.set("zones", zones);
+        safeWorldsCache = null; // набор миров мог измениться командой
         try {
             data.save(stateFile());
         } catch (IOException e) {
@@ -275,13 +281,31 @@ public final class VoidCombat extends JavaPlugin implements Listener, CommandExe
 
     // ------------------------------------------------------------ безопасные места
 
-    /** Все безопасные миры: из конфига + добавленные командой (нижний регистр). */
+    /** Кэш безопасных миров и регионов WorldGuard: isSafe() зовётся каждый тик. */
+    private Set<String> safeWorldsCache;
+    private List<String> wgRegionsCache;
+
     private Set<String> safeWorldNames() {
+        Set<String> cached = safeWorldsCache;
+        if (cached != null) {
+            return cached;
+        }
         Set<String> out = new HashSet<>(stateSafeWorlds);
         for (String world : getConfig().getStringList("combat.safe.worlds")) {
             out.add(world.toLowerCase(Locale.ROOT));
         }
+        safeWorldsCache = out;
         return out;
+    }
+
+    private List<String> wgRegions() {
+        List<String> cached = wgRegionsCache;
+        if (cached != null) {
+            return cached;
+        }
+        cached = getConfig().getStringList("combat.safe.worldguard-regions");
+        wgRegionsCache = cached;
+        return cached;
     }
 
     /** Безопасное место: режим боя не ставится, метка снимается. */
@@ -292,8 +316,7 @@ public final class VoidCombat extends JavaPlugin implements Listener, CommandExe
         if (safeWorldNames().contains(loc.getWorld().getName().toLowerCase(Locale.ROOT))) {
             return true;
         }
-        if (worldGuard != null && worldGuard.inRegion(loc,
-                getConfig().getStringList("combat.safe.worldguard-regions"))) {
+        if (worldGuard != null && worldGuard.inRegion(loc, wgRegions())) {
             return true;
         }
         boolean ignoreY = getConfig().getBoolean("combat.safe.ignore-y", true);
@@ -339,6 +362,8 @@ public final class VoidCombat extends JavaPlugin implements Listener, CommandExe
     private void tickCombat() {
         enforceElytraBan();
         long now = System.currentTimeMillis();
+        // Конфиг читаем один раз на тик, а не на каждого игрока в бою.
+        boolean clearOnEnter = getConfig().getBoolean("combat.safe.clear-on-enter", true);
         Iterator<Map.Entry<UUID, Long>> it = combatUntil.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<UUID, Long> entry = it.next();
@@ -348,8 +373,7 @@ public final class VoidCombat extends JavaPlugin implements Listener, CommandExe
                 combatBars.remove(entry.getKey());
                 continue;
             }
-            if (getConfig().getBoolean("combat.safe.clear-on-enter", true)
-                    && isSafe(player.getLocation())) {
+            if (clearOnEnter && isSafe(player.getLocation())) {
                 it.remove();
                 hideCombatBar(player);
                 msg(player, "combat-ended-safe");
@@ -377,21 +401,42 @@ public final class VoidCombat extends JavaPlugin implements Listener, CommandExe
     // ------------------------------------------------------------ боссбар боя
 
     private BossBar.Color bossBarColor() {
+        BossBar.Color cached = cachedBarColor;
+        if (cached != null) {
+            return cached;
+        }
         String raw = getConfig().getString("combat.display.bossbar-color", "RED");
         try {
-            return BossBar.Color.valueOf(raw == null ? "RED" : raw.trim().toUpperCase(Locale.ROOT));
+            cached = BossBar.Color.valueOf(raw == null ? "RED" : raw.trim().toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
-            return BossBar.Color.RED;
+            cached = BossBar.Color.RED;
         }
+        cachedBarColor = cached;
+        return cached;
     }
 
     private BossBar.Overlay bossBarOverlay() {
+        BossBar.Overlay cached = cachedBarOverlay;
+        if (cached != null) {
+            return cached;
+        }
         String raw = getConfig().getString("combat.display.bossbar-overlay", "PROGRESS");
         try {
-            return BossBar.Overlay.valueOf(raw == null ? "PROGRESS" : raw.trim().toUpperCase(Locale.ROOT));
+            cached = BossBar.Overlay.valueOf(raw == null ? "PROGRESS" : raw.trim().toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
-            return BossBar.Overlay.PROGRESS;
+            cached = BossBar.Overlay.PROGRESS;
         }
+        cachedBarOverlay = cached;
+        return cached;
+    }
+
+    /** Сброс кэшей после /combat reload. */
+    private void invalidateDisplayCache() {
+        cachedBarColor = null;
+        cachedBarOverlay = null;
+        barSeconds.clear();
+        safeWorldsCache = null;
+        wgRegionsCache = null;
     }
 
     /** Создаёт/обновляет боссбар боя: заголовок с секундами + тающая полоса. */
@@ -401,18 +446,25 @@ public final class VoidCombat extends JavaPlugin implements Listener, CommandExe
             return;
         }
         int seconds = (int) Math.ceil(leftMillis / 1000.0);
-        String format = getConfig().getString("combat.display.bossbar-format",
+        Integer previous = barSeconds.get(player.getUniqueId());
+        boolean sameSecond = previous != null && previous == seconds;
+        String format = sameSecond ? null : getConfig().getString("combat.display.bossbar-format",
                 "&#FF5555Режим боя: &f{seconds} сек.");
-        Component title = comp(format.replace("{seconds}", String.valueOf(seconds)));
+        Component title = sameSecond ? null
+                : comp(format.replace("{seconds}", String.valueOf(seconds)));
+        barSeconds.put(player.getUniqueId(), seconds);
         double total = combatDuration() * 1000.0;
         float progress = total <= 0 ? 0.0f
                 : (float) Math.max(0.0, Math.min(1.0, leftMillis / total));
         BossBar bar = combatBars.get(player.getUniqueId());
         if (bar == null) {
-            bar = BossBar.bossBar(title, progress, bossBarColor(), bossBarOverlay());
+            bar = BossBar.bossBar(title == null ? Component.empty() : title, progress,
+                    bossBarColor(), bossBarOverlay());
             combatBars.put(player.getUniqueId(), bar);
         } else {
-            bar.name(title);
+            if (title != null) {
+                bar.name(title);
+            }
             bar.progress(progress);
             bar.color(bossBarColor());
             bar.overlay(bossBarOverlay());
@@ -424,6 +476,7 @@ public final class VoidCombat extends JavaPlugin implements Listener, CommandExe
         if (player == null) {
             return;
         }
+        barSeconds.remove(player.getUniqueId());
         BossBar bar = combatBars.remove(player.getUniqueId());
         if (bar != null) {
             player.hideBossBar(bar);
@@ -941,6 +994,7 @@ public final class VoidCombat extends JavaPlugin implements Listener, CommandExe
                     return true;
                 }
                 reloadConfig();
+                invalidateDisplayCache();
                 loadState();
                 hideAllCombatBars();
                 msg(sender, "reloaded");

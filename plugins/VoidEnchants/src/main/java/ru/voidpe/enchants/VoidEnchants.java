@@ -422,6 +422,12 @@ public final class VoidEnchants extends JavaPlugin implements Listener, TabCompl
         if (ax == 0) step = dir.getX() > 0 ? 1 : -1;
         if (ax == 2) step = dir.getZ() > 0 ? 1 : -1;
 
+        // Список разрешённых блоков читаем один раз на вызов, а не на каждый
+        // проверяемый блок: getStringList каждый раз копирует список, а внутри
+        // трёх вложенных циклов это до 18 копий на один сломанный блок.
+        List<String> allowed = getConfig().getStringList("drill.allowed-blocks");
+        Set<String> allowedSet = allowed.isEmpty() ? null : new HashSet<>(allowed);
+
         for (int layer = 0; layer < depth; layer++) {
             for (int a = -1; a <= 1; a++) {
                 for (int b = -1; b <= 1; b++) {
@@ -437,13 +443,14 @@ public final class VoidEnchants extends JavaPlugin implements Listener, TabCompl
                             || block.getType().getHardness() < 0) {
                         continue;
                     }
-                    // сундуки, спавнеры, таблички и прочие хранилища бур не трогает
-                    if (block.getState() instanceof org.bukkit.block.TileState) {
+                    // сундуки, спавнеры, таблички и прочие хранилища бур не трогает.
+                    // getState(false) — без создания снимка блока, иначе на каждый
+                    // кандидат копировался весь TileEntity.
+                    if (block.getState(false) instanceof org.bukkit.block.TileState) {
                         continue;
                     }
                     // только природные блоки из конфига (поставленные игроками постройки бур не сносит)
-                    List<String> allowed = getConfig().getStringList("drill.allowed-blocks");
-                    if (!allowed.isEmpty() && !allowed.contains(block.getType().name())) {
+                    if (allowedSet != null && !allowedSet.contains(block.getType().name())) {
                         continue;
                     }
                     result.add(block);

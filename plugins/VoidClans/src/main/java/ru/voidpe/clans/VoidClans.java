@@ -34,6 +34,14 @@ public final class VoidClans extends JavaPlugin implements CommandExecutor, TabC
             getCommand("clan").setExecutor(this);
             getCommand("clan").setTabCompleter(this);
         }
+        // Опыт кланов копится в памяти и пишется раз в 30 секунд: раньше
+        // каждый блок и каждое убийство сохраняли clans.yml целиком.
+        org.bukkit.Bukkit.getScheduler().runTaskTimer(this,
+                () -> {
+                    if (service != null) {
+                        service.flushIfDirty();
+                    }
+                }, 600L, 600L);
         getLogger().info("VoidClans включён");
     }
 

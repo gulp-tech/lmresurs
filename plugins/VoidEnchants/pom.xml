@@ -6,7 +6,7 @@
 
     <groupId>ru.voidpe</groupId>
     <artifactId>VoidEnchants</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <packaging>jar</packaging>
     <name>VoidEnchants</name>
     <description>Компактный скорборд (таб) для Geyser/Floodgate сервера VoidPE: монеты (Vault), осколки (PlayerPoints), привилегия, У/С, время в игре + кастомные иконки из Bedrock-ресурспака.</description>

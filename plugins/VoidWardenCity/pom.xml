@@ -6,7 +6,7 @@
 
     <groupId>ru.voidpe</groupId>
     <artifactId>VoidWardenCity</artifactId>
-    <version>1.4.1</version>
+    <version>1.4.2</version>
     <packaging>jar</packaging>
     <name>VoidWardenCity</name>
     <description>Город Вардена как на FunTime для Bedrock-сервера VoidPE: данж в древнем городе, сундуки с обновляемым лутом, вардены с наградой, телепорт за осколки. Всё настраивается в config.yml.</description>

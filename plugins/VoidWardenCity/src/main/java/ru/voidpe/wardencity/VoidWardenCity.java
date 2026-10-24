@@ -631,6 +631,9 @@ public final class VoidWardenCity extends JavaPlugin implements Listener, Comman
     // ------------------------------------------------------------- голограммы
 
     /** Ставит (или находит) голограмму над сундуком и обновляет её текст. */
+    /** Последний показанный текст голограммы — чтобы не спамить пакетами. */
+    private final Map<String, String> hologramTextCache = new HashMap<>();
+
     private void ensureHologram(Location chestLoc) {
         if (!getConfig().getBoolean("hologram.enabled", true) || chestLoc.getWorld() == null) {
             return;
@@ -639,7 +642,14 @@ public final class VoidWardenCity extends JavaPlugin implements Listener, Comman
         UUID id = holograms.get(key);
         Entity existing = id == null ? null : Bukkit.getEntity(id);
         if (existing != null && !existing.isDead()) {
-            existing.customName(comp(hologramText(chestLoc)));
+            // Текст меняется раз в секунду, а таймер тикает чаще. Без этой
+            // проверки каждый сундук получал пакет смены имени на каждый тик
+            // обновления — на 50 сундуках это заметный мусор в сети.
+            String text = hologramText(chestLoc);
+            if (!text.equals(hologramTextCache.get(key))) {
+                hologramTextCache.put(key, text);
+                existing.customName(comp(text));
+            }
             return;
         }
         double height = getConfig().getDouble("hologram.height", 1.3);
@@ -653,10 +663,12 @@ public final class VoidWardenCity extends JavaPlugin implements Listener, Comman
             st.setCustomNameVisible(true);
             st.customName(comp(hologramText(chestLoc)));
         });
+        hologramTextCache.put(key, hologramText(chestLoc));
         holograms.put(key, stand.getUniqueId());
     }
 
     private void removeHologram(String key) {
+        hologramTextCache.remove(key);
         UUID id = holograms.remove(key);
         if (id != null) {
             Entity e = Bukkit.getEntity(id);
@@ -671,6 +683,10 @@ public final class VoidWardenCity extends JavaPlugin implements Listener, Comman
         if (!getConfig().getBoolean("hologram.enabled", true)) {
             return;
         }
+        // Сначала собираем, что изменилось, и пишем файл один раз: раньше
+        // saveChestData() вызывался на каждый сломанный сундук прямо в цикле,
+        // то есть по диску на каждую итерацию.
+        List<String> removed = null;
         for (String key : new ArrayList<>(chestRefills.keySet())) {
             Location loc = parseKey(key);
             if (loc == null || loc.getWorld() == null) {
@@ -683,11 +699,19 @@ public final class VoidWardenCity extends JavaPlugin implements Listener, Comman
             if (loc.getBlock().getType() != Material.CHEST) {
                 // сундук сломали — убираем голограмму и запись
                 removeHologram(key);
-                chestRefills.remove(key);
-                saveChestData();
+                if (removed == null) {
+                    removed = new ArrayList<>();
+                }
+                removed.add(key);
                 continue;
             }
             ensureHologram(loc);
+        }
+        if (removed != null) {
+            for (String key : removed) {
+                chestRefills.remove(key);
+            }
+            saveChestData();
         }
     }
 
