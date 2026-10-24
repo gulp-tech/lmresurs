@@ -1,0 +1,148 @@
+# DeluxeMenus — раздел: кирки
+# Файл на сервере: plugins/DeluxeMenus/gui_menus/shop_pickaxes.yml
+# Рамка — обычное ванильное чёрное стекло. Покупки списывают осколки
+# PlayerPoints только если хватает (click_requirement на каждом товаре).
+# Цены: output и points take в одном товаре должны совпадать.
+menu_title: '• Магазин: кирки'
+open_command: shoppickaxes
+register_command: true
+size: 45
+open_commands:
+  - '[sound] ITEM_BOOK_PAGE_TURN'
+items:
+
+  'Рамка':
+    slots:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 17
+    - 18
+    - 26
+    - 27
+    - 35
+    - 36
+    - 37
+    - 38
+    - 39
+    - 41
+    - 42
+    - 43
+    - 44
+    material: BLACK_STAINED_GLASS_PANE
+    display_name: ' '
+
+  'Баланс':
+    slots:
+    - 13
+    material: PRISMARINE_SHARD
+    display_name: '&#54C8FFТвои осколки'
+    lore:
+      - ''
+      - '&fБаланс: &#54C8FF%playerpoints_points% осколков'
+      - '&7Ими оплачиваются покупки в этом магазине.'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+
+  'Кирка шахтёра I':
+    slots:
+    - 20
+    material: NETHERITE_PICKAXE
+    display_name: '&#FFB340Кирка шахтёра &eI'
+    lore:
+      - ''
+      - '&7Эффективность V, Удача III, Прочность III, Починка.'
+      - '&7Автоплавка + Магнит.'
+      - ''
+      - '&fЦена: &#54C8FF975 осколков'
+      - '&7Твой баланс: &#54C8FF%playerpoints_points%'
+      - '&eНажми, чтобы купить'
+    click_requirement:
+      requirements:
+        shards:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '975'
+      deny_commands:
+        - '[message] &#FF6B6BНе хватает осколков: нужно 975, у тебя %playerpoints_points%.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] points take %player_name% 975'
+      - '[console] vench give %player_name% miner1'
+      - '[message] &#7CFC00Покупка успешна: &#FFB340Кирка шахтёра &eI'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Кирка шахтёра II':
+    slots:
+    - 22
+    material: NETHERITE_PICKAXE
+    display_name: '&#FFB340Кирка шахтёра &eII'
+    lore:
+      - ''
+      - '&7Эффективность VI, Удача IV, Прочность IV, Починка.'
+      - '&7Автоплавка + Магнит + Бур I.'
+      - ''
+      - '&fЦена: &#54C8FF2275 осколков'
+      - '&7Твой баланс: &#54C8FF%playerpoints_points%'
+      - '&eНажми, чтобы купить'
+    click_requirement:
+      requirements:
+        shards:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '2275'
+      deny_commands:
+        - '[message] &#FF6B6BНе хватает осколков: нужно 2275, у тебя %playerpoints_points%.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] points take %player_name% 2275'
+      - '[console] vench give %player_name% miner2'
+      - '[message] &#7CFC00Покупка успешна: &#FFB340Кирка шахтёра &eII'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Кирка шахтёра III':
+    slots:
+    - 24
+    material: NETHERITE_PICKAXE
+    display_name: '&#FFB340Кирка шахтёра &eIII'
+    lore:
+      - ''
+      - '&7Эффективность VII, Удача V, Прочность V, Починка.'
+      - '&7Автоплавка + Магнит + Бур II.'
+      - ''
+      - '&fЦена: &#54C8FF4550 осколков'
+      - '&7Твой баланс: &#54C8FF%playerpoints_points%'
+      - '&eНажми, чтобы купить'
+    click_requirement:
+      requirements:
+        shards:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '4550'
+      deny_commands:
+        - '[message] &#FF6B6BНе хватает осколков: нужно 4550, у тебя %playerpoints_points%.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] points take %player_name% 4550'
+      - '[console] vench give %player_name% miner3'
+      - '[message] &#7CFC00Покупка успешна: &#FFB340Кирка шахтёра &eIII'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Назад':
+    slots:
+    - 40
+    material: ARROW
+    display_name: '&fНазад'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[openguimenu] shop'

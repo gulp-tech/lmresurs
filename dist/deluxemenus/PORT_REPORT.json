@@ -1,0 +1,284 @@
+[
+  {
+    "file": "donate.yml",
+    "size_before": 54,
+    "size_after": 54,
+    "icons": [],
+    "color_replacements": 51,
+    "color_codes_collapsed": 2,
+    "frame_slots_added": 0,
+    "border_added": 0,
+    "warnings": []
+  },
+  {
+    "file": "events.yml",
+    "size_before": 45,
+    "size_after": 54,
+    "icons": [],
+    "color_replacements": 24,
+    "color_codes_collapsed": 0,
+    "frame_slots_added": 9,
+    "border_added": 0,
+    "warnings": []
+  },
+  {
+    "file": "keys.yml",
+    "size_before": 54,
+    "size_after": 54,
+    "icons": [
+      {
+        "item": "Ключ Талисманов",
+        "material": "TRIAL_KEY",
+        "custom_model_data": 14
+      },
+      {
+        "item": "Ключ Ресурсов",
+        "material": "TRIAL_KEY",
+        "custom_model_data": 3
+      },
+      {
+        "item": "Ключ Сфер",
+        "material": "TRIAL_KEY",
+        "custom_model_data": 13
+      }
+    ],
+    "color_replacements": 72,
+    "color_codes_collapsed": 10,
+    "frame_slots_added": 0,
+    "border_added": 0,
+    "warnings": []
+  },
+  {
+    "file": "menu.yml",
+    "size_before": 54,
+    "size_after": 54,
+    "icons": [
+      {
+        "item": "Информация",
+        "material": "PAPER",
+        "custom_model_data": 22
+      },
+      {
+        "item": "Донат-магазин /shop",
+        "material": "PAPER",
+        "custom_model_data": 29
+      }
+    ],
+    "color_replacements": 67,
+    "color_codes_collapsed": 48,
+    "frame_slots_added": 0,
+    "border_added": 26,
+    "warnings": []
+  },
+  {
+    "file": "podryvnik.yml",
+    "size_before": 27,
+    "size_after": 27,
+    "icons": [],
+    "color_replacements": 51,
+    "color_codes_collapsed": 10,
+    "frame_slots_added": 0,
+    "border_added": 0,
+    "warnings": []
+  },
+  {
+    "file": "privat_shop.yml",
+    "size_before": 27,
+    "size_after": 27,
+    "icons": [],
+    "color_replacements": 67,
+    "color_codes_collapsed": 11,
+    "frame_slots_added": 0,
+    "border_added": 0,
+    "warnings": []
+  },
+  {
+    "file": "shop.yml",
+    "size_before": 45,
+    "size_after": 54,
+    "icons": [
+      {
+        "item": "Раздел талисманы",
+        "material": "PAPER",
+        "custom_model_data": 42
+      }
+    ],
+    "color_replacements": 8,
+    "color_codes_collapsed": 0,
+    "frame_slots_added": 9,
+    "border_added": 0,
+    "warnings": [
+      "item_model voidspheres:sphere1 — модели нет в FunTime-паке, на Bedrock будет бумага"
+    ]
+  },
+  {
+    "file": "shop_enchants.yml",
+    "size_before": 45,
+    "size_after": 54,
+    "icons": [],
+    "color_replacements": 20,
+    "color_codes_collapsed": 0,
+    "frame_slots_added": 9,
+    "border_added": 0,
+    "warnings": []
+  },
+  {
+    "file": "shop_items.yml",
+    "size_before": 45,
+    "size_after": 54,
+    "icons": [
+      {
+        "item": "Капкан",
+        "material": "PAPER",
+        "custom_model_data": 40
+      }
+    ],
+    "color_replacements": 26,
+    "color_codes_collapsed": 0,
+    "frame_slots_added": 9,
+    "border_added": 0,
+    "warnings": []
+  },
+  {
+    "file": "shop_pickaxes.yml",
+    "size_before": 45,
+    "size_after": 54,
+    "icons": [],
+    "color_replacements": 20,
+    "color_codes_collapsed": 0,
+    "frame_slots_added": 9,
+    "border_added": 0,
+    "warnings": []
+  },
+  {
+    "file": "shop_potions.yml",
+    "size_before": 45,
+    "size_after": 54,
+    "icons": [
+      {
+        "item": "Зелье ярости",
+        "material": "POTION",
+        "custom_model_data": 1
+      },
+      {
+        "item": "Боевое зелье",
+        "material": "POTION",
+        "custom_model_data": 2
+      },
+      {
+        "item": "Зелье скорости",
+        "material": "POTION",
+        "custom_model_data": 3
+      },
+      {
+        "item": "Зелье защиты",
+        "material": "POTION",
+        "custom_model_data": 4
+      }
+    ],
+    "color_replacements": 26,
+    "color_codes_collapsed": 0,
+    "frame_slots_added": 9,
+    "border_added": 0,
+    "warnings": []
+  },
+  {
+    "file": "shop_spheres.yml",
+    "size_before": 45,
+    "size_after": 54,
+    "icons": [],
+    "color_replacements": 29,
+    "color_codes_collapsed": 0,
+    "frame_slots_added": 9,
+    "border_added": 0,
+    "warnings": [
+      "item_model voidspheres:sphere4 — модели нет в FunTime-паке, на Bedrock будет бумага",
+      "item_model voidspheres:sphere1 — модели нет в FunTime-паке, на Bedrock будет бумага",
+      "item_model voidspheres:sphere3 — модели нет в FunTime-паке, на Bedrock будет бумага",
+      "item_model voidspheres:sphere2 — модели нет в FunTime-паке, на Bedrock будет бумага"
+    ]
+  },
+  {
+    "file": "shop_talismans.yml",
+    "size_before": 54,
+    "size_after": 54,
+    "icons": [
+      {
+        "item": "Талисман воина",
+        "material": "TOTEM_OF_UNDYING",
+        "custom_model_data": 6
+      },
+      {
+        "item": "Талисман берсерка",
+        "material": "TOTEM_OF_UNDYING",
+        "custom_model_data": 8
+      },
+      {
+        "item": "Талисман убийцы",
+        "material": "TOTEM_OF_UNDYING",
+        "custom_model_data": 7
+      },
+      {
+        "item": "Талисман ярости",
+        "material": "TOTEM_OF_UNDYING",
+        "custom_model_data": 2
+      },
+      {
+        "item": "Талисман бегуна",
+        "material": "TOTEM_OF_UNDYING",
+        "custom_model_data": 10
+      },
+      {
+        "item": "Талисман охотника",
+        "material": "TOTEM_OF_UNDYING",
+        "custom_model_data": 9
+      },
+      {
+        "item": "Талисман странника",
+        "material": "TOTEM_OF_UNDYING",
+        "custom_model_data": 4
+      },
+      {
+        "item": "Талисман жизни",
+        "material": "TOTEM_OF_UNDYING",
+        "custom_model_data": 1
+      },
+      {
+        "item": "Талисман танка",
+        "material": "TOTEM_OF_UNDYING",
+        "custom_model_data": 5
+      },
+      {
+        "item": "Талисман стража",
+        "material": "TOTEM_OF_UNDYING",
+        "custom_model_data": 3
+      },
+      {
+        "item": "Талисман демона",
+        "material": "TOTEM_OF_UNDYING",
+        "custom_model_data": 11
+      },
+      {
+        "item": "Талисман героя",
+        "material": "TOTEM_OF_UNDYING",
+        "custom_model_data": 2
+      }
+    ],
+    "color_replacements": 74,
+    "color_codes_collapsed": 1,
+    "frame_slots_added": 0,
+    "border_added": 0,
+    "warnings": []
+  },
+  {
+    "file": "titles.yml",
+    "size_before": 27,
+    "size_after": 27,
+    "icons": [],
+    "color_replacements": 42,
+    "color_codes_collapsed": 1,
+    "frame_slots_added": 0,
+    "border_added": 0,
+    "warnings": []
+  }
+]

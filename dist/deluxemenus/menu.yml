@@ -1,0 +1,140 @@
+# DeluxeMenus — главное меню VoidPE (крупные кнопки, удобно на телефоне)
+# Файл в: plugins/DeluxeMenus/gui_menus/menu.yml
+menu_title: '• Меню сервера'
+open_command: menu
+register_command: true
+size: 54
+open_commands:
+  - '[sound] ITEM_BOOK_PAGE_TURN'
+items:
+
+  Информация:
+    slots:
+    - 13
+    material: PAPER
+    model_data_component:
+      floats: [22]
+    display_name: '&7%player_name%'
+    lore:
+      - ''
+      - '&fВаша статистика:'
+      - '&7• &fМонеты: &a%vault_eco_balance_formatted%$'
+      - '&7• &fОсколки: &a%playerpoints_points%'
+      - '&7• &fУбийств: &a%statistic_player_kills%'
+      - '&7• &fСмертей: &a%statistic_deaths%'
+      - '&7• &fНаиграно часов: &a%statistic_hours_played%'
+
+  'Автошахта /warp mine':
+    slots:
+    - 28
+    material: NETHERITE_PICKAXE
+    display_name: '&3Автош&aахта &7/warp mine'
+    lore:
+      - ''
+      - '&f Телепорт на автошахту,'
+      - '&f где можно копать ресурсы.'
+      - ''
+      - '&3➥ &fНажмите, чтобы отправиться.'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[player] warp mine'
+      - '[close]'
+
+  'О сервере':
+    slots:
+    - 31
+    material: BOOK
+    display_name: '&3О сер&aвере'
+    lore:
+      - ''
+      - '&b&lVoidPE &f— Bedrock-сервер выживания.'
+      - ''
+      - '&fПолезные команды:'
+      - '&7• &f/menu &7— это меню'
+      - '&7• &f/kit &7— наборы привилегий'
+      - '&7• &f/ah &7— аукцион игроков'
+      - '&7• &f/buyer &7— скупщик'
+      - '&7• &f/rtp &7— случайный телепорт'
+      - ''
+      - '&fПриятной игры!'
+
+  'PvP Арена /warp pvp':
+    slots:
+    - 34
+    material: NETHERITE_SWORD
+    display_name: '&3PvP А&aрена &7/warp pvp'
+    lore:
+      - ''
+      - '&f Телепорт на PvP-арену.'
+      - '&f Сражайтесь с другими игроками!'
+      - ''
+      - '&3➥ &fНажмите, чтобы отправиться.'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[player] warp pvp'
+      - '[close]'
+
+  'Случайный телепорт /rtp':
+    slots:
+    - 39
+    material: CHORUS_FRUIT
+    display_name: '&3Случайный&a телепорт &7/rtp'
+    lore:
+      - ''
+      - '&f Случайный телепорт в мир выживания.'
+      - '&f Кулдаун: &b15 секунд&f.'
+      - ''
+      - '&3➥ &fНажмите, чтобы отправиться.'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[player] rtp'
+      - '[close]'
+
+  'Донат-магазин /shop':
+    slots:
+    - 41
+    material: PAPER
+    model_data_component:
+      floats: [29]
+    display_name: '&3Донат-м&aагазин &7/shop'
+    lore:
+      - ''
+      - '&f Магазин кастомных предметов'
+      - '&f за осколки.'
+      - ''
+      - '&3➥ &fНажмите, чтобы открыть.'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[player] shop'
+      - '[close]'
+
+  'Рамка':
+    slots:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 17
+    - 18
+    - 26
+    - 27
+    - 35
+    - 36
+    - 44
+    - 45
+    - 46
+    - 47
+    - 48
+    - 49
+    - 50
+    - 51
+    - 52
+    - 53
+    material: BLACK_STAINED_GLASS_PANE
+    display_name: '&8'

@@ -1,0 +1,234 @@
+# DeluxeMenus — раздел: сферы
+# Файл на сервере: plugins/DeluxeMenus/gui_menus/shop_spheres.yml
+# Рамка — обычное ванильное чёрное стекло. Покупки списывают осколки
+# PlayerPoints только если хватает (click_requirement на каждом товаре).
+# Цены: output и points take в одном товаре должны совпадать.
+menu_title: '• Магазин: сферы'
+open_command: shopspheres
+register_command: true
+size: 45
+open_commands:
+  - '[sound] ITEM_BOOK_PAGE_TURN'
+items:
+
+  'Рамка':
+    slots:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 17
+    - 18
+    - 26
+    - 27
+    - 35
+    - 36
+    - 37
+    - 38
+    - 39
+    - 41
+    - 42
+    - 43
+    - 44
+    material: BLACK_STAINED_GLASS_PANE
+    display_name: ' '
+
+  'Баланс':
+    slots:
+    - 13
+    material: PRISMARINE_SHARD
+    display_name: '&#54C8FFТвои осколки'
+    lore:
+      - ''
+      - '&fБаланс: &#54C8FF%playerpoints_points% осколков'
+      - '&7Ими оплачиваются покупки в этом магазине.'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+
+  'Сфера сумерек':
+    slots:
+    - 20
+    material: PAPER
+    item_model: voidspheres:sphere1
+    model_data_component:
+      floats: [9001.0]
+    display_name: '&#C86BFFСфера сумерек'
+    lore:
+      - ''
+      - '&7Работает только в левой руке.'
+      - ''
+      - '&7Урон: &a+1'
+      - '&7Броня: &a+1'
+      - '&7Здоровье: &a+2'
+      - ''
+      - '&fЦена: &#54C8FF1300 осколков'
+      - '&7Твой баланс: &#54C8FF%playerpoints_points%'
+      - '&eНажми, чтобы купить'
+    click_requirement:
+      requirements:
+        shards:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '1300'
+      deny_commands:
+        - '[message] &#FF6B6BНе хватает осколков: нужно 1300, у тебя %playerpoints_points%.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] points take %player_name% 1300'
+      - '[console] sphere give %player_name% 1 1'
+      - '[message] &#7CFC00Покупка успешна: &#C86BFFСфера сумерек'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Сфера пламени':
+    slots:
+    - 22
+    material: PAPER
+    item_model: voidspheres:sphere2
+    model_data_component:
+      floats: [9002.0]
+    display_name: '&#FF7847Сфера пламени'
+    lore:
+      - ''
+      - '&7Работает только в левой руке.'
+      - ''
+      - '&7Урон: &a+2'
+      - '&7Броня: &a+2'
+      - '&7Здоровье: &a+4'
+      - '&7Скорость: &c-3%'
+      - ''
+      - '&fЦена: &#54C8FF2600 осколков'
+      - '&7Твой баланс: &#54C8FF%playerpoints_points%'
+      - '&eНажми, чтобы купить'
+    click_requirement:
+      requirements:
+        shards:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '2600'
+      deny_commands:
+        - '[message] &#FF6B6BНе хватает осколков: нужно 2600, у тебя %playerpoints_points%.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] points take %player_name% 2600'
+      - '[console] sphere give %player_name% 2 1'
+      - '[message] &#7CFC00Покупка успешна: &#FF7847Сфера пламени'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Сфера бездны':
+    slots:
+    - 24
+    material: PAPER
+    item_model: voidspheres:sphere3
+    model_data_component:
+      floats: [9003.0]
+    display_name: '&#B388FFСфера бездны'
+    lore:
+      - ''
+      - '&7Работает только в левой руке.'
+      - ''
+      - '&7Урон: &a+3'
+      - '&7Броня: &a+3'
+      - '&7Здоровье: &a+6'
+      - '&7Скорость: &a+5%'
+      - ''
+      - '&fЦена: &#54C8FF5200 осколков'
+      - '&7Твой баланс: &#54C8FF%playerpoints_points%'
+      - '&eНажми, чтобы купить'
+    click_requirement:
+      requirements:
+        shards:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '5200'
+      deny_commands:
+        - '[message] &#FF6B6BНе хватает осколков: нужно 5200, у тебя %playerpoints_points%.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] points take %player_name% 5200'
+      - '[console] sphere give %player_name% 3 1'
+      - '[message] &#7CFC00Покупка успешна: &#B388FFСфера бездны'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Сфера пустоты':
+    slots:
+    - 30
+    material: PAPER
+    item_model: voidspheres:sphere4
+    model_data_component:
+      floats: [9004.0]
+    display_name: '&#4D7CFEСфера пустоты'
+    lore:
+      - ''
+      - '&7Работает только в левой руке.'
+      - ''
+      - '&7Урон: &a+4'
+      - '&7Броня: &a+4'
+      - '&7Здоровье: &a+4'
+      - '&7Скорость: &a+5%'
+      - ''
+      - '&fЦена: &#54C8FF3500 осколков'
+      - '&7Твой баланс: &#54C8FF%playerpoints_points%'
+      - '&eНажми, чтобы купить'
+    click_requirement:
+      requirements:
+        shards:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '3500'
+      deny_commands:
+        - '[message] &#FF6B6BНе хватает осколков: нужно 3500, у тебя %playerpoints_points%.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] points take %player_name% 3500'
+      - '[console] sphere give %player_name% 4 1'
+      - '[message] &#7CFC00Покупка успешна: &#4D7CFEСфера пустоты'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Сфера пустоты за яйцо дракона':
+    slots:
+    - 32
+    material: DRAGON_EGG
+    display_name: '&#8E6BFFОбмен: яйцо дракона'
+    lore:
+      - ''
+      - '&7Отдай &fяйцо дракона&7 и получи'
+      - '&#4D7CFEСферу пустоты&7:'
+      - ''
+      - '&7Урон: &a+4'
+      - '&7Броня: &a+4'
+      - '&7Здоровье: &a+4'
+      - '&7Скорость: &a+5%'
+      - ''
+      - '&eНажми, чтобы обменять'
+    click_requirement:
+      requirements:
+        egg:
+          type: has item
+          material: DRAGON_EGG
+          amount: 1
+      deny_commands:
+        - '[message] &#FF6B6BДля обмена нужно яйцо дракона в инвентаре.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] sphere exchange %player_name%'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Назад':
+    slots:
+    - 40
+    material: ARROW
+    display_name: '&fНазад'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[openguimenu] shop'

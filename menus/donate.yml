@@ -1,0 +1,308 @@
+# DeluxeMenus — раздел: Донат
+# Файл на сервере: plugins/DeluxeMenus/gui_menus/donate.yml
+# Открывается командой /donate
+#
+# Команды приведены под VoidPE:
+#  * группы LuckPerms — наши: strannik, geroy, rycar, baron, lord, knyaz, imperator;
+#  * выдача — только parent add (не parent set!), чтобы привилегии не слетали;
+#  * киты LiteKits — /kit strannik, /kit geroy, /kit rycar и т.д.
+
+menu_title: '• Донат привилегии'
+open_command: donate
+register_command: true
+size: 54
+open_commands:
+  - '[sound] ITEM_BOOK_PAGE_TURN'
+
+items:
+
+  'Рамка':
+    slots:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 17
+    - 18
+    - 26
+    - 27
+    - 35
+    - 36
+    - 44
+    - 45
+    - 46
+    - 47
+    - 48
+    - 50
+    - 51
+    - 52
+    - 53
+    material: BLACK_STAINED_GLASS_PANE
+    display_name: ' '
+
+  'Баланс':
+    slots:
+    - 13
+    material: PRISMARINE_SHARD
+    display_name: '&#54C8FFТвои осколки'
+    lore:
+      - ''
+      - '&fБаланс: &#54C8FF%playerpoints_points% осколков'
+      - '&7Ими оплачиваются покупки в этом магазине.'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+
+  'Странник':
+    slots:
+    - 20
+    material: LEATHER_HELMET
+    display_name: '&f» &#CFCFCFСтранник'
+    lore:
+      - ''
+      - '&fВозможности:'
+      - '&7• Префикс: &#CFCFCFСтранник'
+      - '&7• Доступ к &a/kit strannik'
+      - '&7• Домов (/sethome): &a2'
+      - '&7• Приватов (регионов): &a4'
+      - '&7• Возможность заходить на полный сервер'
+      - ''
+      - '&fЦена: &#54C8FF12 осколков'
+      - '&7Твой баланс: &#54C8FF%playerpoints_points%'
+      - '&eНажми, чтобы купить'
+    click_requirement:
+      requirements:
+        shards:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '12'
+      deny_commands:
+        - '[message] &#FF6B6BНе хватает осколков: нужно 12, у тебя %playerpoints_points%.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] points take %player_name% 12'
+      - '[console] lp user %player_name% parent add strannik'
+      - '[message] &#7CFC00Покупка успешна: &#CFCFCFСтранник'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Герой':
+    slots:
+    - 21
+    material: CHAINMAIL_HELMET
+    display_name: '&f» &#55FF55Герой'
+    lore:
+      - ''
+      - '&fВозможности:'
+      - '&7• Префикс: &#55FF55Герой'
+      - '&7• Доступ к &a/kit geroy'
+      - '&7• Команда &a/workbench &7(верстак)'
+      - '&7• Домов (/sethome): &a2'
+      - '&7• Приватов (регионов): &a5'
+      - ''
+      - '&fЦена: &#54C8FF20 осколков'
+      - '&7Твой баланс: &#54C8FF%playerpoints_points%'
+      - '&eНажми, чтобы купить'
+    click_requirement:
+      requirements:
+        shards:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '20'
+      deny_commands:
+        - '[message] &#FF6B6BНе хватает осколков: нужно 20, у тебя %playerpoints_points%.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] points take %player_name% 20'
+      - '[console] lp user %player_name% parent add geroy'
+      - '[message] &#7CFC00Покупка успешна: &#55FF55Герой'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Рыцарь':
+    slots:
+    - 22
+    material: IRON_HELMET
+    display_name: '&f» &#FFFF55Рыцарь'
+    lore:
+      - ''
+      - '&fВозможности:'
+      - '&7• Префикс: &#FFFF55Рыцарь'
+      - '&7• Доступ к &a/kit rycar'
+      - '&7• Команда &a/enderchest &7(эндер-сундук)'
+      - '&7• Сохранение опыта при смерти'
+      - '&7• Домов (/sethome): &a3'
+      - '&7• Приватов (регионов): &a6'
+      - ''
+      - '&fЦена: &#54C8FF95 осколков'
+      - '&7Твой баланс: &#54C8FF%playerpoints_points%'
+      - '&eНажми, чтобы купить'
+    click_requirement:
+      requirements:
+        shards:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '95'
+      deny_commands:
+        - '[message] &#FF6B6BНе хватает осколков: нужно 95, у тебя %playerpoints_points%.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] points take %player_name% 95'
+      - '[console] lp user %player_name% parent add rycar'
+      - '[message] &#7CFC00Покупка успешна: &#FFFF55Рыцарь'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Барон':
+    slots:
+    - 23
+    material: GOLDEN_HELMET
+    display_name: '&f» &#FFAA00Барон'
+    lore:
+      - ''
+      - '&fВозможности:'
+      - '&7• Префикс: &#FFAA00Барон'
+      - '&7• Доступ к &a/kit baron'
+      - '&7• Команда &a/feed &7(утолить голод)'
+      - '&7• Команда &a/heal &7(раз в день)'
+      - '&7• Монет с мобов: &a×1.2'
+      - '&7• Домов (/sethome): &a4'
+      - '&7• Приватов (регионов): &a5'
+      - ''
+      - '&fЦена: &#54C8FF222 осколка'
+      - '&7Твой баланс: &#54C8FF%playerpoints_points%'
+      - '&eНажми, чтобы купить'
+    click_requirement:
+      requirements:
+        shards:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '222'
+      deny_commands:
+        - '[message] &#FF6B6BНе хватает осколков: нужно 222, у тебя %playerpoints_points%.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] points take %player_name% 222'
+      - '[console] lp user %player_name% parent add baron'
+      - '[message] &#7CFC00Покупка успешна: &#FFAA00Барон'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Лорд':
+    slots:
+    - 24
+    material: DIAMOND_HELMET
+    display_name: '&f» &#55FFFFЛорд'
+    lore:
+      - ''
+      - '&fВозможности:'
+      - '&7• Префикс: &#55FFFFЛорд'
+      - '&7• Доступ к &a/kit lord'
+      - '&7• Команда &a/fly &7(полёт на спавне)'
+      - '&7• Полет в привате'
+      - '&7• Монет с мобов: &a×1.5'
+      - '&7• Домов (/sethome): &a5'
+      - '&7• Приватов (регионов): &a6'
+      - ''
+      - '&fЦена: &#54C8FF350 осколков'
+      - '&7Твой баланс: &#54C8FF%playerpoints_points%'
+      - '&eНажми, чтобы купить'
+    click_requirement:
+      requirements:
+        shards:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '350'
+      deny_commands:
+        - '[message] &#FF6B6BНе хватает осколков: нужно 350, у тебя %playerpoints_points%.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] points take %player_name% 350'
+      - '[console] lp user %player_name% parent add lord'
+      - '[message] &#7CFC00Покупка успешна: &#55FFFFЛорд'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Князь':
+    slots:
+    - 30
+    material: NETHERITE_HELMET
+    display_name: '&f» &#FF55FFКнязь'
+    lore:
+      - ''
+      - '&fВозможности:'
+      - '&7• Префикс: &#FF55FFКнязь'
+      - '&7• Доступ к &a/kit knyaz'
+      - '&7• Команда &a/heal &7без задержки'
+      - '&7• Команды &a/hat &7и &a/nick'
+      - '&7• Монет с мобов: &a×2'
+      - '&7• Домов (/sethome): &a7'
+      - '&7• Приватов (регионов): &a7'
+      - '&7• Доступ к выделенному киту варпа'
+      - ''
+      - '&fЦена: &#54C8FF540 осколков'
+      - '&7Твой баланс: &#54C8FF%playerpoints_points%'
+      - '&eНажми, чтобы купить'
+    click_requirement:
+      requirements:
+        shards:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '540'
+      deny_commands:
+        - '[message] &#FF6B6BНе хватает осколков: нужно 540, у тебя %playerpoints_points%.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] points take %player_name% 540'
+      - '[console] lp user %player_name% parent add knyaz'
+      - '[message] &#7CFC00Покупка успешна: &#FF55FFКнязь'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Император':
+    slots:
+    - 32
+    material: NETHER_STAR
+    display_name: '&f» &#FFD93DИмператор'
+    lore:
+      - ''
+      - '&fВозможности:'
+      - '&7• Префикс: &#FFD93DИмператор'
+      - '&7• Доступ ко всем командам низших привилегий'
+      - '&7• Приватов (регионов): &a8'
+      - '&7• Монет с мобов: &a×3'
+      - '&7• Домов (/sethome): &a10'
+      - '&7• Доступ к &a/kit imperator'
+      - ''
+      - '&fЦена: &#54C8FF950 осколков'
+      - '&7Твой баланс: &#54C8FF%playerpoints_points%'
+      - '&eНажми, чтобы купить'
+    click_requirement:
+      requirements:
+        shards:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '950'
+      deny_commands:
+        - '[message] &#FF6B6BНе хватает осколков: нужно 950, у тебя %playerpoints_points%.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] points take %player_name% 950'
+      - '[console] lp user %player_name% parent add imperator'
+      - '[message] &#7CFC00Покупка успешна: &#FFD93DИмператор'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Закрыть':
+    slots:
+    - 49
+    material: BARRIER
+    display_name: '&cЗакрыть'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[close]'

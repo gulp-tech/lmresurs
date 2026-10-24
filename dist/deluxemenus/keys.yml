@@ -1,0 +1,333 @@
+menu_title: • Магазин ключей
+open_command: keys
+register_command: true
+size: 54
+
+open_commands:
+  - '[sound] ITEM_BOOK_PAGE_TURN'
+
+items:
+  Информация:
+    slots:
+    - 4
+    material: NETHER_STAR
+    display_name: '&3Инфор&aмация'
+    lore:
+      - ''
+      - '&f Официальный магазин ключей'
+      - '&f для открытия кейсов на спавне.'
+      - ''
+      - '&fВаш баланс:'
+      - '&7• &fМонеты: &a%vault_eco_balance_formatted%'
+      - ''
+      - '&7• &fНажмите на ключ &a(1 шт.)'
+      - '&7• &fНажмите на слиток &a(5 шт.)'
+
+  # ══════════════════════════════════════
+  #          КЛЮЧИ — 1 ШТУКА
+  # ══════════════════════════════════════
+
+  Ключ Талисманов:
+    slots:
+    - 19
+    material: TRIAL_KEY
+    model_data_component:
+      floats: [14]
+    hide_attributes: true
+    display_name: '&3Ключ Талисманов &7- &a105 000$'
+    lore:
+      - ''
+      - '&f Открывает кейс с уникальными'
+      - '&f магическими артефактами.'
+      - ''
+      - '&fСтоимость:'
+      - '&7• &fЗа 1 шт: &a105 000$'
+      - ''
+      - '&fВаш баланс:'
+      - '&7• &fМонеты: &a%vault_eco_balance_formatted%'
+      - ''
+      - '&3➥ &fНажмите для покупки 1 ключа'
+    click_commands:
+      - '[sound] ENTITY_EXPERIENCE_ORB_PICKUP'
+      - '[console] eco take %player_name% 105000'
+      - '[console] lmcase givekey %player_name% talisman'
+      - '[message] &fВы купили &aКлюч Талисманов &7(1 шт.)'
+      - '[refresh]'
+    click_requirement:
+      requirements:
+        money_check:
+          type: has money
+          amount: 105000
+      deny_commands:
+        - '[sound] ENTITY_VILLAGER_NO'
+        - '[message] &cНедостаточно средств! Требуется 105 000$'
+
+  Ключ Ресурсов:
+    slots:
+    - 21
+    material: TRIAL_KEY
+    model_data_component:
+      floats: [3]
+    hide_attributes: true
+    display_name: '&3Ключ Ресурсов &7- &a98 000$'
+    lore:
+      - ''
+      - '&f Открывает кейс с ценными'
+      - '&f материалами и ресурсами.'
+      - ''
+      - '&fСтоимость:'
+      - '&7• &fЗа 1 шт: &a98 000$'
+      - ''
+      - '&fВаш баланс:'
+      - '&7• &fМонеты: &a%vault_eco_balance_formatted%'
+      - ''
+      - '&3➥ &fНажмите для покупки 1 ключа'
+    click_commands:
+      - '[sound] ENTITY_EXPERIENCE_ORB_PICKUP'
+      - '[console] eco take %player_name% 98000'
+      - '[console] lmcase givekey %player_name% resource'
+      - '[message] &fВы купили &aКлюч Ресурсов &7(1 шт.)'
+      - '[refresh]'
+    click_requirement:
+      requirements:
+        money_check:
+          type: has money
+          amount: 98000
+      deny_commands:
+        - '[sound] ENTITY_VILLAGER_NO'
+        - '[message] &cНедостаточно средств! Требуется 98 000$'
+
+  Ключ Сфер:
+    slots:
+    - 23
+    material: TRIAL_KEY
+    model_data_component:
+      floats: [13]
+    hide_attributes: true
+    display_name: '&3Ключ Сфер &7- &a90 000$'
+    lore:
+      - ''
+      - '&f Открывает кейс с особыми'
+      - '&f сферами и уникальными предметами.'
+      - ''
+      - '&fСтоимость:'
+      - '&7• &fЗа 1 шт: &a90 000$'
+      - ''
+      - '&fВаш баланс:'
+      - '&7• &fМонеты: &a%vault_eco_balance_formatted%'
+      - ''
+      - '&3➥ &fНажмите для покупки 1 ключа'
+    click_commands:
+      - '[sound] ENTITY_EXPERIENCE_ORB_PICKUP'
+      - '[console] eco take %player_name% 90000'
+      - '[console] lmcase givekey %player_name% sphere'
+      - '[message] &fВы купили &aКлюч Сфер &7(1 шт.)'
+      - '[refresh]'
+    click_requirement:
+      requirements:
+        money_check:
+          type: has money
+          amount: 90000
+      deny_commands:
+        - '[sound] ENTITY_VILLAGER_NO'
+        - '[message] &cНедостаточно средств! Требуется 90 000$'
+
+  Ключ Зелий:
+    slots:
+    - 25
+    material: DRAGON_BREATH
+    hide_attributes: true
+    display_name: '&aКлюч Зелий &7- &a71 000$'
+    lore:
+      - ''
+      - '&f Открывает кейс с редкими'
+      - '&f зельями и алхимическими баффами.'
+      - ''
+      - '&fСтоимость:'
+      - '&7• &fЗа 1 шт: &a71 000$'
+      - ''
+      - '&fВаш баланс:'
+      - '&7• &fМонеты: &a%vault_eco_balance_formatted%'
+      - ''
+      - '&3➥ &fНажмите для покупки 1 ключа'
+    click_commands:
+      - '[sound] ENTITY_EXPERIENCE_ORB_PICKUP'
+      - '[console] eco take %player_name% 71000'
+      - '[console] lmcase givekey %player_name% potion'
+      - '[message] &fВы купили &aКлюч Зелий &7(1 шт.)'
+      - '[refresh]'
+    click_requirement:
+      requirements:
+        money_check:
+          type: has money
+          amount: 71000
+      deny_commands:
+        - '[sound] ENTITY_VILLAGER_NO'
+        - '[message] &cНедостаточно средств! Требуется 71 000$'
+
+  # ══════════════════════════════════════
+  #          КЛЮЧИ — 5 ШТУК
+  # ══════════════════════════════════════
+
+  Ключ Талисманов x5:
+    slots:
+    - 28
+    material: GOLD_INGOT
+    hide_attributes: true
+    display_name: '&3Ключ Талисманов &e×5 &7- &a525 000$'
+    lore:
+      - ''
+      - '&f Пакет из 5 ключей Талисманов.'
+      - ''
+      - '&fСтоимость:'
+      - '&7• &fЗа 5 шт: &a525 000$'
+      - ''
+      - '&fВаш баланс:'
+      - '&7• &fМонеты: &a%vault_eco_balance_formatted%'
+      - ''
+      - '&3➥ &fНажмите для покупки 5 ключей'
+    click_commands:
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[console] eco take %player_name% 525000'
+      - '[console] lmcase givekey %player_name% talisman'
+      - '[console] lmcase givekey %player_name% talisman'
+      - '[console] lmcase givekey %player_name% talisman'
+      - '[console] lmcase givekey %player_name% talisman'
+      - '[console] lmcase givekey %player_name% talisman'
+      - '[message] &fВы купили &aКлюч Талисманов &7(5 шт.)'
+      - '[refresh]'
+    click_requirement:
+      requirements:
+        money_check:
+          type: has money
+          amount: 525000
+      deny_commands:
+        - '[sound] ENTITY_VILLAGER_NO'
+        - '[message] &cНедостаточно средств! Требуется 525 000$'
+
+  Ключ Ресурсов x5:
+    slots:
+    - 30
+    material: GOLD_INGOT
+    hide_attributes: true
+    display_name: '&3Ключ Ресурсов &e×5 &7- &a490 000$'
+    lore:
+      - ''
+      - '&f Пакет из 5 ключей Ресурсов.'
+      - ''
+      - '&fСтоимость:'
+      - '&7• &fЗа 5 шт: &a490 000$'
+      - ''
+      - '&fВаш баланс:'
+      - '&7• &fМонеты: &a%vault_eco_balance_formatted%'
+      - ''
+      - '&3➥ &fНажмите для покупки 5 ключей'
+    click_commands:
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[console] eco take %player_name% 490000'
+      - '[console] lmcase givekey %player_name% resource'
+      - '[console] lmcase givekey %player_name% resource'
+      - '[console] lmcase givekey %player_name% resource'
+      - '[console] lmcase givekey %player_name% resource'
+      - '[console] lmcase givekey %player_name% resource'
+      - '[message] &fВы купили &aКлюч Ресурсов &7(5 шт.)'
+      - '[refresh]'
+    click_requirement:
+      requirements:
+        money_check:
+          type: has money
+          amount: 490000
+      deny_commands:
+        - '[sound] ENTITY_VILLAGER_NO'
+        - '[message] &cНедостаточно средств! Требуется 490 000$'
+
+  Ключ Сфер x5:
+    slots:
+    - 32
+    material: GOLD_INGOT
+    hide_attributes: true
+    display_name: '&3Ключ Сфер &e×5 &7- &a450 000$'
+    lore:
+      - ''
+      - '&f Пакет из 5 ключей Сфер.'
+      - ''
+      - '&fСтоимость:'
+      - '&7• &fЗа 5 шт: &a450 000$'
+      - ''
+      - '&fВаш баланс:'
+      - '&7• &fМонеты: &a%vault_eco_balance_formatted%'
+      - ''
+      - '&3➥ &fНажмите для покупки 5 ключей'
+    click_commands:
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[console] eco take %player_name% 450000'
+      - '[console] lmcase givekey %player_name% sphere'
+      - '[console] lmcase givekey %player_name% sphere'
+      - '[console] lmcase givekey %player_name% sphere'
+      - '[console] lmcase givekey %player_name% sphere'
+      - '[console] lmcase givekey %player_name% sphere'
+      - '[message] &fВы купили &aКлюч Сфер &7(5 шт.)'
+      - '[refresh]'
+    click_requirement:
+      requirements:
+        money_check:
+          type: has money
+          amount: 450000
+      deny_commands:
+        - '[sound] ENTITY_VILLAGER_NO'
+        - '[message] &cНедостаточно средств! Требуется 450 000$'
+
+  Ключ Зелий x5:
+    slots:
+    - 34
+    material: GOLD_INGOT
+    hide_attributes: true
+    display_name: '&aКлюч Зелий &e×5 &7- &a355 000$'
+    lore:
+      - ''
+      - '&f Пакет из 5 ключей Зелий.'
+      - ''
+      - '&fСтоимость:'
+      - '&7• &fЗа 5 шт: &a355 000$'
+      - ''
+      - '&fВаш баланс:'
+      - '&7• &fМонеты: &a%vault_eco_balance_formatted%'
+      - ''
+      - '&3➥ &fНажмите для покупки 5 ключей'
+    click_commands:
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[console] eco take %player_name% 355000'
+      - '[console] lmcase givekey %player_name% potion'
+      - '[console] lmcase givekey %player_name% potion'
+      - '[console] lmcase givekey %player_name% potion'
+      - '[console] lmcase givekey %player_name% potion'
+      - '[console] lmcase givekey %player_name% potion'
+      - '[message] &fВы купили &aКлюч Зелий &7(5 шт.)'
+      - '[refresh]'
+    click_requirement:
+      requirements:
+        money_check:
+          type: has money
+          amount: 355000
+      deny_commands:
+        - '[sound] ENTITY_VILLAGER_NO'
+        - '[message] &cНедостаточно средств! Требуется 355 000$'
+
+  # ══════════════════════════════════════
+  #              НАЗАД
+  # ══════════════════════════════════════
+
+  Назад /menu:
+    slots:
+    - 49
+    material: ARROW
+    display_name: '&3Наз&aад &7/menu'
+    lore:
+      - ''
+      - '&f Вернуться к списку основных'
+      - '&f разделов сервера.'
+      - ''
+      - '&3➥ &fНажмите, чтобы открыть.'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[openguimenu] menu'

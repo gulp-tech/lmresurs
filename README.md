@@ -9,9 +9,15 @@ Bedrock-порт ресурспака и меню **FunTime** для Geyser + Fl
 | `funtime.zip` | Исходный Java-ресурспак FunTime (723 файла, pack_format 34, оверлеи 1.21.4–1.21.6+) |
 | `funtime/` | Распакованный Java-пак (локально, в git не нужен — генератор умеет читать `.zip`) |
 | `tools/build_bedrock_pack.py` | Генератор Bedrock-пака и Geyser mappings из Java-пака |
+| `tools/port_deluxemenus.py` | Портирование меню DeluxeMenus (оформление, без изменения функционала) |
+| `tools/preview_menu.py` | PNG-превью меню |
+| `tools/build_all.sh` | Пересборка пака, mappings и меню одной командой |
 | `dist/funtime.mcpack` | Готовый Bedrock-ресурспак (135 иконок предметов) |
 | `dist/geyser_mappings.json` | Geyser custom item mappings (v2, `legacy` по `custom_model_data`) |
 | `dist/deluxemenus_items.yml` | 136 заготовок предметов для DeluxeMenus |
+| `dist/deluxemenus/` | Портированные меню DeluxeMenus (14 файлов) под Bedrock |
+| `dist/preview/` | PNG-превью меню (как их видит Bedrock) |
+| `menus/` | Исходные меню DeluxeMenus |
 | `dist/CONVERSION_REPORT.md` | Отчёт конвертации |
 | `examples/deluxemenus_bedrock_menu.yml` | Пример меню, которое сразу работает на Bedrock |
 | `docs/GEYSER_BEDROCK.md` | Установка, ограничения, troubleshooting |
@@ -19,7 +25,14 @@ Bedrock-порт ресурспака и меню **FunTime** для Geyser + Fl
 ## Быстрый старт
 
 ```bash
-python3 tools/build_bedrock_pack.py --pack funtime.zip --out dist
+bash tools/build_all.sh          # пак + mappings + все меню
+```
+
+или по отдельности:
+
+```bash
+python3 tools/port_deluxemenus.py --src menus --out dist/deluxemenus
+python3 tools/build_bedrock_pack.py --pack funtime.zip --out dist --deluxemenus dist/deluxemenus
 ```
 
 Затем скопировать в Geyser:
@@ -27,6 +40,7 @@ python3 tools/build_bedrock_pack.py --pack funtime.zip --out dist
 ```
 dist/funtime.mcpack          -> plugins/Geyser-Spigot/packs/
 dist/geyser_mappings.json    -> plugins/Geyser-Spigot/custom_mappings/funtime.json
+dist/deluxemenus/*.yml       -> plugins/DeluxeMenus/gui_menus/
 ```
 
 и включить `gameplay.enable-custom-content: true` в `plugins/Geyser-Spigot/config.yml`.

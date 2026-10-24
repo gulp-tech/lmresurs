@@ -1,0 +1,248 @@
+# DeluxeMenus — меню титулов VoidPE
+# Файл в: plugins/DeluxeMenus/gui_menus/titles.yml
+# Открытие: /titles
+#
+# Как это работает:
+#  * Титулы выдаются ТОЛЬКО из кейса титулов (VoidCases): при выигрыше
+#    кейс, помимо суффикса, выдаёт право titles.<id> в LuckPerms.
+#    Ничего не продаётся и командами не выдаётся.
+#  * Нажатие на титул проверяет право (has permission titles.<id>):
+#    есть право — титул применяется суффиксом LuckPerms (setsuffix 90,
+#    как ставит сам кейс и как читает VoidTab), нет — сообщение, что
+#    титула нет.
+#  * Кнопка «Очистить» (слот 26) убирает титул: meta removesuffix 90.
+
+menu_title: '• Титулы'
+open_command: titles
+register_command: true
+size: 27
+open_commands:
+  - '[sound] ITEM_BOOK_PAGE_TURN'
+items:
+
+  'Титул Везунчик':
+    slots:
+    - 10
+    material: NAME_TAG
+    display_name: '&#7CFC00Везунчик'
+    lore:
+      - ''
+      - '&fТитул после ника в чате.'
+      - '&7Шанс из кейса: &#7CFC0033.1%'
+      - ''
+      - '&#FFD93DВыбивается только из кейса титулов!'
+      - '&eНажми, чтобы применить'
+    click_requirement:
+      requirements:
+        owned:
+          type: has permission
+          permission: titles.vezunchik
+      deny_commands:
+        - '[message] &#FF6B6BУ тебя нет титула «Везунчик». Он выпадает только из кейса титулов.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] lp user %player_name% meta setsuffix 90 " &#7CFC00Везунчик&r"'
+      - '[message] &#7CFC00Титул «Везунчик» применён! Теперь он после твоего ника.'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Титул Охотник':
+    slots:
+    - 11
+    material: NAME_TAG
+    display_name: '&#8CE8FFОхотник'
+    lore:
+      - ''
+      - '&fТитул после ника в чате.'
+      - '&7Шанс из кейса: &#8CE8FF24.3%'
+      - ''
+      - '&#FFD93DВыбивается только из кейса титулов!'
+      - '&eНажми, чтобы применить'
+    click_requirement:
+      requirements:
+        owned:
+          type: has permission
+          permission: titles.ohotnik
+      deny_commands:
+        - '[message] &#FF6B6BУ тебя нет титула «Охотник». Он выпадает только из кейса титулов.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] lp user %player_name% meta setsuffix 90 " &#8CE8FFОхотник&r"'
+      - '[message] &#8CE8FFТитул «Охотник» применён! Теперь он после твоего ника.'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Титул Богач':
+    slots:
+    - 12
+    material: NAME_TAG
+    display_name: '&#FFD93DБогач'
+    lore:
+      - ''
+      - '&fТитул после ника в чате.'
+      - '&7Шанс из кейса: &#FFD93D17.7%'
+      - ''
+      - '&#FFD93DВыбивается только из кейса титулов!'
+      - '&eНажми, чтобы применить'
+    click_requirement:
+      requirements:
+        owned:
+          type: has permission
+          permission: titles.bogach
+      deny_commands:
+        - '[message] &#FF6B6BУ тебя нет титула «Богач». Он выпадает только из кейса титулов.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] lp user %player_name% meta setsuffix 90 " &#FFD93DБогач&r"'
+      - '[message] &#FFD93DТитул «Богач» применён! Теперь он после твоего ника.'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Титул Гроза':
+    slots:
+    - 13
+    material: NAME_TAG
+    display_name: '&#C86BFFГроза'
+    lore:
+      - ''
+      - '&fТитул после ника в чате.'
+      - '&7Шанс из кейса: &#C86BFF12.1%'
+      - ''
+      - '&#FFD93DВыбивается только из кейса титулов!'
+      - '&eНажми, чтобы применить'
+    click_requirement:
+      requirements:
+        owned:
+          type: has permission
+          permission: titles.groza
+      deny_commands:
+        - '[message] &#FF6B6BУ тебя нет титула «Гроза». Он выпадает только из кейса титулов.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] lp user %player_name% meta setsuffix 90 " &#55E6FFГроза&r"'
+      - '[message] &#55E6FFТитул «Гроза» применён! Теперь он после твоего ника.'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Титул Призрак':
+    slots:
+    - 14
+    material: NAME_TAG
+    display_name: '&#B8B8FFПризрак'
+    lore:
+      - ''
+      - '&fТитул после ника в чате.'
+      - '&7Шанс из кейса: &#B8B8FF7.7%'
+      - ''
+      - '&#FFD93DВыбивается только из кейса титулов!'
+      - '&eНажми, чтобы применить'
+    click_requirement:
+      requirements:
+        owned:
+          type: has permission
+          permission: titles.prizrak
+      deny_commands:
+        - '[message] &#FF6B6BУ тебя нет титула «Призрак». Он выпадает только из кейса титулов.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] lp user %player_name% meta setsuffix 90 " &#C86BFFПризрак&r"'
+      - '[message] &#C86BFFТитул «Призрак» применён! Теперь он после твоего ника.'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Титул Легенда':
+    slots:
+    - 15
+    material: NAME_TAG
+    display_name: '&#FF9A3DЛегенда'
+    lore:
+      - ''
+      - '&fТитул после ника в чате.'
+      - '&7Шанс из кейса: &#FF9A3D3.9%'
+      - ''
+      - '&#FFD93DВыбивается только из кейса титулов!'
+      - '&eНажми, чтобы применить'
+    click_requirement:
+      requirements:
+        owned:
+          type: has permission
+          permission: titles.legenda
+      deny_commands:
+        - '[message] &#FF6B6BУ тебя нет титула «Легенда». Он выпадает только из кейса титулов.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] lp user %player_name% meta setsuffix 90 " &#FF9A3DЛегенда&r"'
+      - '[message] &#FF9A3DТитул «Легенда» применён! Теперь он после твоего ника.'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Титул Миф':
+    slots:
+    - 16
+    material: NAME_TAG
+    display_name: '&cМиф'
+    lore:
+      - ''
+      - '&fТитул после ника в чате.'
+      - '&7Шанс из кейса: &#FF78471.1%'
+      - ''
+      - '&#FFD93DВыбивается только из кейса титулов!'
+      - '&eНажми, чтобы применить'
+    click_requirement:
+      requirements:
+        owned:
+          type: has permission
+          permission: titles.mif
+      deny_commands:
+        - '[message] &#FF6B6BУ тебя нет титула «Миф». Он выпадает только из кейса титулов.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] lp user %player_name% meta setsuffix 90 " &#FF5555Миф&r"'
+      - '[message] &#FF5555Титул «Миф» применён! Теперь он после твоего ника.'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Назад в меню':
+    slots:
+    - 18
+    material: ARROW
+    display_name: '&fНазад'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[player] menu'
+
+  'Как получить':
+    slots:
+    - 22
+    material: ENDER_CHEST
+    display_name: '&#FFD93DКак получить титул?'
+    lore:
+      - ''
+      - '&f1. Открой &bКейс титулов&f: выпавший'
+      - '&f   титул станет твоим навсегда.'
+      - '&f2. Нажми на него в этом меню —'
+      - '&f   он применится после ника.'
+      - '&f3. Кнопка справа внизу убирает титул.'
+      - ''
+      - '&7Других способов получить титул нет:'
+      - '&7они не продаются и не выдаются командами.'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+
+  'Очистить':
+    slots:
+    - 26
+    material: BARRIER
+    display_name: '&cОчистить титул'
+    lore:
+      - ''
+      - '&7Убрать титул после ника полностью.'
+      - '&7Сам титул не пропадает: его можно'
+      - '&7вернуть нажатием в этом меню.'
+      - ''
+      - '&eНажми, чтобы убрать'
+    click_commands:
+      - '[console] lp user %player_name% meta removesuffix 90'
+      - '[message] &aТитул убран. Ник теперь без титула.'
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[refresh]'

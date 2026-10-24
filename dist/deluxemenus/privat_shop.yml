@@ -1,0 +1,240 @@
+menu_title: '• Магазин приватов'
+open_command: privshop
+register_command: true
+size: 27
+update_interval: 1
+
+open_commands:
+  - '[sound] ITEM_BOOK_PAGE_TURN'
+
+items:
+
+  Информация:
+    slots:
+      - 4
+    material: BOOK
+    display_name: '&3Инфор&aмация'
+    lore:
+      - ''
+      - '&f Добро пожаловать в магазин'
+      - '&f приватов!'
+      - ''
+      - '&f Выберите нужный размер и'
+      - '&f кликните по блоку,'
+      - '&f чтобы купить приват.'
+      - ''
+      - '&fВаш баланс:'
+      - '&7• &fМонеты: &a%vault_eco_balance_formatted%$'
+      - '&7• &fОсколки: &7%playerpoints_points%'
+
+  Маленький приват:
+    slots:
+      - 10
+    material: GOLD_BLOCK
+    display_name: '&3Маленький приват &7- &a5 000$'
+    lore:
+      - ''
+      - '&f Небольшая территория для'
+      - '&f новичков сервера.'
+      - ''
+      - '&fХарактеристики:'
+      - '&7• &fРазмер: &a5x5 блоков'
+      - '&7• &fЦена: &a5 000$'
+      - ''
+      - '&fПодходит для:'
+      - '&7• &fНебольшого дома'
+      - '&7• &fСклада ресурсов'
+      - ''
+      - '&fВаш баланс:'
+      - '&7• &fМонеты: &a%vault_eco_balance_formatted%$'
+      - ''
+      - '&3➥ &fНажмите, чтобы купить.'
+
+    click_commands:
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[console] eco take %player_name% 5000'
+      - '[console] ps give %player_name% gold'
+      - '[message] &fВы купили &aМаленький приват 5x5&f!'
+      - '[close]'
+
+    click_requirement:
+      requirements:
+        has_money:
+          type: has money
+          amount: 5000
+      deny_commands:
+        - '[sound] ENTITY_VILLAGER_NO'
+        - '[message] &cНедостаточно средств! Требуется: 5 000$'
+
+  Средний приват:
+    slots:
+      - 12
+    material: DIAMOND_BLOCK
+    display_name: '&3Средний приват &7- &a15 000$'
+    lore:
+      - ''
+      - '&f Средняя территория для'
+      - '&f активных игроков.'
+      - ''
+      - '&fХарактеристики:'
+      - '&7• &fРазмер: &a10x10 блоков'
+      - '&7• &fЦена: &a15 000$'
+      - ''
+      - '&fПодходит для:'
+      - '&7• &fБольшого дома'
+      - '&7• &fФермы и территории'
+      - ''
+      - '&fВаш баланс:'
+      - '&7• &fМонеты: &a%vault_eco_balance_formatted%$'
+      - ''
+      - '&3➥ &fНажмите, чтобы купить.'
+
+    click_commands:
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[console] eco take %player_name% 15000'
+      - '[console] ps give %player_name% diamond'
+      - '[message] &fВы купили &aСредний приват 10x10&f!'
+      - '[close]'
+
+    click_requirement:
+      requirements:
+        has_money:
+          type: has money
+          amount: 15000
+      deny_commands:
+        - '[sound] ENTITY_VILLAGER_NO'
+        - '[message] &cНедостаточно средств! Требуется: 15 000$'
+
+  Укреплённый приват:
+    slots:
+      - 13
+    material: REINFORCED_DEEPSLATE
+    display_name: '&7Укреплённый приват - &6800 осколков'
+    lore:
+      - ''
+      - '&7Укреплённый приват'
+      - ' &fимеет максимальный &94 уровень прочности&f;'
+      - ' &fс шансом &950% блокирует взрыв динамита&f.'
+      - ' &fвзрывается такими динамитами: &9Посейдон&f, &9Тяжёлый фугас&f.'
+      - ''
+      - '&fХарактеристики:'
+      - '&7• &fРазмер: &930x30 блоков'
+      - '&7• &fПрочность: &94/4'
+      - '&7• &fБлокировка динамита: &950%'
+      - '&7• &fЦена: &7800 осколков'
+      - ''
+      - '&fВаш баланс:'
+      - '&7• &fОсколки: &7%playerpoints_points%'
+      - ''
+      - '&7➥ &fНажмите, чтобы купить.'
+
+    click_commands:
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[console] points take %player_name% 800'
+      - '[console] ps give %player_name% reinforced'
+      - '[message] &fВы купили &7Укреплённый приват&f!'
+      - '[message] &fПрочность: &94/4 &7• &fШанс блокировки TNT: &950%'
+      - '[close]'
+
+    click_requirement:
+      requirements:
+        has_points:
+          type: javascript
+          expression: '%playerpoints_points% >= 800'
+      deny_commands:
+        - '[sound] ENTITY_VILLAGER_NO'
+        - '[message] &cНедостаточно осколков! Требуется: &7800'
+
+  Большой приват:
+    slots:
+      - 14
+    material: DIAMOND_ORE
+    display_name: '&3Большой приват &7- &a100 000$'
+    lore:
+      - ''
+      - '&f Огромная территория для'
+      - '&f настоящих строителей.'
+      - ''
+      - '&fХарактеристики:'
+      - '&7• &fРазмер: &a15x15 блоков'
+      - '&7• &fЦена: &a100 000$'
+      - ''
+      - '&fПодходит для:'
+      - '&7• &fПолноценной базы'
+      - '&7• &fЗамка или поселения'
+      - ''
+      - '&fВаш баланс:'
+      - '&7• &fМонеты: &a%vault_eco_balance_formatted%$'
+      - ''
+      - '&3➥ &fНажмите, чтобы купить.'
+
+    click_commands:
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[console] eco take %player_name% 100000'
+      - '[console] ps give %player_name% diamond_ore'
+      - '[message] &fВы купили &aБольшой приват 15x15&f!'
+      - '[close]'
+
+    click_requirement:
+      requirements:
+        has_money:
+          type: has money
+          amount: 100000
+      deny_commands:
+        - '[sound] ENTITY_VILLAGER_NO'
+        - '[message] &cНедостаточно средств! Требуется: 100 000$'
+
+  Огромный приват:
+    slots:
+      - 16
+    material: EMERALD_ORE
+    display_name: '&aОгромный приват &7- &a300 000$'
+    lore:
+      - ''
+      - '&f Максимальная территория'
+      - '&f для истинных ценителей.'
+      - ''
+      - '&fХарактеристики:'
+      - '&7• &fРазмер: &a25x25 блоков'
+      - '&7• &fЦена: &a300 000$'
+      - ''
+      - '&fПодходит для:'
+      - '&7• &fЦелого города'
+      - '&7• &fМасштабных проектов'
+      - ''
+      - '&fВаш баланс:'
+      - '&7• &fМонеты: &a%vault_eco_balance_formatted%$'
+      - ''
+      - '&3➥ &fНажмите, чтобы купить.'
+
+    click_commands:
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[console] eco take %player_name% 300000'
+      - '[console] ps give %player_name% emerald'
+      - '[message] &fВы купили &aОгромный приват 25x25&f!'
+      - '[close]'
+
+    click_requirement:
+      requirements:
+        has_money:
+          type: has money
+          amount: 300000
+      deny_commands:
+        - '[sound] ENTITY_VILLAGER_NO'
+        - '[message] &cНедостаточно средств! Требуется: 300 000$'
+
+  Назад /menu:
+    slots:
+      - 22
+    material: ARROW
+    display_name: '&3Наз&aад &7/menu'
+    lore:
+      - ''
+      - '&f Вернуться к списку основных'
+      - '&f разделов сервера.'
+      - ''
+      - '&3➥ &fНажмите, чтобы открыть.'
+
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[openguimenu] menu'

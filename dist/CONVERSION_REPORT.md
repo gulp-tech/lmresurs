@@ -149,6 +149,41 @@
 | `minecraft:trident` | 1 | `funtime:item_funtime_new_year_santa_staff` | `item_funtime_new_year_santa_staff` | — |
 | `minecraft:wither_skeleton_skull` | 1 | `funtime:item_funtime_halloween_draculas_skull` | `item_funtime_halloween_draculas_skull` | — |
 
+## Проверка DeluxeMenus
+
+Предметов с `model_data_component`: **23**, покрыто mappings: **23**, не покрыто: **0**
+
+| Меню | Строка | Предмет | CMD | Статус |
+| --- | --- | --- | --- | --- |
+| `keys.yml` | 33 | `minecraft:trial_key` | 14 | ok |
+| `keys.yml` | 68 | `minecraft:trial_key` | 3 | ok |
+| `keys.yml` | 103 | `minecraft:trial_key` | 13 | ok |
+| `menu.yml` | 14 | `minecraft:paper` | 22 | ok |
+| `menu.yml` | 96 | `minecraft:paper` | 29 | ok |
+| `shop.yml` | 111 | `minecraft:paper` | 42 | ok |
+| `shop.yml` | 128 | `minecraft:paper` | 9001 | item-model |
+| `shop_items.yml` | 66 | `minecraft:paper` | 40 | ok |
+| `shop_potions.yml` | 66 | `minecraft:potion` | 1 | ok |
+| `shop_potions.yml` | 96 | `minecraft:potion` | 2 | ok |
+| `shop_potions.yml` | 126 | `minecraft:potion` | 3 | ok |
+| `shop_potions.yml` | 156 | `minecraft:potion` | 4 | ok |
+| `shop_spheres.yml` | 66 | `minecraft:paper` | 9001 | item-model |
+| `shop_spheres.yml` | 101 | `minecraft:paper` | 9002 | item-model |
+| `shop_spheres.yml` | 137 | `minecraft:paper` | 9003 | item-model |
+| `shop_spheres.yml` | 173 | `minecraft:paper` | 9004 | item-model |
+| `shop_talismans.yml` | 59 | `minecraft:totem_of_undying` | 6 | ok |
+| `shop_talismans.yml` | 93 | `minecraft:totem_of_undying` | 8 | ok |
+| `shop_talismans.yml` | 126 | `minecraft:totem_of_undying` | 7 | ok |
+| `shop_talismans.yml` | 160 | `minecraft:totem_of_undying` | 2 | ok |
+| `shop_talismans.yml` | 194 | `minecraft:totem_of_undying` | 10 | ok |
+| `shop_talismans.yml` | 228 | `minecraft:totem_of_undying` | 9 | ok |
+| `shop_talismans.yml` | 262 | `minecraft:totem_of_undying` | 4 | ok |
+| `shop_talismans.yml` | 296 | `minecraft:totem_of_undying` | 1 | ok |
+| `shop_talismans.yml` | 328 | `minecraft:totem_of_undying` | 5 | ok |
+| `shop_talismans.yml` | 362 | `minecraft:totem_of_undying` | 3 | ok |
+| `shop_talismans.yml` | 396 | `minecraft:totem_of_undying` | 11 | ok |
+| `shop_talismans.yml` | 430 | `minecraft:totem_of_undying` | 2 | ok |
+
 ## Покрытие оверлеев
 
 CMD, который есть только в одном формате (нормально: оверлеи патчат не все предметы).

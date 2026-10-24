@@ -19,7 +19,8 @@ items:
   # Прозрачная заглушка (paper + CMD 1 = ui/empty) — «пустые» слоты без ванильных предметов
   filler:
     material: PAPER
-    custom-model-data: 1
+    model_data_component:
+      floats: [1]
     slots:
       - 0
       - 1
@@ -51,7 +52,8 @@ items:
   # Кейсы: paper (2..12) — те же номера, что в ресурспаке
   case_usual:
     material: PAPER
-    custom-model-data: 2
+    model_data_component:
+      floats: [2]
     slot: 19
     name: '&eОбычный кейс'
     lore:
@@ -62,7 +64,8 @@ items:
 
   case_free:
     material: PAPER
-    custom-model-data: 3
+    model_data_component:
+      floats: [3]
     slot: 21
     name: '&aБесплатный кейс'
     lore:
@@ -72,7 +75,8 @@ items:
 
   case_rank:
     material: PAPER
-    custom-model-data: 7
+    model_data_component:
+      floats: [7]
     slot: 23
     name: '&6Кейс с привилегией'
     left_click_commands:
@@ -81,20 +85,23 @@ items:
   # Ключи: trial_key (1..15)
   key_usual:
     material: TRIAL_KEY
-    custom-model-data: 1
+    model_data_component:
+      floats: [1]
     slot: 29
     name: '&fКлюч от обычного кейса'
 
   key_rank:
     material: TRIAL_KEY
-    custom-model-data: 5
+    model_data_component:
+      floats: [5]
     slot: 31
     name: '&6Ключ от кейса с привилегией'
 
   # Кнопки-иконки: paper (13..17, 20..21, 22, 25..28)
   auction:
     material: PAPER
-    custom-model-data: 13
+    model_data_component:
+      floats: [13]
     slot: 39
     name: '&bАукцион'
     left_click_commands:
@@ -103,7 +110,8 @@ items:
 
   donate:
     material: PAPER
-    custom-model-data: 28
+    model_data_component:
+      floats: [28]
     slot: 41
     name: '&dДонат'
     left_click_commands:
@@ -112,7 +120,8 @@ items:
 
   settings:
     material: PAPER
-    custom-model-data: 38
+    model_data_component:
+      floats: [38]
     slot: 43
     name: '&7Настройки'
     left_click_commands:
@@ -120,7 +129,8 @@ items:
 
   teleport_home:
     material: PAPER
-    custom-model-data: 44
+    model_data_component:
+      floats: [44]
     slot: 49
     name: '&aТелепорт домой'
     left_click_commands:

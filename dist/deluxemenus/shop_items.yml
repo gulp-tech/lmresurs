@@ -1,0 +1,188 @@
+# DeluxeMenus — раздел: кастомные предметы
+# Файл на сервере: plugins/DeluxeMenus/gui_menus/shop_items.yml
+# Рамка — обычное ванильное чёрное стекло. Покупки списывают осколки
+# PlayerPoints только если хватает (click_requirement на каждом товаре).
+# Цены: output и points take в одном товаре должны совпадать.
+menu_title: '• Магазин: предметы'
+open_command: shopitems
+register_command: true
+size: 54
+open_commands:
+  - '[sound] ITEM_BOOK_PAGE_TURN'
+items:
+
+  'Рамка':
+    slots:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 17
+    - 18
+    - 26
+    - 27
+    - 35
+    - 36
+    - 37
+    - 38
+    - 39
+    - 41
+    - 42
+    - 43
+    - 44
+      - 45
+      - 46
+      - 47
+      - 48
+      - 49
+      - 50
+      - 51
+      - 52
+      - 53
+    material: BLACK_STAINED_GLASS_PANE
+    display_name: ' '
+
+  'Баланс':
+    slots:
+    - 13
+    material: PRISMARINE_SHARD
+    display_name: '&bТвои осколки'
+    lore:
+      - ''
+      - '&fБаланс: &b%playerpoints_points% осколков'
+      - '&7Ими оплачиваются покупки в этом магазине.'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+
+  'Капкан':
+    slots:
+    - 19
+    material: PAPER
+    model_data_component:
+      floats: [40]
+    display_name: '&dКапкан'
+    lore:
+      - ''
+      - '&7ПКМ: капкан появляется там, где ты стоишь.'
+      - '&7Клетка 3×3 держится 20 секунд.'
+      - ''
+      - '&fЦена: &b195 осколков'
+      - '&7Твой баланс: &b%playerpoints_points%'
+      - '&eНажми, чтобы купить'
+    click_requirement:
+      requirements:
+        shards:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '195'
+      deny_commands:
+        - '[message] &cНе хватает осколков: нужно 195, у тебя %playerpoints_points%.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] points take %player_name% 195'
+      - '[console] items give %player_name% trapka 1'
+      - '[message] &aПокупка успешна: &dКапкан'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Пыль обнаружения':
+    slots:
+    - 21
+    material: GLOWSTONE_DUST
+    display_name: '&eПыль обнаружения'
+    lore:
+      - ''
+      - '&7ПКМ: игроки в радиусе 15 теряют'
+      - '&7невидимость и подсвечиваются на 10 секунд.'
+      - ''
+      - '&fЦена: &b98 осколков'
+      - '&7Твой баланс: &b%playerpoints_points%'
+      - '&eНажми, чтобы купить'
+    click_requirement:
+      requirements:
+        shards:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '98'
+      deny_commands:
+        - '[message] &cНе хватает осколков: нужно 98, у тебя %playerpoints_points%.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] points take %player_name% 98'
+      - '[console] items give %player_name% dust 1'
+      - '[message] &aПокупка успешна: &eПыль обнаружения'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Око дезориентации':
+    slots:
+    - 23
+    material: ENDER_EYE
+    display_name: '&bОко дезориентации'
+    lore:
+      - ''
+      - '&7ПКМ: враги в радиусе 9 получают слепоту,'
+      - '&7тошноту и замедление III на 5 секунд.'
+      - ''
+      - '&fЦена: &b163 осколков'
+      - '&7Твой баланс: &b%playerpoints_points%'
+      - '&eНажми, чтобы купить'
+    click_requirement:
+      requirements:
+        shards:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '163'
+      deny_commands:
+        - '[message] &cНе хватает осколков: нужно 163, у тебя %playerpoints_points%.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] points take %player_name% 163'
+      - '[console] items give %player_name% dezorientation 1'
+      - '[message] &aПокупка успешна: &bОко дезориентации'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Лом для спавнеров':
+    slots:
+    - 25
+    material: GOLDEN_PICKAXE
+    display_name: '&6Лом для спавнеров'
+    lore:
+      - ''
+      - '&7Сломай им спавнер — заберёшь его'
+      - '&7вместе с мобом. Лом одноразовый.'
+      - ''
+      - '&fЦена: &b488 осколков'
+      - '&7Твой баланс: &b%playerpoints_points%'
+      - '&eНажми, чтобы купить'
+    click_requirement:
+      requirements:
+        shards:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '488'
+      deny_commands:
+        - '[message] &cНе хватает осколков: нужно 488, у тебя %playerpoints_points%.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] points take %player_name% 488'
+      - '[console] items give %player_name% spawner_lom 1'
+      - '[message] &aПокупка успешна: &6Лом для спавнеров'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Назад':
+    slots:
+    - 40
+    material: ARROW
+    display_name: '&fНазад'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[openguimenu] shop'

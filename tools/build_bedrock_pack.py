@@ -373,8 +373,9 @@ def emit_deluxemenus(
     lines = [
         "# Автоматически сгенерировано tools/build_bedrock_pack.py",
         "# Заготовки предметов для DeluxeMenus. Скопируй нужный блок в конфиг меню.",
-        "# material + custom-model-data менять не нужно: Geyser сам подменит иконку",
+        "# material + model_data_component менять не нужно: Geyser сам подменит иконку",
         "# на Bedrock-версию из funtime.mcpack через geyser_mappings.json.",
+        "# model_data_component.floats[0] == custom_model_data из geyser_mappings.json.",
         "#",
         "# ВАЖНО (Bedrock): не используй в name/lore символы из private-use области",
         "# (сдвиги/offset-глифы Java-пака) — в Bedrock они отображаются квадратами.",
@@ -393,7 +394,8 @@ def emit_deluxemenus(
             f"  # {item_id} | custom_model_data: {cmd} | модель: {entry.model}",
             f"  {key}:",
             f"    material: {bukkit_material(item_id)}",
-            f"    custom-model-data: {cmd}",
+            "    model_data_component:",
+            f"      floats: [{cmd}]",
             f"    name: '&f{label}'",
             "    lore:",
             "      - '&7'",
@@ -407,13 +409,20 @@ def emit_deluxemenus(
 
 def check_deluxemenus(directory: str, by_key: Dict[Tuple[str, int], "CmdEntry"]) -> List[dict]:
     """
-    Простая проверка конфигов DeluxeMenus (*.yml) без PyYAML:
-    ищем пары material + custom-model-data и смотрим, покрыты ли они mappings.
+    Проверка конфигов DeluxeMenus (*.yml) без PyYAML:
+    находит material + model_data_component/model_data/custom-model-data/item_model
+    и проверяет, покрыты ли такие пары (предмет, CMD) в mappings.
     """
     import re
 
-    material_re = re.compile(r"^\s*-?\s*material\s*:\s*['\"]?([A-Za-z0-9_]+)")
-    cmd_re = re.compile(r"^\s*-?\s*custom-model-data\s*:\s*['\"]?(-?\d+)")
+    material_re = re.compile(r"^\s*-?\s*material\s*:\s*['\"]?([A-Za-z0-9_\-:%]+)")
+    cmd_re = re.compile(
+        r"^\s*-?\s*(?:custom-model-data|model_data)\s*:\s*['\"]?(-?\d+)"
+    )
+    floats_re = re.compile(r"floats\s*:\s*\[\s*(-?\d+(?:\.\d+)?)")
+    component_re = re.compile(r"^\s*-?\s*model_data_component\s*:\s*$")
+    item_model_re = re.compile(r"^\s*-?\s*item_model\s*:\s*['\"]?([^'\"\s]+)")
+
     results: List[dict] = []
 
     for root, _dirs, files in os.walk(directory):
@@ -422,6 +431,7 @@ def check_deluxemenus(directory: str, by_key: Dict[Tuple[str, int], "CmdEntry"])
                 continue
             path = os.path.join(root, name)
             current: Optional[dict] = None
+            pending_component = False
             with open(path, "r", encoding="utf-8-sig", errors="replace") as fh:
                 for lineno, line in enumerate(fh, 1):
                     m = material_re.match(line)
@@ -433,22 +443,39 @@ def check_deluxemenus(directory: str, by_key: Dict[Tuple[str, int], "CmdEntry"])
                             "line": lineno,
                             "material": m.group(1).upper(),
                             "custom_model_data": None,
+                            "item_model": None,
                         }
+                        pending_component = False
+                        continue
+                    if current is None:
+                        continue
+                    if component_re.match(line):
+                        pending_component = True
                         continue
                     c = cmd_re.match(line)
-                    if c and current is not None:
-                        current["custom_model_data"] = int(c.group(1))
+                    if c:
+                        current["custom_model_data"] = int(float(c.group(1)))
+                        pending_component = False
+                        continue
+                    if pending_component:
+                        f = floats_re.search(line)
+                        if f:
+                            current["custom_model_data"] = int(float(f.group(1)))
+                    im = item_model_re.match(line)
+                    if im:
+                        current["item_model"] = im.group(1)
             if current:
                 results.append(current)
 
     for entry in results:
-        cmd = entry["custom_model_data"]
-        if cmd is None:
-            entry["status"] = "no-cmd"          # обычный ванильный предмет — маппинг не нужен
-            continue
         item_id = f"minecraft:{entry['material'].lower()}"
-        entry["status"] = "ok" if (item_id, cmd) in by_key else "missing"
         entry["java_item"] = item_id
+        if entry["item_model"]:
+            entry["status"] = "item-model"
+        elif entry["custom_model_data"] is None:
+            entry["status"] = "no-cmd"
+        else:
+            entry["status"] = "ok" if (item_id, entry["custom_model_data"]) in by_key else "missing"
     return results
 
 
@@ -722,11 +749,14 @@ def build(args: argparse.Namespace) -> int:
         if os.path.isdir(dm_dir):
             dm_checks = check_deluxemenus(dm_dir, by_key)
             missing_dm = [d for d in dm_checks if d["status"] == "missing"]
-            log(f"DeluxeMenus: проверено предметов с custom-model-data: "
-                f"{len([d for d in dm_checks if d['status'] != 'no-cmd'])} "
-                f"(не покрыто mappings: {len(missing_dm)})")
+            model_dm = [d for d in dm_checks if d["status"] == "item-model"]
+            log(f"DeluxeMenus: предметов с CMD: "
+                f"{len([d for d in dm_checks if d['status'] == 'ok'])} покрыто, "
+                f"{len(missing_dm)} не покрыто, {len(model_dm)} через item_model")
             for d in missing_dm:
                 log(f"  ! {d['file']}:{d['line']} {d['java_item']} CMD {d['custom_model_data']}")
+            for d in model_dm:
+                log(f"  ~ {d['file']}:{d['line']} item_model {d['item_model']} (нет в Java-паке)")
         else:
             log(f"! каталог DeluxeMenus не найден: {dm_dir}")
 
@@ -792,11 +822,21 @@ def build(args: argparse.Namespace) -> int:
             "",
             "## Проверка DeluxeMenus",
             "",
-            f"Найдено предметов с `custom-model-data`: "
-            f"**{len([d for d in dm_checks if d['status'] != 'no-cmd'])}**, "
-            f"не покрыто mappings: **{len(dm_missing)}**",
+            f"Предметов с `model_data_component`: "
+            f"**{len([d for d in dm_checks if d['status'] in ('ok', 'missing')])}**, "
+            f"покрыто mappings: **{len([d for d in dm_checks if d['status'] == 'ok'])}**, "
+            f"не покрыто: **{len(dm_missing)}**",
             "",
+            "| Меню | Строка | Предмет | CMD | Статус |",
+            "| --- | --- | --- | --- | --- |",
         ]
+        for d in dm_checks:
+            if d["status"] in ("no-cmd",):
+                continue
+            lines.append(
+                f"| `{d['file']}` | {d['line']} | `{d['java_item']}` | "
+                f"{d['custom_model_data'] if d['custom_model_data'] is not None else '—'} | {d['status']} |"
+            )
         for d in dm_missing:
             lines.append(
                 f"- `{d['file']}:{d['line']}` — `{d['java_item']}` CMD {d['custom_model_data']} "
