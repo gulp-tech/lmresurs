@@ -37,15 +37,16 @@ Bedrock-порт ресурспака и меню **FunTime** для Geyser + Fl
 | [VoidAntiCheat-2.0.5.jar](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/VoidAntiCheat-2.0.5.jar) | 2.0.5 | фикс `NoSuchMethodError: hoverEvent` (спам в логе), кэш конфига |
 | [VoidEnchants-1.2.2.jar](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/VoidEnchants-1.2.2.jar) | 1.2.2 | бур: конфиг один раз на вызов, без снимков блоков |
 | [VoidTalismans-1.7.6.jar](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/VoidTalismans-1.7.6.jar) | 1.7.6 | чистка атрибутов раз за сессию, кэш атрибутов |
-| [VoidTab-1.16.4.jar](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/VoidTab-1.16.4.jar) | 1.16.4 | кэш иконок и заголовка скорборда |
+| [VoidTab-1.16.5.jar](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/VoidTab-1.16.5.jar) | 1.16.5 | кэш иконок, ник из VoidNick в табе и над головой |
 | [VoidCombat-1.2.4.jar](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/VoidCombat-1.2.4.jar) | 1.2.4 | кэш боссбара, миров и регионов WG |
 | [VoidClans-1.2.1.jar](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/VoidClans-1.2.1.jar) | 1.2.1 | запись раз в 30 с вместо каждого блока, индекс игрок→клан |
 | [VoidWardenCity-1.4.2.jar](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/VoidWardenCity-1.4.2.jar) | 1.4.2 | без спама голограммами, одна запись на скан |
 | [VoidItems-1.8.7.jar](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/VoidItems-1.8.7.jar) | 1.8.7 | фикс сборки под 26.2 + таймер без пустых копий |
 | [VoidPvP-1.0.8.jar](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/VoidPvP-1.0.8.jar) | 1.0.8 | фикс сборки под 26.2 |
+| [VoidNick-1.1.0.jar](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/VoidNick-1.1.0.jar) | 1.1.0 | смена ника без выхода из игры, поиск Floodgate-игрока |
 
 Остальные (`VoidAuthSpawn 1.2.0`, `VoidCases 1.4.2`, `VoidDrops 1.1.0`,
-`VoidNick 1.0.2`, `VoidQuiet 1.0.2`) пересобраны без изменений по коду —
+`VoidNick 1.1.0`, `VoidQuiet 1.0.2`) пересобраны без изменений по коду —
 файлы лежат в `voidplugins-all.zip` и в релизе отдельными jar.
 
 Исходники — в `plugins/`, сборка — GitHub Actions
