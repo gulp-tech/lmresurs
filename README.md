@@ -25,16 +25,32 @@ Bedrock-порт ресурспака и меню **FunTime** для Geyser + Fl
 | `examples/deluxemenus_bedrock_menu.yml` | Пример меню, которое сразу работает на Bedrock |
 | `docs/GEYSER_BEDROCK.md` | Установка, ограничения, troubleshooting |
 
-## Плагины VoidPE: исправления и сборка
+## Плагины VoidPE: сборка, исправления, оптимизация
 
-| Что | Ссылка |
-| --- | --- |
-| VoidAntiCheat **2.0.5** (фикс `NoSuchMethodError: hoverEvent`) | [VoidAntiCheat-2.0.5.jar](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/VoidAntiCheat-2.0.5.jar) |
-| Настройки + разбор падения | [voidplugins-configs.zip](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/voidplugins-configs.zip) |
+Все 14 плагинов пересобраны под Paper 26.2 (Java 25) и оптимизированы.
+Релиз: **[voidplugins](https://github.com/gulp-tech/lmresurs/releases/tag/voidplugins)**
 
-Исходники — в `plugins/VoidAntiCheat/`, сборка — GitHub Actions
-(`.github/workflows/build-plugins.yml`), результат попадает в релиз `voidplugins`.
-Подробности: `docs/PLUGINS_FIX_AND_TUNING.md`.
+| Файл | Версия | Что изменилось |
+| --- | --- | --- |
+| [voidplugins-all.zip](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/voidplugins-all.zip) | — | все 14 jar + все конфиги одним архивом |
+| [voidplugins-configs.zip](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/voidplugins-configs.zip) | — | конфиги под нагрузку (`Void<Имя>-config.yml`) |
+| [VoidAntiCheat-2.0.5.jar](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/VoidAntiCheat-2.0.5.jar) | 2.0.5 | фикс `NoSuchMethodError: hoverEvent` (спам в логе), кэш конфига |
+| [VoidEnchants-1.2.2.jar](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/VoidEnchants-1.2.2.jar) | 1.2.2 | бур: конфиг один раз на вызов, без снимков блоков |
+| [VoidTalismans-1.7.6.jar](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/VoidTalismans-1.7.6.jar) | 1.7.6 | чистка атрибутов раз за сессию, кэш атрибутов |
+| [VoidTab-1.16.4.jar](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/VoidTab-1.16.4.jar) | 1.16.4 | кэш иконок и заголовка скорборда |
+| [VoidCombat-1.2.4.jar](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/VoidCombat-1.2.4.jar) | 1.2.4 | кэш боссбара, миров и регионов WG |
+| [VoidClans-1.2.1.jar](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/VoidClans-1.2.1.jar) | 1.2.1 | запись раз в 30 с вместо каждого блока, индекс игрок→клан |
+| [VoidWardenCity-1.4.2.jar](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/VoidWardenCity-1.4.2.jar) | 1.4.2 | без спама голограммами, одна запись на скан |
+| [VoidItems-1.8.7.jar](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/VoidItems-1.8.7.jar) | 1.8.7 | фикс сборки под 26.2 + таймер без пустых копий |
+| [VoidPvP-1.0.8.jar](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/VoidPvP-1.0.8.jar) | 1.0.8 | фикс сборки под 26.2 |
+
+Остальные (`VoidAuthSpawn 1.2.0`, `VoidCases 1.4.2`, `VoidDrops 1.1.0`,
+`VoidNick 1.0.2`, `VoidQuiet 1.0.2`) пересобраны без изменений по коду —
+файлы лежат в `voidplugins-all.zip` и в релизе отдельными jar.
+
+Исходники — в `plugins/`, сборка — GitHub Actions
+(`.github/workflows/build-plugins.yml`, матрица на 14 модулей).
+Подробности и чек-лист: `docs/PLUGINS_FIX_AND_TUNING.md`.
 
 ## Быстрый старт
 
