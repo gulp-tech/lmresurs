@@ -1,0 +1,229 @@
+# ============================================================
+#  VoidCases — донат-кейсы (VoidPE, Bedrock)
+#
+#  Игрок получает предмет-кейс и открывает его ПКМ: крутится
+#  рулетка-анимация со звуками, в конце — приз, праздничные частицы и,
+#  если у приза announce: true, объявление на весь сервер.
+#
+#  Выдача: /cases give <игрок> <кейс> [кол-во] (voidcases.admin)
+#  В DeluxeMenus: [console] cases give %player_name% titles
+#
+#  Призы: weight — вес (шанс = weight / сумма всех весов),
+#  commands — консольные команды приза, {player} — ник игрока.
+#  Цвета: &a, &#FFB340, <gradient:#..:#..>текст</gradient>
+# ============================================================
+
+animation:
+  duration-ticks: 90        # длина рулетки (90 = 4.5 сек)
+  final-hold-ticks: 20      # сколько выигрыш ещё висит над кейсом в конце (20 = 1 сек)
+  show-prize-name: true     # название текущей награды над крутящимся предметом
+  spin-sound: "block.note_block.hat"
+  win-sound: "entity.player.levelup"
+  open-sound: "block.chest.open"
+  celebration: true         # праздничные частицы при выигрыше (БЕЗ урона: сущность фейерверка больше не спавнится)
+  celebration-sound: "entity.firework_rocket.launch"
+
+# Поставленные кейсы: /cases set <кейс>, глядя на блок. Сам блок НЕ меняется
+# (якорь возрождения останется якорем) — клик по нему просто открывает кейс,
+# а исходное действие блока блокируется. Над кейсом висит голограмма.
+hologram:
+  second-line: "&#FFD93DНажми, чтобы открыть"
+
+messages:
+  prefix: "&#C86BFFVoidPE &8» &f"
+  no-permission: "&cТолько для админов."
+  received: "&aТебе выдан виртуальный ключ: {case} &7x{amount}&a. Открыть: &f/cases open"
+  key-added: "&aПредмет превращён в виртуальные ключи: {case} &7x{amount}&a. Открыть: &f/cases open {id}"
+  keys-title: "&#FFD93DТвои ключи:"
+  keys-line: "&7- {case}&7: &f{amount} &8(/cases open {id})"
+  keys-none: "&7Ключей пока нет. Загляни в магазин."
+  given: "&aИгроку &f{player} &aвыдан виртуальный ключ: {case} &7x{amount}"
+  player-offline: "&cИгрок не в сети."
+  case-not-found: "&cТакого кейса нет. Список: &f/cases list"
+  already-opening: "&cПодожди, кейс уже открывается."
+  need-keys: "&cНет ключей от кейса {case}&c. Загляни в магазин — там можно пополнить ключи."
+  case-busy: "&cЭтот кейс уже открывает другой игрок. Подожди, пока он закончит."
+  title-set: "&aТитул установлен: {prize}"
+  title-removed: "&aТитул убран."
+  title-not-owned: "&cЭтого титула у тебя ещё нет: {prize}"
+  title-none: "&7Сейчас титул не установлен."
+  set-done: "&aКейс поставлен: {case}&a. Блок не изменён, над ним голограмма. Открытие — кликом, нужен виртуальный ключ."
+  set-removed: "&aКейс убран."
+  not-a-case: "&cЭтот блок — не кейс."
+  no-target-block: "&cПосмотри на блок (до 6 блоков)."
+  case-protected: "&cЭтот кейс нельзя сломать."
+  win: "&#FFD93DТы выбил: {prize}&r &#FFD93Dиз кейса {case}!"
+  # Объявление на весь сервер (только призы с announce: true):
+  win-broadcast: "&#FFD93DИгрок &f{player} &#FFD93Dвыбил {prize} &#FFD93Dиз кейса {case}!"
+
+cases:
+
+  # ---------------- Кейс доната (привилегии LuckPerms) ----------------
+  # parent add добавляет привилегию. Группы LP: поменяй под свои.
+  donate:
+    display-name: "&#FFD93DКейс доната"
+    material: NETHER_STAR
+    item-lore:
+      - "&7Виртуальный ключ. Открыть: &f/cases open donate"
+      - "&7Внутри: привилегия от Странника до Императора"
+    prizes:
+      - id: strannik
+        name: "&7Привилегия: Странник"
+        material: LEATHER_HELMET
+        weight: 300
+        announce: false
+        commands: ["lp user {player} parent add strannik"]
+      - id: geroy
+        name: "&#55E6FFПривилегия: Герой"
+        material: IRON_HELMET
+        weight: 220
+        announce: false
+        commands: ["lp user {player} parent add geroy"]
+      - id: rycar
+        name: "&#8CE8FFПривилегия: Рыцарь"
+        material: GOLDEN_HELMET
+        weight: 160
+        announce: false
+        commands: ["lp user {player} parent add rycar"]
+      - id: baron
+        name: "&#7CFC00Привилегия: Барон"
+        material: DIAMOND_HELMET
+        weight: 110
+        announce: true
+        commands: ["lp user {player} parent add baron"]
+      - id: lord
+        name: "&#C86BFFПривилегия: Лорд"
+        material: DIAMOND_CHESTPLATE
+        weight: 70
+        announce: true
+        commands: ["lp user {player} parent add lord"]
+      - id: knyaz
+        name: "&#FF9A3DПривилегия: Князь"
+        material: NETHERITE_HELMET
+        weight: 35
+        announce: true
+        commands: ["lp user {player} parent add knyaz"]
+      - id: imperator
+        name: "<gradient:#FFD93D:#FF5555>Привилегия: Император</gradient>"
+        material: DRAGON_HEAD
+        weight: 10
+        announce: true
+        commands: ["lp user {player} parent add imperator"]
+
+  # ---------------- Кейс титулов (выбиваются ТОЛЬКО отсюда) ----------------
+  # Титул — суффикс после ника в чате (LuckPerms meta setsuffix).
+  # Посмотреть все титулы: /titles
+  titles:
+    display-name: "&#C86BFFКейс титулов"
+    material: NAME_TAG
+    item-lore:
+      - "&7Виртуальный ключ. Открыть: &f/cases open titles"
+      - "&7Внутри: титул после ника. Меню: &f/titles"
+    prizes:
+      - id: vezunchik
+        name: "&#7CFC00Титул: Везунчик"
+        material: PAPER
+        weight: 300
+        announce: false
+        commands:
+          - 'lp user {player} meta setsuffix 90 " &#7CFC00Везунчик&r"'
+          - 'lp user {player} permission set titles.vezunchik true'
+      - id: ohotnik
+        name: "&#8CE8FFТитул: Охотник"
+        material: BOW
+        weight: 220
+        announce: false
+        commands:
+          - 'lp user {player} meta setsuffix 90 " &#8CE8FFОхотник&r"'
+          - 'lp user {player} permission set titles.ohotnik true'
+      - id: bogach
+        name: "&#FFD93DТитул: Богач"
+        material: GOLD_INGOT
+        weight: 160
+        announce: false
+        commands:
+          - 'lp user {player} meta setsuffix 90 " &#FFD93DБогач&r"'
+          - 'lp user {player} permission set titles.bogach true'
+      - id: groza
+        name: "&#55E6FFТитул: Гроза"
+        material: LIGHTNING_ROD
+        weight: 110
+        announce: true
+        commands:
+          - 'lp user {player} meta setsuffix 90 " &#55E6FFГроза&r"'
+          - 'lp user {player} permission set titles.groza true'
+      - id: prizrak
+        name: "&#C86BFFТитул: Призрак"
+        material: PHANTOM_MEMBRANE
+        weight: 70
+        announce: true
+        commands:
+          - 'lp user {player} meta setsuffix 90 " &#C86BFFПризрак&r"'
+          - 'lp user {player} permission set titles.prizrak true'
+      - id: legenda
+        name: "&#FF9A3DТитул: Легенда"
+        material: NETHERITE_SWORD
+        weight: 35
+        announce: true
+        commands:
+          - 'lp user {player} meta setsuffix 90 " &#FF9A3DЛегенда&r"'
+          - 'lp user {player} permission set titles.legenda true'
+      - id: mif
+        name: "<gradient:#FFD93D:#FF5555>Титул: Миф</gradient>"
+        material: ENCHANTED_GOLDEN_APPLE
+        weight: 10
+        announce: true
+        commands:
+          - 'lp user {player} meta setsuffix 90 " &#FF5555Миф&r"'
+          - 'lp user {player} permission set titles.mif true'
+
+  # ---------------- Кейс осколков (PlayerPoints) ----------------
+  shards:
+    display-name: "&#8CE8FFКейс осколков"
+    material: PRISMARINE_SHARD
+    item-lore:
+      - "&7Виртуальный ключ. Открыть: &f/cases open shards"
+      - "&7Внутри: осколки (PlayerPoints)"
+    prizes:
+      - id: shards_25
+        name: "&#8CE8FF25 осколков"
+        material: PRISMARINE_SHARD
+        weight: 300
+        announce: false
+        commands: ["points give {player} 25"]
+      - id: shards_50
+        name: "&#8CE8FF50 осколков"
+        material: PRISMARINE_SHARD
+        weight: 220
+        announce: false
+        commands: ["points give {player} 50"]
+      - id: shards_100
+        name: "&#55E6FF100 осколков"
+        material: PRISMARINE_SHARD
+        weight: 160
+        announce: false
+        commands: ["points give {player} 100"]
+      - id: shards_200
+        name: "&#7CFC00 200 осколков"
+        material: PRISMARINE_SHARD
+        weight: 100
+        announce: false
+        commands: ["points give {player} 200"]
+      - id: shards_350
+        name: "&#C86BFF350 осколков"
+        material: PRISMARINE_SHARD
+        weight: 60
+        announce: true
+        commands: ["points give {player} 350"]
+      - id: shards_500
+        name: "&#FF9A3D500 осколков"
+        material: PRISMARINE_SHARD
+        weight: 30
+        announce: true
+        commands: ["points give {player} 500"]
+      - id: shards_1000
+        name: "<gradient:#FFD93D:#FF5555>1000 осколков</gradient>"
+        material: PRISMARINE_CRYSTALS
+        weight: 10
+        announce: true
+        commands: ["points give {player} 1000"]

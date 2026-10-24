@@ -1,76 +1,88 @@
-# Плагины VoidPE: разбор падения и настройка под нагрузку
+# Плагины VoidPE: сборка под Paper 26.2, исправления и оптимизация
 
-## 1. Откуда спам в логе
+Все 14 плагинов пересобраны под **Paper 26.2 (Java 25)** и оптимизированы.
+Сборка автоматическая: `.github/workflows/build-plugins.yml`, результат — в релизе
+`voidplugins` (`VoidAntiCheat-2.0.5.jar` … `VoidWardenCity-1.4.2.jar` + `voidplugins-all.zip`).
 
-```
-java.lang.NoSuchMethodError: 'net.kyori.adventure.text.Component
-    net.kyori.adventure.text.Component.hoverEvent(
-        net.kyori.adventure.text.event.HoverEvent)'
-    at VoidAntiCheat.maybeAlert(VoidAntiCheat.java:678)
-```
+## 1. Почему плагины вообще пересобирались
 
-Причина не в античите и не в конфиге: на Paper 26.2 пришла новая **Adventure**,
-в которой у `Component` больше нет метода `hoverEvent(HoverEvent)` (hover стал
-частью `HoverEvent<?>`, старый метод удалён). Jar `VoidAntiCheat-2.0.4.jar`
-собран против старой Adventure, поэтому вызов не находится **в момент
-выполнения** — компилятор такое не ловит, а JVM падает на первом же алерте.
+Три jar-файла из архива не работали на текущем ядре:
 
-Почему «на каждый блок»: `VoidEnchants.expandDrill()` вызывает
-`BlockBreakEvent` для каждого блока бура, тот попадает в античит, античит
-пытается отправить алерт персоналу — и падает. Один сломанный блок = один
-стектрейс в лог.
-
-**Это и была главная проблема производительности**: построение исключения,
-его логирование и запись в файл на каждый сломанный блок. Античит при этом
-не работал (исключение вылетало до отправки алерта), но сервер платил за него.
-
-## 2. Что сделано
-
-Патч исходников (`plugins/VoidAntiCheat/`):
-
-| Место | Было | Стало |
+| Плагин | Ошибка | Причина |
 | --- | --- | --- |
-| `maybeAlert` (стр. 678) | `.hoverEvent(HoverEvent.showText(...))` | подсказка выводится второй строкой через `Component.append` — работает на любой версии Adventure |
-| `registryLookup` (стр. 217) | `<T> T registryLookup(Registry<T> ...)` | `Registry<?>` — на 26.x у `Registry` появился bound |
+| VoidAntiCheat 2.0.4 | `NoSuchMethodError: Component.hoverEvent(HoverEvent)` | в новой Adventure метод удалён |
+| VoidItems 1.8.6 | не компилируется | `Registry<T>` получил bound |
+| VoidPvP 1.0.7 | не компилируется | то же самое |
 
-Версия поднята до **2.0.5**, сборка идёт в CI (`.github/workflows/build-plugins.yml`)
-и кладётся в релиз `voidplugins`.
+Первое — это и есть спам в логе. Цепочка: `VoidEnchants` ломает блоки бура →
+каждый блок кидает `BlockBreakEvent` → античит пытается отправить алерт персоналу →
+падает на `hoverEvent`. Один блок = один стектрейс, и античит при этом не работал.
 
-## 3. Настройки, которые снижают шум и нагрузку
+Исправления: подсказка алерта выводится второй строкой через `Component.append`;
+`Registry<?>` в служебных методах поиска.
 
-Файл `plugins/configs/VoidAntiCheat-config.yml` — готовый образец для
-`plugins/VoidAntiCheat/config.yml`:
+## 2. Что оптимизировано в коде
 
-```yaml
-settings:
-  alert-cooldown-ms: 5000   # было 2500 — алерт по игроку+проверке не чаще раза в 5 с
-  alert-min-vl: 2.0         # было 1.0 — не шуметь на одиночных подозрениях
-  staff-alerts: false       # в 2.0.4 этот путь падал; в 2.0.5 можно включить обратно
-```
+| Плагин | Было | Стало |
+| --- | --- | --- |
+| VoidAntiCheat | `getConfig().getX("a.b.c")` на каждый пакет движения | кэш значений, сброс при `/vac reload` |
+| VoidEnchants | `getStringList("drill.allowed-blocks")` внутри тройного цикла (до 18 копий списка на блок) + снимок `TileState` на каждый блок | список один раз на вызов, сравнение по `Set`, `getState(false)` |
+| VoidTalismans | полный обход реестра атрибутов (`stripLegacyModifiers`) на каждый refresh × каждого игрока; `Registry.get` на каждый атрибут | чистка один раз за сессию, кэш `Attribute`, эффекты не перевыдаются, пока живут |
+| VoidTab | конфиг читался на каждую из 15 строк на каждого игрока; заголовок пересобирался каждый тик | кэш иконок и логотипа, сброс при `/voidtab reload` |
+| VoidCombat | `valueOf` цветов боссбара каждый тик; текст пересобирался каждые 0.5 с; `HashSet` безопасных миров на каждый вызов | кэш enum'ов, текст только при смене секунды, кэш миров и регионов WG |
+| VoidClans | `saveData()` (запись файла) на каждое начисление опыта; `clanOf` перебирал все кланы | запись раз в 30 с по флагу, индекс игрок→клан |
+| VoidWardenCity | `saveChestData()` на каждый сломанный сундук в цикле; имя голограммы отправлялось каждый тик | одна запись на проход, пакет только при смене текста |
+| VoidItems | копия `keySet()` 5 раз в секунду даже при пустой карте | ранний выход |
 
-Остальное в конфиге уже разумно: `enforcement: true`, `auto-punish: false`,
-`vl-reset-clean-seconds: 90`, грейсы после телепорта/урона/поршней.
+Версии подняты, чтобы отличать от архивных:
+`VoidAntiCheat 2.0.5`, `VoidClans 1.2.1`, `VoidCombat 1.2.4`, `VoidEnchants 1.2.2`,
+`VoidItems 1.8.7`, `VoidPvP 1.0.8`, `VoidTab 1.16.4`, `VoidTalismans 1.7.6`,
+`VoidWardenCity 1.4.2`. Остальные (AuthSpawn, Cases, Drops, Nick, Quiet) не менялись
+по коду — только пересобраны.
 
-## 4. Чек-лист по остальным плагинам
+## 3. Конфиги
 
-1. **Убрать дубли jar.** `VoidVersionsExtension-1.5.0.jar` и `-1.5.1.jar`
-   рядом — оставить только 1.5.1 (два одинаковых расширения дают двойную
-   обработку рукопожатия Geyser).
-2. **Один источник талисманов.** `VoidTalismans` и старый `VoidItems`
-   не должны одновременно выдавать предметы с одинаковым CMD.
-3. **Периоды обновлений.** Все они в конфигах и по умолчанию 40 тиков (2 с):
-   `VoidTab.update-interval-ticks`, `VoidPvP.refresh-ticks`,
-   `VoidTalismans.refresh-interval-ticks`. На 100+ онлайне имеет смысл 60–80.
-4. **VoidWardenCity.** `update-seconds: 10` — поднимать до 20–30, если
-   голограммы не нужны часто; скан сундуков — самый дорогой таймер.
-5. **Флаги запуска.** Для Paper + Geyser:
+В архиве `voidplugins-configs.zip` лежат `Void<Имя>-config.yml` для всех 14 плагинов —
+это дефолтные конфиги с уже применёнными настройками под нагрузку:
+
+| Файл | Ключ | Было | Стало |
+| --- | --- | --- | --- |
+| VoidAntiCheat | `alert-cooldown-ms` | 2500 | 5000 |
+| VoidAntiCheat | `alert-min-vl` | 1.0 | 2.0 |
+| VoidAntiCheat | `staff-alerts` | true | false |
+| VoidTab | `update-interval-ticks` | 40 | 60 |
+| VoidTalismans | `settings.refresh-interval-ticks` | 40 | 60 |
+| VoidWardenCity | `chests.scan-seconds` | 60 | 120 |
+
+Ставить их не обязательно: jar-ы работают и со старыми конфигами, значения просто
+останутся прежними. Менять конфиг можно и вручную — ключи те же.
+
+## 4. Порядок установки
+
+1. Остановить сервер (не `/reload`: у плагинов висят таймеры и кэши игроков).
+2. Удалить старые jar-файлы, положить новые из `voidplugins-all.zip` (папка `jars/`).
+3. По желанию заменить конфиги из папки `configs/`.
+4. Запустить, проверить `logs/latest.log`:
+   - нет `NoSuchMethodError` и `Could not pass event`;
+   - нет `Не удалось сохранить кланы` каждые пару секунд.
+
+## 5. Что ещё стоит сделать руками
+
+1. **Убрать дубли jar.** `VoidVersionsExtension-1.5.0.jar` и `-1.5.1.jar` рядом —
+   оставить только 1.5.1.
+2. **Один источник талисманов.** `VoidTalismans` и старый `VoidItems` не должны
+   одновременно выдавать предметы с одинаковым `custom-model-data`.
+3. **VoidWardenCity.** Если голограммы не нужны часто, поднять
+   `hologram.update-seconds` до 20–30 и `warden.check-seconds` до 60.
+4. **Флаги запуска Paper** под 8+ ГБ памяти:
    ```
-   java -Xms4G -Xmx4G -XX:+UseG1GC -XX:+ParallelRefProcEnabled \
+   java -Xms6G -Xmx6G -XX:+UseG1GC -XX:+ParallelRefProcEnabled \
         -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions \
         -XX:+DisableExplicitGC -XX:+AlwaysPreTouch \
         -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 \
         -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 \
         -XX:InitiatingHeapOccupancyPercent=15 -jar paper.jar --nogui
    ```
-6. **Логи.** После установки 2.0.5 проверить, что в `logs/latest.log`
-   больше нет `NoSuchMethodError` и `Could not pass event BlockBreakEvent`.
+5. **Профилировка.** Если после установки TPS всё ещё проседает, снять
+   `/spark profiler start --timeout 60` и посмотреть, какой плагин в топе —
+   по этому отчёту можно точечно доработать.

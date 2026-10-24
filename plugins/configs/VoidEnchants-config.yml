@@ -1,0 +1,203 @@
+# ============================================================
+#  VoidEnchants — кастомные зачарования сервера VoidPE
+#  Автоплавка, Магнит, Бур I/II + кирки шахтёра.
+# ============================================================
+
+messages:
+  prefix: '&bVoidPE &8» &f'
+  given: '&aВыдано игроку &f{player}&a: &f{item}'
+  received: '&aВы получили: &f{item}'
+  enchanted: '&aЗачарование &f{enchant} &aдобавлено на предмет в руке.'
+  not-applicable: '&cЭто зачарование нельзя наложить на этот предмет.'
+  no-item: '&cВозьмите предмет в руку.'
+  reloaded: '&aКонфиг перезагружен.'
+  no-permission: '&cУ вас нет прав на эту команду.'
+  player-not-found: '&cИгрок не найден.'
+  usage: '&fИспользование: &b/vench give <игрок> <miner1|miner2|miner3|book_autosmelt|book_magnet|book_drill> &fили &b/vench enchant <autosmelt|magnet|drill> [уровень]'
+  anvil-combined: '&aГотово! Объединённый предмет — в инвентаре (списано уровней: &f{levels}&a).'
+  anvil-no-xp: '&cНе хватает уровней опыта: нужно &f{levels}&c.'
+  # Подсказки: как получить чары (команда /vench help и просто /vench).
+  help:
+    - '&fКак добыть кастомные зачарования:'
+    - '&7• &fСтол зачарований: &bтолько 30 уровень&f — шанс Автоплавки, Магнита и Бура I (и на книги тоже)'
+    - '&7• &fКниги: &b/vench give <игрок> book_autosmelt|book_magnet|book_drill&f (админ)'
+    - '&7• &fКастомная наковальня (Bedrock): &b/vench anvil&f — книга + инструмент, книга + книга, Бур I + Бур I = &bБур II&f'
+    - '&7• &fФизическая наковальня: &fпросто нажмите на неё — откроется Bedrock-наковальня'
+    - '&7• &fОбычная наковальня: &fприсядьте и нажмите, либо кнопка в Bedrock-меню (переименование и ванильные объединения)'
+    - '&7• &fГотовые кирки: &b/vench give <игрок> miner1|miner2|miner3&f (админ)'
+    - '&7• &fВручную на предмет в руке: &b/vench enchant <autosmelt|magnet|drill> [уровень]&f (админ)'
+
+# Названия зачарований в лоре предметов (строка добавляется автоматически).
+enchant-names:
+  autosmelt: '&6Автоплавка'
+  magnet: '&bМагнит'
+  drill: '&eБур' # уровень дописывается римской цифрой: Бур I, Бур II
+
+# Стол зачарований: кастомные чары выпадают ТОЛЬКО на максимальном (30) уровне.
+enchanting-table:
+  enabled: true
+  min-level-cost: 30
+  chances: # шанс 0..1 для каждого чара (проверяется отдельно)
+    autosmelt: 0.15
+    magnet: 0.15
+    drill: 0.08 # с книгой/киркой/лопатой; выпадает только Бур I (II — наковальней из двух I)
+
+# Наковальня: цена в уровнях опыта за объединение с повышением/добавлением кастомных чар.
+anvil:
+  xp-cost: 8
+  # Максимальные уровни при объединении одинаковых чар (L + L = L+1, но не выше капа).
+  # Тут капы ВЫШЕ ванильных: эффективность до 7, острота до 7, защита до 5, удача до 5, прочность до 5.
+  caps:
+    efficiency: 7
+    sharpness: 7
+    protection: 5
+    fortune: 5
+    unbreaking: 5
+
+# Кастомная наковальня-меню для Bedrock (/vench anvil). Обычная наковальня у
+# Bedrock-игроков кастомные книги не объединяет (клиент показывает красный X —
+# ограничение Geyser), поэтому объединение делает это меню: результат считает
+# сервер, игрок просто кладёт предметы в два левых слота и забирает результат
+# справа. Работает: инструмент + книга, книга + книга, инструмент + такой же
+# инструмент, книга + инструмент. Цена — anvil.xp-cost уровней опыта.
+# Bedrock-наковальня через физический блок: сервер только для Bedrock,
+# поэтому обычное нажатие на наковальню сразу открывает рабочее меню ниже.
+bedrock-anvil:
+  enabled: true
+  # true: нажатие с приседанием открывает ОБЫЧНУЮ наковальню (переименование,
+  # полностью ванильные объединения). Обычное нажатие — Bedrock-меню.
+  sneak-opens-vanilla: true
+
+combine-menu:
+  title: '&#C86BFFКастомная наковальня'
+  info-name: '&#C86BFFОбъединение кастомных чар'
+  info-lore:
+    - '&7Положите ДВА предмета в пустые слоты слева.'
+    - '&7Инструмент + книга, книга + книга или'
+    - '&7инструмент + такой же инструмент.'
+    - '&7Результат появится справа — нажмите на него.'
+    - '&7Цена: &b{levels} уровней опыта&7.'
+    - '&7Ванильные чары тоже объединяются здесь,'
+    - '&7причём выше ванильных капов (Защита до V).'
+  vanilla-name: '&fОбычная наковальня'
+  vanilla-lore:
+    - '&7Для переименования и ванильных объединений.'
+    - '&8Кастомные книги Bedrock тут не объединит.'
+
+drill:
+  # Бур и в креативе тоже работает (дроп в креативе не даётся). false — если мешает при строительстве.
+  in-creative: true
+  # Бур ломает ТОЛЬКО эти природные блоки (поставленные игроками постройки, сундуки и спавнеры не трогает).
+  # Пустой список [] — любые блоки кроме хранилищ и бедрока.
+  allowed-blocks:
+    - STONE
+    - DEEPSLATE
+    - COBBLESTONE
+    - COBBLED_DEEPSLATE
+    - ANDESITE
+    - DIORITE
+    - GRANITE
+    - TUFF
+    - DIRT
+    - GRAVEL
+    - SAND
+    - RED_SAND
+    - CLAY
+    - IRON_ORE
+    - DEEPSLATE_IRON_ORE
+    - GOLD_ORE
+    - DEEPSLATE_GOLD_ORE
+    - COPPER_ORE
+    - DEEPSLATE_COPPER_ORE
+    - COAL_ORE
+    - DEEPSLATE_COAL_ORE
+    - DIAMOND_ORE
+    - DEEPSLATE_DIAMOND_ORE
+    - EMERALD_ORE
+    - DEEPSLATE_EMERALD_ORE
+    - LAPIS_ORE
+    - DEEPSLATE_LAPIS_ORE
+    - REDSTONE_ORE
+    - DEEPSLATE_REDSTONE_ORE
+    - NETHER_GOLD_ORE
+    - NETHER_QUARTZ_ORE
+    - ANCIENT_DEBRIS
+    - NETHERRACK
+    - BASALT
+    - BLACKSTONE
+    - MAGMA_BLOCK
+    - SOUL_SAND
+    - SOUL_SOIL
+    - END_STONE
+    - OBSIDIAN
+    - SANDSTONE
+    - RED_SANDSTONE
+    - PURPUR_BLOCK
+    - PURPUR_PILLAR
+    - PURPLE_GLAZED_TERRACOTTA
+  # Прочность тратится за каждый дополнительный блок бура (с учётом Прочности).
+  damage-per-block: true
+  # Скорость износа кирки за блоки бура: 1.0 - как за обычный блок, 1.3 - на 30% быстрее, 2.0 - вдвое быстрее, 0 - без износа.
+  durability-multiplier: 1.3
+  # Опыт за дополнительные блоки бура не даётся (только за основной блок).
+  extra-blocks-xp: false
+
+magnet:
+  # true — добытое сразу в инвентарь; переполнение падает под ноги.
+  direct-to-inventory: true
+  # Поддержка авто-скупщика LMbuyer (/buyer): магнитный дроп проходит через событие
+  # подбора предмета, и автоскупщик успевает продать его до попадания в инвентарь.
+  autobuy-support: true
+  # Магнит на топоре собирает дроп с убитых мобов (на игроков НЕ работает).
+  mob-drops: true
+
+# Автоплавка: во что превращается ВЫПАВШИЙ предмет (дроп -> результат).
+# Работает и на все блоки бура. С шёлковым касанием автоплавка не применяется.
+smelt-map:
+  RAW_IRON: IRON_INGOT
+  RAW_GOLD: GOLD_INGOT
+  RAW_COPPER: COPPER_INGOT
+  IRON_ORE: IRON_INGOT
+  DEEPSLATE_IRON_ORE: IRON_INGOT
+  GOLD_ORE: GOLD_INGOT
+  DEEPSLATE_GOLD_ORE: GOLD_INGOT
+  NETHER_GOLD_ORE: GOLD_INGOT
+  COPPER_ORE: COPPER_INGOT
+  DEEPSLATE_COPPER_ORE: COPPER_INGOT
+  ANCIENT_DEBRIS: NETHERITE_SCRAP
+  COBBLESTONE: STONE
+  SAND: GLASS
+  RED_SAND: GLASS
+
+# Готовые кирки шахтёра (команда /vench give <игрок> miner1|miner2|miner3).
+picks:
+  miner1:
+    name: '&6Кирка шахтёра &eI'
+    material: NETHERITE_PICKAXE
+    efficiency: 5
+    fortune: 3
+    unbreaking: 3
+    mending: true
+    autosmelt: true
+    magnet: true
+    drill: 0
+  miner2:
+    name: '&6Кирка шахтёра &eII'
+    material: NETHERITE_PICKAXE
+    efficiency: 6
+    fortune: 4
+    unbreaking: 4
+    mending: true
+    autosmelt: true
+    magnet: true
+    drill: 1
+  miner3:
+    name: '&6Кирка шахтёра &eIII'
+    material: NETHERITE_PICKAXE
+    efficiency: 7
+    fortune: 5
+    unbreaking: 5
+    mending: true
+    autosmelt: true
+    magnet: true
+    drill: 2
