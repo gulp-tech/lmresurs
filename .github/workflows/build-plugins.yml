@@ -87,7 +87,10 @@ jobs:
           cp docs/PLUGINS_FIX_AND_TUNING.md upload/ 2>/dev/null || true
           cp jars/*.jar upload/jars/
           (cd upload && zip -r ../voidplugins-all.zip .)
-          ls -la upload/jars
+          (cd upload/configs && zip -r ../../voidplugins-configs.zip .)
+          echo "---- состав архивов ----"
+          unzip -l voidplugins-all.zip
+          unzip -l voidplugins-configs.zip
 
       - name: Публикация в релиз
         env:
@@ -97,4 +100,4 @@ jobs:
           if ! gh release view "$TAG" >/dev/null 2>&1; then
             gh release create "$TAG" --title "VoidPE plugins: сборки под Paper 26.2" --notes "Автосборка из plugins/."
           fi
-          gh release upload "$TAG" jars/*.jar voidplugins-all.zip --clobber
+          gh release upload "$TAG" jars/*.jar voidplugins-all.zip voidplugins-configs.zip --clobber
