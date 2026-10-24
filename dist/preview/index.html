@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>FunTime → Bedrock: превью меню</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 28px 24px 60px;
+    background: #14161a; color: #e8e8ea;
+    font: 15px/1.55 -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  }
+  h1 { font-size: 21px; margin: 0 0 6px; font-weight: 650; }
+  .sub { color: #8b929c; font-size: 13px; margin-bottom: 26px; }
+  .sub code { background: #22262d; padding: 1px 6px; border-radius: 4px; color: #b9c2cf; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(430px, 1fr)); gap: 22px; }
+  .card {
+    background: #1b1e24; border: 1px solid #282d35; border-radius: 10px;
+    overflow: hidden; display: flex; flex-direction: column;
+  }
+  .card header {
+    display: flex; align-items: baseline; gap: 10px;
+    padding: 11px 14px; border-bottom: 1px solid #282d35;
+  }
+  .card header b { font-size: 14px; font-weight: 600; }
+  .card header span { font-size: 12px; color: #757d88; }
+  .card a.img { display: block; background: #0f1114; }
+  .card img { display: block; width: 100%; height: auto; }
+  .card footer { padding: 9px 14px; border-top: 1px solid #282d35; font-size: 12px; }
+  .card footer a { color: #6db3f2; text-decoration: none; }
+  .card footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+  <h1>FunTime → Bedrock: превью меню</h1>
+  <div class="sub">
+    Рендер того, что увидит Bedrock-игрок: реальные иконки из <code>funtime.mcpack</code>,
+    сетка слотов 9×N как в игре. Нажми на картинку — откроется в полном размере.
+  </div>
+  <div class="grid" id="grid"></div>
+
+<script>
+const items = [
+  ["menu",          "menu.yml",          "главное меню"],
+  ["shop",          "shop.yml",          "донат-магазин"],
+  ["shop_items",    "shop_items.yml",    "раздел: предметы"],
+  ["shop_potions",  "shop_potions.yml",  "раздел: зелья"],
+  ["shop_pickaxes", "shop_pickaxes.yml", "раздел: кирки"],
+  ["shop_talismans","shop_talismans.yml","раздел: талисманы"],
+  ["shop_spheres",  "shop_spheres.yml",  "раздел: сферы"],
+  ["shop_enchants", "shop_enchants.yml", "раздел: зачарования"],
+  ["keys",          "keys.yml",          "магазин ключей"],
+  ["donate",        "donate.yml",        "донат-привилегии"],
+  ["titles",        "titles.yml",        "титулы"],
+  ["events",        "events.yml",        "ивенты"],
+  ["podryvnik",     "podryvnik.yml",     "магазин подрывника"],
+  ["privat_shop",   "privat_shop.yml",   "магазин приватов"]
+];
+
+const grid = document.getElementById('grid');
+for (const [slug, file, title] of items) {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <header><b>${title}</b><span>${file}</span></header>
+    <a class="img" href="${slug}.png" target="_blank" rel="noopener">
+      <img src="${slug}.png" alt="${title}" loading="lazy">
+    </a>
+    <footer><a href="../deluxemenus/${file}">${file}</a></footer>`;
+  grid.appendChild(card);
+}
+</script>
+</body>
+</html>
