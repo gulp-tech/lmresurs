@@ -1,0 +1,154 @@
+# DeluxeMenus — главный донат-магазин
+# Файл на сервере: plugins/DeluxeMenus/gui_menus/shop.yml
+# Рамка — обычное ванильное чёрное стекло. Покупки списывают осколки
+# PlayerPoints только если хватает (click_requirement на каждом товаре).
+# Цены: output и points take в одном товаре должны совпадать.
+menu_title: '• Донат-магазин'
+open_command: shop
+register_command: true
+size: 45
+open_commands:
+  - '[sound] ITEM_BOOK_PAGE_TURN'
+items:
+
+  'Рамка':
+    slots:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 17
+    - 18
+    - 26
+    - 27
+    - 35
+    - 36
+    - 37
+    - 38
+    - 39
+    - 41
+    - 42
+    - 43
+    - 44
+    material: BLACK_STAINED_GLASS_PANE
+    display_name: ' '
+
+  'Баланс':
+    slots:
+    - 13
+    material: PRISMARINE_SHARD
+    display_name: '&#54C8FFТвои осколки'
+    lore:
+      - ''
+      - '&fБаланс: &#54C8FF%playerpoints_points% осколков'
+      - '&7Ими оплачиваются покупки в этом магазине.'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+
+  'Раздел предметы':
+    slots:
+    - 20
+    material: CHEST
+    display_name: '&#C86BFFКастомные предметы'
+    lore:
+      - ''
+      - '&7Капкан, пыль обнаружения, око'
+      - '&7дезориентации и лом для спавнеров.'
+      - ''
+      - '&eНажми, чтобы открыть раздел'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[openguimenu] shop_items'
+
+  'Раздел зелья':
+    slots:
+    - 22
+    material: POTION
+    display_name: '&#FF5555Зелья'
+    lore:
+      - ''
+      - '&7Особые зелья: ярость, боевое,'
+      - '&7скорости и защиты.'
+      - ''
+      - '&eНажми, чтобы открыть раздел'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[openguimenu] shop_potions'
+
+  'Раздел кирки':
+    slots:
+    - 24
+    material: NETHERITE_PICKAXE
+    display_name: '&#FFB340Кирки'
+    lore:
+      - ''
+      - '&7Кирки шахтёра I, II и III:'
+      - '&7Автоплавка, Магнит и Бур.'
+      - ''
+      - '&eНажми, чтобы открыть раздел'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[openguimenu] shop_pickaxes'
+
+  'Раздел талисманы':
+    slots:
+    - 29
+    material: TOTEM_OF_UNDYING
+    display_name: '&#FFD93DТалисманы'
+    lore:
+      - ''
+      - '&7Работают только в левой руке.'
+      - '&7У каждого свои плюсы и минусы.'
+      - ''
+      - '&eНажми, чтобы открыть раздел'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[openguimenu] shop_talismans'
+
+  'Раздел сферы':
+    slots:
+    - 31
+    material: PAPER
+    item_model: voidspheres:sphere1
+    model_data_component:
+      floats: [9001.0]
+    display_name: '&#B388FFСферы'
+    lore:
+      - ''
+      - '&7Сферы трёх уровней: сумерек,'
+      - '&7пламени и бездны. Тоже в левую руку.'
+      - ''
+      - '&eНажми, чтобы открыть раздел'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[openguimenu] shop_spheres'
+
+  'Раздел зачарования':
+    slots:
+    - 33
+    material: ENCHANTED_BOOK
+    display_name: '&#C86BFFКастомные зачарования'
+    lore:
+      - ''
+      - '&7Книги: Автоплавка, Магнит и Бур.'
+      - '&7Накладываются на инструмент на наковальне.'
+      - ''
+      - '&eНажми, чтобы открыть раздел'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[openguimenu] shop_enchants'
+
+  'В главное меню':
+    slots:
+    - 40
+    material: ARROW
+    display_name: '&fВ главное меню'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[player] menu'

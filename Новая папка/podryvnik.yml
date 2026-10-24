@@ -1,0 +1,180 @@
+menu_title: • Магазин подрывника
+open_command: podryvnik
+register_command: true
+size: 27
+
+open_commands:
+  - '[sound] ITEM_BOOK_PAGE_TURN'
+
+items:
+  Информация:
+    slots:
+    - 4
+    material: TNT
+    hide_attributes: true
+    display_name: '&x&1&C&A&7&6&9И&x&2&0&A&9&6&7н&x&2&5&A&B&6&5ф&x&2&9&A&D&6&3о&x&2&E&B&0&6&2р&x&3&2&B&2&6&0м&x&3&6&B&4&5&Eа&x&3&B&B&6&5&Cц&x&4&3&B&A&5&Aия'
+    lore:
+      - ''
+      - '&f Взрывчатые предметы для'
+      - '&f разрушения любых построек.'
+      - ''
+      - '&fВаш баланс:'
+      - '&7• &fОсколков: &#00F15E%playerpoints_points%'
+      - ''
+      - '&7• &fВыберите нужную взрывчатку'
+      - '&7• &fи нажмите для покупки'
+
+  Динамитная шашка:
+    slots:
+    - 10
+    material: TNT
+    hide_attributes: true
+    display_name: '&x&1&F&A&8&6&8Динамитная шашка &7- &#00F15E120 осколков'
+    lore:
+      - ''
+      - '&f Базовая взрывчатка для'
+      - '&f разрушения обычных построек.'
+      - ''
+      - '&fХарактеристики:'
+      - '&7• &fРадиус взрыва: &#00F15E6 блоков'
+      - '&7• &fЦена: &#00F15E120 осколков'
+      - ''
+      - '&fВаш баланс:'
+      - '&7• &fОсколков: &#00F15E%playerpoints_points%'
+      - ''
+      - '&#1CA769➥ &fНажмите, чтобы купить.'
+    click_commands:
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[console] points take %player_name% 120'
+      - '[console] hypertnt give %player_name% tnt'
+      - '[message] &fВы купили &#00F15EДинамитную шашку&f!'
+    click_requirement:
+      requirements:
+        points_check:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '120'
+      deny_commands:
+        - '[sound] ENTITY_VILLAGER_NO'
+        - '[message] &#FF4B4BНедостаточно осколков! Требуется 120'
+
+  Зажигательный заряд:
+    slots:
+    - 12
+    material: TNT
+    hide_attributes: true
+    display_name: '&x&2&5&A&B&6&5Зажигательный заряд &7- &#00F15E135 осколков'
+    lore:
+      - ''
+      - '&f Взрывчатка с эффектом'
+      - '&f поджога территории.'
+      - ''
+      - '&fХарактеристики:'
+      - '&7• &fРадиус взрыва: &#00F15E10 блоков'
+      - '&7• &fСпец. эффект: &#00F15EСоздаёт огонь'
+      - '&7• &fЦена: &#00F15E135 осколков'
+      - ''
+      - '&fВаш баланс:'
+      - '&7• &fОсколков: &#00F15E%playerpoints_points%'
+      - ''
+      - '&#1CA769➥ &fНажмите, чтобы купить.'
+    click_commands:
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[console] points take %player_name% 135'
+      - '[console] hypertnt give %player_name% tnt_fire'
+      - '[message] &fВы купили &#00F15EЗажигательный заряд&f!'
+    click_requirement:
+      requirements:
+        points_check:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '135'
+      deny_commands:
+        - '[sound] ENTITY_VILLAGER_NO'
+        - '[message] &#FF4B4BНедостаточно осколков! Требуется 135'
+
+  Обсидиановая бомба:
+    slots:
+    - 14
+    material: TNT
+    hide_attributes: true
+    hide_enchantments: true
+    display_name: '&x&2&B&A&E&6&3Обсидиановая бомба &7- &#00F15E800 осколков'
+    lore:
+      - ''
+      - '&f Разрушитель баз, способный'
+      - '&f пробивать обсидиан.'
+      - ''
+      - '&fХарактеристики:'
+      - '&7• &fРадиус взрыва: &#00F15E5 блоков'
+      - '&7• &fСпец. эффект: &#00F15EРазрушает обсидиан'
+      - '&7• &fЦена: &#00F15E800 осколков'
+      - ''
+      - '&fВаш баланс:'
+      - '&7• &fОсколков: &#00F15E%playerpoints_points%'
+      - ''
+      - '&#1CA769➥ &fНажмите, чтобы купить.'
+    click_commands:
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[console] points take %player_name% 800'
+      - '[console] hypertnt give %player_name% tnt_obs'
+      - '[message] &fВы купили &#00F15EОбсидиановую бомбу&f!'
+    click_requirement:
+      requirements:
+        points_check:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '800'
+      deny_commands:
+        - '[sound] ENTITY_VILLAGER_NO'
+        - '[message] &#FF4B4BНедостаточно осколков! Требуется 800'
+
+  Тяжёлый фугас:
+    slots:
+    - 16
+    material: TNT
+    hide_attributes: true
+    hide_enchantments: true
+    display_name: '&x&3&3&B&2&6&0Тяжёлый фугас &7- &#00F15E1550 осколков'
+    lore:
+      - ''
+      - '&f Абсолютное разрушение для'
+      - '&f настоящих подрывников.'
+      - ''
+      - '&fХарактеристики:'
+      - '&7• &fРадиус взрыва: &#00F15E10 блоков'
+      - '&7• &fСпец. эффект: &#00F15EРазрушает обсидиан++'
+      - '&7• &fЦена: &#00F15E1550 осколков'
+      - ''
+      - '&fВаш баланс:'
+      - '&7• &fОсколков: &#00F15E%playerpoints_points%'
+      - ''
+      - '&#1CA769➥ &fНажмите, чтобы купить.'
+    click_commands:
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[console] points take %player_name% 1550'
+      - '[console] hypertnt give %player_name% tnt_heavy'
+      - '[message] &fВы купили &#00F15EТяжёлый фугас&f!'
+    click_requirement:
+      requirements:
+        points_check:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '1550'
+      deny_commands:
+        - '[sound] ENTITY_VILLAGER_NO'
+        - '[message] &#FF4B4BНедостаточно осколков! Требуется 1550'
+
+  Назад /shop:
+    slots:
+    - 22
+    material: ARROW
+    display_name: '&x&1&C&A&7&6&9Н&x&2&3&A&A&6&6а&x&2&B&A&E&6&3з&x&3&3&B&2&6&0а&x&3&B&B&6&5&Cд &7/shop'
+    lore:
+      - ''
+      - '&f Вернуться в донат-магазин.'
+      - ''
+      - '&#1CA769➥ &fНажмите, чтобы открыть.'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[openguimenu] shop'

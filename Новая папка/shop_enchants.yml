@@ -1,0 +1,151 @@
+# DeluxeMenus — раздел: кастомные зачарования
+# Файл на сервере: plugins/DeluxeMenus/gui_menus/shop_enchants.yml
+# Рамка — обычное ванильное чёрное стекло. Покупки списывают осколки
+# PlayerPoints только если хватает (click_requirement на каждом товаре).
+# Цены: output и points take в одном товаре должны совпадать.
+menu_title: '• Магазин: зачарования'
+open_command: shopenchants
+register_command: true
+size: 45
+open_commands:
+  - '[sound] ITEM_BOOK_PAGE_TURN'
+items:
+
+  'Рамка':
+    slots:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 17
+    - 18
+    - 26
+    - 27
+    - 35
+    - 36
+    - 37
+    - 38
+    - 39
+    - 41
+    - 42
+    - 43
+    - 44
+    material: BLACK_STAINED_GLASS_PANE
+    display_name: ' '
+
+  'Баланс':
+    slots:
+    - 13
+    material: PRISMARINE_SHARD
+    display_name: '&#54C8FFТвои осколки'
+    lore:
+      - ''
+      - '&fБаланс: &#54C8FF%playerpoints_points% осколков'
+      - '&7Ими оплачиваются покупки в этом магазине.'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+
+  'Книга Автоплавки':
+    slots:
+    - 20
+    material: ENCHANTED_BOOK
+    display_name: '&#FF9A3DКнига: Автоплавка'
+    lore:
+      - ''
+      - '&7Добыча сразу плавится в готовый результат:'
+      - '&7руда, булыжник и песок не требуют печи.'
+      - '&7Книга накладывается на инструмент на наковальне.'
+      - ''
+      - '&fЦена: &#54C8FF488 осколков'
+      - '&7Твой баланс: &#54C8FF%playerpoints_points%'
+      - '&eНажми, чтобы купить'
+    click_requirement:
+      requirements:
+        shards:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '488'
+      deny_commands:
+        - '[message] &#FF6B6BНе хватает осколков: нужно 488, у тебя %playerpoints_points%.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] points take %player_name% 488'
+      - '[console] vench give %player_name% book_autosmelt'
+      - '[message] &#7CFC00Покупка успешна: &#FF9A3DКнига: Автоплавка'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Книга Магнита':
+    slots:
+    - 22
+    material: ENCHANTED_BOOK
+    display_name: '&#55E6FFКнига: Магнит'
+    lore:
+      - ''
+      - '&7Добытое само попадает в инвентарь,'
+      - '&7а на топоре собирает дроп с убитых мобов.'
+      - '&7Книга накладывается на инструмент на наковальне.'
+      - ''
+      - '&fЦена: &#54C8FF488 осколков'
+      - '&7Твой баланс: &#54C8FF%playerpoints_points%'
+      - '&eНажми, чтобы купить'
+    click_requirement:
+      requirements:
+        shards:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '488'
+      deny_commands:
+        - '[message] &#FF6B6BНе хватает осколков: нужно 488, у тебя %playerpoints_points%.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] points take %player_name% 488'
+      - '[console] vench give %player_name% book_magnet'
+      - '[message] &#7CFC00Покупка успешна: &#55E6FFКнига: Магнит'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Книга Бура I':
+    slots:
+    - 24
+    material: ENCHANTED_BOOK
+    display_name: '&#FFD93DКнига: Бур I'
+    lore:
+      - ''
+      - '&7Инструмент ломает дополнительные блоки вокруг.'
+      - '&7Две книги Бур I на наковальне дают Бур II.'
+      - '&7Книга накладывается на инструмент на наковальне.'
+      - ''
+      - '&fЦена: &#54C8FF650 осколков'
+      - '&7Твой баланс: &#54C8FF%playerpoints_points%'
+      - '&eНажми, чтобы купить'
+    click_requirement:
+      requirements:
+        shards:
+          type: '>='
+          input: '%playerpoints_points%'
+          output: '650'
+      deny_commands:
+        - '[message] &#FF6B6BНе хватает осколков: нужно 650, у тебя %playerpoints_points%.'
+        - '[sound] ENTITY_VILLAGER_NO'
+    click_commands:
+      - '[console] points take %player_name% 650'
+      - '[console] vench give %player_name% book_drill'
+      - '[message] &#7CFC00Покупка успешна: &#FFD93DКнига: Бур I'
+      - '[sound] ENTITY_PLAYER_LEVELUP'
+      - '[refresh]'
+
+  'Назад':
+    slots:
+    - 40
+    material: ARROW
+    display_name: '&fНазад'
+    click_commands:
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[openguimenu] shop'
