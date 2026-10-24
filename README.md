@@ -25,6 +25,17 @@ Bedrock-порт ресурспака и меню **FunTime** для Geyser + Fl
 | `examples/deluxemenus_bedrock_menu.yml` | Пример меню, которое сразу работает на Bedrock |
 | `docs/GEYSER_BEDROCK.md` | Установка, ограничения, troubleshooting |
 
+## Плагины VoidPE: исправления и сборка
+
+| Что | Ссылка |
+| --- | --- |
+| VoidAntiCheat **2.0.5** (фикс `NoSuchMethodError: hoverEvent`) | [VoidAntiCheat-2.0.5.jar](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/VoidAntiCheat-2.0.5.jar) |
+| Настройки + разбор падения | [voidplugins-configs.zip](https://github.com/gulp-tech/lmresurs/releases/download/voidplugins/voidplugins-configs.zip) |
+
+Исходники — в `plugins/VoidAntiCheat/`, сборка — GitHub Actions
+(`.github/workflows/build-plugins.yml`), результат попадает в релиз `voidplugins`.
+Подробности: `docs/PLUGINS_FIX_AND_TUNING.md`.
+
 ## Быстрый старт
 
 ```bash
