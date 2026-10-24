@@ -1137,7 +1137,7 @@
         "bedrock_options": {
           "icon": "minecraft_item_funtime_items_talisman_harmony",
           "allow_offhand": true,
-          "display_handheld": true
+          "display_handheld": false
         }
       },
       {
@@ -1147,7 +1147,7 @@
         "bedrock_options": {
           "icon": "minecraft_item_funtime_items_talisman_daedalus",
           "allow_offhand": true,
-          "display_handheld": true
+          "display_handheld": false
         }
       },
       {
@@ -1157,7 +1157,7 @@
         "bedrock_options": {
           "icon": "minecraft_item_funtime_items_talisman_triton",
           "allow_offhand": true,
-          "display_handheld": true
+          "display_handheld": false
         }
       },
       {
@@ -1167,7 +1167,7 @@
         "bedrock_options": {
           "icon": "minecraft_item_funtime_items_talisman_discord",
           "allow_offhand": true,
-          "display_handheld": true
+          "display_handheld": false
         }
       },
       {
@@ -1177,7 +1177,7 @@
         "bedrock_options": {
           "icon": "minecraft_item_funtime_items_talisman_echidna",
           "allow_offhand": true,
-          "display_handheld": true
+          "display_handheld": false
         }
       },
       {
@@ -1187,7 +1187,7 @@
         "bedrock_options": {
           "icon": "minecraft_item_funtime_items_talisman_crusher",
           "allow_offhand": true,
-          "display_handheld": true
+          "display_handheld": false
         }
       },
       {
@@ -1197,7 +1197,7 @@
         "bedrock_options": {
           "icon": "minecraft_item_funtime_items_talisman_punisher",
           "allow_offhand": true,
-          "display_handheld": true
+          "display_handheld": false
         }
       },
       {
@@ -1207,7 +1207,7 @@
         "bedrock_options": {
           "icon": "minecraft_item_funtime_items_talisman_tyrant",
           "allow_offhand": true,
-          "display_handheld": true
+          "display_handheld": false
         }
       },
       {
@@ -1217,7 +1217,7 @@
         "bedrock_options": {
           "icon": "minecraft_item_funtime_items_talisman_edge",
           "allow_offhand": true,
-          "display_handheld": true
+          "display_handheld": false
         }
       },
       {
@@ -1227,7 +1227,7 @@
         "bedrock_options": {
           "icon": "minecraft_item_funtime_items_talisman_phoenix",
           "allow_offhand": true,
-          "display_handheld": true
+          "display_handheld": false
         }
       },
       {
@@ -1237,7 +1237,7 @@
         "bedrock_options": {
           "icon": "minecraft_item_funtime_new_year_talisman_grinch",
           "allow_offhand": true,
-          "display_handheld": true
+          "display_handheld": false
         }
       },
       {
@@ -1247,7 +1247,7 @@
         "bedrock_options": {
           "icon": "minecraft_item_funtime_items_talisman_hero",
           "allow_offhand": true,
-          "display_handheld": true
+          "display_handheld": false
         }
       }
     ],

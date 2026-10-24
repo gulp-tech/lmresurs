@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Мокап «талисман в руке» — грубая проверка глазами до захода в игру.
+Мокап «талисман в руке» — проверка глазами до захода в игру.
 
-Настоящий вид в руке рисует клиент Bedrock по attachable (плоская фигурка на
-ванильной анимации `animation.bow.wield`). Здесь фигурка просто кладётся на
-ладонь в трёх ракурсах, чтобы сверить размер и читаемость.
+Geyser рисует кастомный предмет плоской иконкой (attachables для талисманов
+намеренно не создаются), поэтому в руке фигурка выглядит ровно так же, как в
+слоте меню. Здесь она кладётся на «ладонь» без наклона — так и будет в игре.
 
 Требует Pillow. Для сервера не нужен.
 
@@ -74,9 +74,7 @@ def main() -> int:
         draw.rounded_rectangle(
             [x - 8, y - 6, x + cell + 8, y + cell + 10], radius=6, fill=(46, 40, 52, 255)
         )
-        # наклон как у плоского предмета в руке
-        tilted = art.rotate(-14, resample=Image.NEAREST, expand=False)
-        sheet.alpha_composite(tilted, (x, y))
+        sheet.alpha_composite(art, (x, y))
         draw.text((x, y + cell + 8), f"{title} · CMD {cmd}", font=font, fill=(220, 220, 228, 255))
 
     os.makedirs(args.out, exist_ok=True)

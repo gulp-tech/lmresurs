@@ -1,5 +1,5 @@
 {
-  "pack": "/tmp/java_pack_sct8xn_6",
+  "pack": "/tmp/java_pack_8l8tnb84",
   "entries_total": 390,
   "entries_unique": 137,
   "icons": 136,
@@ -1982,85 +1982,85 @@
         "custom_model_data": 1,
         "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_harmony",
         "icon": "minecraft_item_funtime_items_talisman_harmony",
-        "display_handheld": true,
+        "display_handheld": false,
         "source_texture": "assets/minecraft/textures/item/funtime/items/talisman_harmony.png"
       },
       {
         "custom_model_data": 2,
         "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_daedalus",
         "icon": "minecraft_item_funtime_items_talisman_daedalus",
-        "display_handheld": true,
+        "display_handheld": false,
         "source_texture": "assets/minecraft/textures/item/funtime/items/talisman_daedalus.png"
       },
       {
         "custom_model_data": 3,
         "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_triton",
         "icon": "minecraft_item_funtime_items_talisman_triton",
-        "display_handheld": true,
+        "display_handheld": false,
         "source_texture": "assets/minecraft/textures/item/funtime/items/talisman_triton.png"
       },
       {
         "custom_model_data": 4,
         "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_discord",
         "icon": "minecraft_item_funtime_items_talisman_discord",
-        "display_handheld": true,
+        "display_handheld": false,
         "source_texture": "assets/minecraft/textures/item/funtime/items/talisman_discord.png"
       },
       {
         "custom_model_data": 5,
         "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_echidna",
         "icon": "minecraft_item_funtime_items_talisman_echidna",
-        "display_handheld": true,
+        "display_handheld": false,
         "source_texture": "assets/minecraft/textures/item/funtime/items/talisman_echidna.png"
       },
       {
         "custom_model_data": 6,
         "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_crusher",
         "icon": "minecraft_item_funtime_items_talisman_crusher",
-        "display_handheld": true,
+        "display_handheld": false,
         "source_texture": "assets/minecraft/textures/item/funtime/items/talisman_crusher.png"
       },
       {
         "custom_model_data": 7,
         "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_punisher",
         "icon": "minecraft_item_funtime_items_talisman_punisher",
-        "display_handheld": true,
+        "display_handheld": false,
         "source_texture": "assets/minecraft/textures/item/funtime/items/talisman_punisher.png"
       },
       {
         "custom_model_data": 8,
         "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_tyrant",
         "icon": "minecraft_item_funtime_items_talisman_tyrant",
-        "display_handheld": true,
+        "display_handheld": false,
         "source_texture": "assets/minecraft/textures/item/funtime/items/talisman_tyrant.png"
       },
       {
         "custom_model_data": 9,
         "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_edge",
         "icon": "minecraft_item_funtime_items_talisman_edge",
-        "display_handheld": true,
+        "display_handheld": false,
         "source_texture": "assets/minecraft/textures/item/funtime/items/talisman_edge.png"
       },
       {
         "custom_model_data": 10,
         "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_phoenix",
         "icon": "minecraft_item_funtime_items_talisman_phoenix",
-        "display_handheld": true,
+        "display_handheld": false,
         "source_texture": "assets/minecraft/textures/item/funtime/items/talisman_phoenix.png"
       },
       {
         "custom_model_data": 11,
         "bedrock_identifier": "funtime:minecraft_item_funtime_new_year_talisman_grinch",
         "icon": "minecraft_item_funtime_new_year_talisman_grinch",
-        "display_handheld": true,
+        "display_handheld": false,
         "source_texture": "assets/minecraft/textures/item/funtime/new_year/talisman_grinch.png"
       },
       {
         "custom_model_data": 12,
         "bedrock_identifier": "funtime:minecraft_item_funtime_items_talisman_hero",
         "icon": "minecraft_item_funtime_items_talisman_hero",
-        "display_handheld": true,
-        "source_texture": "talisman_art: нарисован (герой)"
+        "display_handheld": false,
+        "source_texture": "talisman_art: золотая версия talisman_crusher"
       }
     ],
     "minecraft:trial_key": [
