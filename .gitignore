@@ -4,5 +4,8 @@
 # промежуточный каталог сборки Bedrock-пака (итог лежит в dist/funtime.mcpack)
 /dist/bedrock_pack/
 
+# распакованный разбираемый архив GeyserPlugins-main.zip (сам zip лежит в origin/main)
+/geyserplugins/
+
 __pycache__/
 *.pyc
