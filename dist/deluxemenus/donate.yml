@@ -2,10 +2,14 @@
 # Файл на сервере: plugins/DeluxeMenus/gui_menus/donate.yml
 # Открывается командой /donate
 #
-# Команды приведены под VoidPE:
-#  * группы LuckPerms — наши: strannik, geroy, rycar, baron, lord, knyaz, imperator;
-#  * выдача — только parent add (не parent set!), чтобы привилегии не слетали;
-#  * киты LiteKits — /kit strannik, /kit geroy, /kit rycar и т.д.
+# Покупка за осколки (PlayerPoints) в этом меню ОТКЛЮЧЕНА:
+#  * привилегии не продаются за осколки — только за реальные деньги на сайте;
+#  * выдачу привилегии делает плагин-магазин/администратор, а не DeluxeMenus;
+#  * меню служит витриной: показывает возможности каждой привилегии.
+#
+# Группы LuckPerms (для справки): strannik, geroy, rycar, baron, lord, knyaz, imperator.
+# Если снова понадобится покупка за осколки — верни блоки click_requirement
+# и команды points take / lp user parent add.
 
 menu_title: '• Донат привилегии'
 open_command: donate
@@ -46,18 +50,19 @@ items:
     material: BLACK_STAINED_GLASS_PANE
     display_name: ' '
 
-  'Баланс':
+  'Где купить':
     slots:
     - 13
-    material: PRISMARINE_SHARD
-    display_name: '&bТвои осколки'
+    material: BOOK
+    display_name: '&eКак получить привилегию'
     lore:
       - ''
-      - '&fБаланс: &b%playerpoints_points% осколков'
-      - '&7Ими оплачиваются покупки в этом магазине.'
+      - '&7Привилегии продаются за реальные деньги'
+      - '&7в магазине на сайте сервера.'
+      - ''
+      - '&7После оплаты привилегия выдаётся автоматически.'
     click_commands:
       - '[sound] ITEM_BOOK_PAGE_TURN'
-
   'Странник':
     slots:
     - 20
@@ -72,24 +77,10 @@ items:
       - '&7• Приватов (регионов): &a4'
       - '&7• Возможность заходить на полный сервер'
       - ''
-      - '&fЦена: &b12 осколков'
-      - '&7Твой баланс: &b%playerpoints_points%'
-      - '&eНажми, чтобы купить'
-    click_requirement:
-      requirements:
-        shards:
-          type: '>='
-          input: '%playerpoints_points%'
-          output: '12'
-      deny_commands:
-        - '[message] &cНе хватает осколков: нужно 12, у тебя %playerpoints_points%.'
-        - '[sound] ENTITY_VILLAGER_NO'
+      - '&7Выдаётся после оплаты в магазине'
     click_commands:
-      - '[console] points take %player_name% 12'
-      - '[console] lp user %player_name% parent add strannik'
-      - '[message] &aПокупка успешна: &7Странник'
-      - '[sound] ENTITY_PLAYER_LEVELUP'
-      - '[refresh]'
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[message] &eПривилегия выдаётся после оплаты в магазине на сайте.'
 
   'Герой':
     slots:
@@ -105,24 +96,10 @@ items:
       - '&7• Домов (/sethome): &a2'
       - '&7• Приватов (регионов): &a5'
       - ''
-      - '&fЦена: &b20 осколков'
-      - '&7Твой баланс: &b%playerpoints_points%'
-      - '&eНажми, чтобы купить'
-    click_requirement:
-      requirements:
-        shards:
-          type: '>='
-          input: '%playerpoints_points%'
-          output: '20'
-      deny_commands:
-        - '[message] &cНе хватает осколков: нужно 20, у тебя %playerpoints_points%.'
-        - '[sound] ENTITY_VILLAGER_NO'
+      - '&7Выдаётся после оплаты в магазине'
     click_commands:
-      - '[console] points take %player_name% 20'
-      - '[console] lp user %player_name% parent add geroy'
-      - '[message] &aПокупка успешна: Герой'
-      - '[sound] ENTITY_PLAYER_LEVELUP'
-      - '[refresh]'
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[message] &eПривилегия выдаётся после оплаты в магазине на сайте.'
 
   'Рыцарь':
     slots:
@@ -139,24 +116,10 @@ items:
       - '&7• Домов (/sethome): &a3'
       - '&7• Приватов (регионов): &a6'
       - ''
-      - '&fЦена: &b95 осколков'
-      - '&7Твой баланс: &b%playerpoints_points%'
-      - '&eНажми, чтобы купить'
-    click_requirement:
-      requirements:
-        shards:
-          type: '>='
-          input: '%playerpoints_points%'
-          output: '95'
-      deny_commands:
-        - '[message] &cНе хватает осколков: нужно 95, у тебя %playerpoints_points%.'
-        - '[sound] ENTITY_VILLAGER_NO'
+      - '&7Выдаётся после оплаты в магазине'
     click_commands:
-      - '[console] points take %player_name% 95'
-      - '[console] lp user %player_name% parent add rycar'
-      - '[message] &aПокупка успешна: &eРыцарь'
-      - '[sound] ENTITY_PLAYER_LEVELUP'
-      - '[refresh]'
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[message] &eПривилегия выдаётся после оплаты в магазине на сайте.'
 
   'Барон':
     slots:
@@ -174,24 +137,10 @@ items:
       - '&7• Домов (/sethome): &a4'
       - '&7• Приватов (регионов): &a5'
       - ''
-      - '&fЦена: &b222 осколка'
-      - '&7Твой баланс: &b%playerpoints_points%'
-      - '&eНажми, чтобы купить'
-    click_requirement:
-      requirements:
-        shards:
-          type: '>='
-          input: '%playerpoints_points%'
-          output: '222'
-      deny_commands:
-        - '[message] &cНе хватает осколков: нужно 222, у тебя %playerpoints_points%.'
-        - '[sound] ENTITY_VILLAGER_NO'
+      - '&7Выдаётся после оплаты в магазине'
     click_commands:
-      - '[console] points take %player_name% 222'
-      - '[console] lp user %player_name% parent add baron'
-      - '[message] &aПокупка успешна: &6Барон'
-      - '[sound] ENTITY_PLAYER_LEVELUP'
-      - '[refresh]'
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[message] &eПривилегия выдаётся после оплаты в магазине на сайте.'
 
   'Лорд':
     slots:
@@ -209,24 +158,10 @@ items:
       - '&7• Домов (/sethome): &a5'
       - '&7• Приватов (регионов): &a6'
       - ''
-      - '&fЦена: &b350 осколков'
-      - '&7Твой баланс: &b%playerpoints_points%'
-      - '&eНажми, чтобы купить'
-    click_requirement:
-      requirements:
-        shards:
-          type: '>='
-          input: '%playerpoints_points%'
-          output: '350'
-      deny_commands:
-        - '[message] &cНе хватает осколков: нужно 350, у тебя %playerpoints_points%.'
-        - '[sound] ENTITY_VILLAGER_NO'
+      - '&7Выдаётся после оплаты в магазине'
     click_commands:
-      - '[console] points take %player_name% 350'
-      - '[console] lp user %player_name% parent add lord'
-      - '[message] &aПокупка успешна: &bЛорд'
-      - '[sound] ENTITY_PLAYER_LEVELUP'
-      - '[refresh]'
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[message] &eПривилегия выдаётся после оплаты в магазине на сайте.'
 
   'Князь':
     slots:
@@ -245,24 +180,10 @@ items:
       - '&7• Приватов (регионов): &a7'
       - '&7• Доступ к выделенному киту варпа'
       - ''
-      - '&fЦена: &b540 осколков'
-      - '&7Твой баланс: &b%playerpoints_points%'
-      - '&eНажми, чтобы купить'
-    click_requirement:
-      requirements:
-        shards:
-          type: '>='
-          input: '%playerpoints_points%'
-          output: '540'
-      deny_commands:
-        - '[message] &cНе хватает осколков: нужно 540, у тебя %playerpoints_points%.'
-        - '[sound] ENTITY_VILLAGER_NO'
+      - '&7Выдаётся после оплаты в магазине'
     click_commands:
-      - '[console] points take %player_name% 540'
-      - '[console] lp user %player_name% parent add knyaz'
-      - '[message] &aПокупка успешна: &dКнязь'
-      - '[sound] ENTITY_PLAYER_LEVELUP'
-      - '[refresh]'
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[message] &eПривилегия выдаётся после оплаты в магазине на сайте.'
 
   'Император':
     slots:
@@ -279,24 +200,10 @@ items:
       - '&7• Домов (/sethome): &a10'
       - '&7• Доступ к &a/kit imperator'
       - ''
-      - '&fЦена: &b950 осколков'
-      - '&7Твой баланс: &b%playerpoints_points%'
-      - '&eНажми, чтобы купить'
-    click_requirement:
-      requirements:
-        shards:
-          type: '>='
-          input: '%playerpoints_points%'
-          output: '950'
-      deny_commands:
-        - '[message] &cНе хватает осколков: нужно 950, у тебя %playerpoints_points%.'
-        - '[sound] ENTITY_VILLAGER_NO'
+      - '&7Выдаётся после оплаты в магазине'
     click_commands:
-      - '[console] points take %player_name% 950'
-      - '[console] lp user %player_name% parent add imperator'
-      - '[message] &aПокупка успешна: &eИмператор'
-      - '[sound] ENTITY_PLAYER_LEVELUP'
-      - '[refresh]'
+      - '[sound] ITEM_BOOK_PAGE_TURN'
+      - '[message] &eПривилегия выдаётся после оплаты в магазине на сайте.'
 
   'Закрыть':
     slots:
