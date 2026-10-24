@@ -1,0 +1,20 @@
+name: VoidCombat
+version: '${project.version}'
+main: ru.voidpe.combat.VoidCombat
+api-version: '26.2'
+author: VoidPE
+description: "Режим боя VoidPE: PvP-метка, кулдауны яблок, зелий исцеления и кастомных предметов, запрет фейерверков в бою."
+softdepend: [VoidItems, WorldGuard]
+commands:
+  combat:
+    description: "Режим боя VoidPE: статус; админ — on|off|settime|world|zone|info|reload"
+    usage: /combat [on|off|settime <сек>|world add|remove|list|zone add|remove|list|info|reload]
+    aliases: [vcombat, бой]
+    permission: voidcombat.use
+permissions:
+  voidcombat.use:
+    description: Проверка своего режима боя командой /combat
+    default: true
+  voidcombat.admin:
+    description: Перезагрузка VoidCombat
+    default: op

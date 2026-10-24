@@ -1,0 +1,22 @@
+name: VoidTalismans
+version: '${project.version}'
+main: ru.voidpe.talismans.VoidTalismans
+api-version: '26.2'
+author: VoidPE
+description: "Талисманы и сферы: плюсы к характеристикам, пока предмет в левой руке. Всё настраивается в config.yml."
+commands:
+  talisman:
+    description: "Талисманы и сферы: меню, выдача, список"
+    usage: "/talisman [give <игрок> <id> [кол-во]|list|reload|help]"
+    aliases: [tal]
+  sphere:
+    description: "Сферы: выдача по уровню"
+    usage: "/sphere give <игрок> <1|2|3|4> [кол-во] | /sphere exchange <игрок>"
+    aliases: [spheres]
+permissions:
+  voidtalismans.admin:
+    description: "Команда /talisman: меню, выдача, reload"
+    default: op
+  faraltalismans.admin:
+    description: "Старое право до переименования плагина (тоже работает)"
+    default: op

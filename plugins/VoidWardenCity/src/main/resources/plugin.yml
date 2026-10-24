@@ -1,0 +1,21 @@
+name: VoidWardenCity
+version: '${project.version}'
+main: ru.voidpe.wardencity.VoidWardenCity
+api-version: '26.2'
+author: VoidPE
+description: "Город Вардена как на FunTime: данж в древнем городе, сундуки с обновляемым лутом, вардены с наградой, телепорт за осколки."
+commands:
+  wcity:
+    description: "Город Вардена: телепорт и настройка"
+    usage: /wcity [tp|info|setcenter|setspawn|chest|loot|chances|refill|reload]
+    aliases: [wardencity, warden]
+permissions:
+  voidwardencity.use:
+    description: Телепорт в Город Вардена командой /wcity
+    default: true
+  voidwardencity.admin:
+    description: Настройка города (setcenter/setspawn/reload) и обход защиты блоков
+    default: op
+  voidwardencity.bypass:
+    description: Телепорт без цены и кулдауна
+    default: false

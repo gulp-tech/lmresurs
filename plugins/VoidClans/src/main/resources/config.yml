@@ -1,0 +1,129 @@
+# ============================================================
+#  VoidClans — кланы (VoidPE, Bedrock)
+#
+#  /clan — меню клана. Деньги клана — монеты Vault.
+#  Роли и их права настраиваются прямо в игре: меню клана ->
+#  "Роли и права" или /clan setperm <роль> <право>.
+#  Права: invite (приглашать), kick (кикать), withdraw (снимать
+#  монеты из банка), promote (выдавать роли ниже своей),
+#  settings (настраивать права ролей), sethome (ставить дом).
+#  У Лидера всегда все права. Данные: plugins/VoidClans/clans.yml
+# ============================================================
+
+settings:
+  create-cost: 10000        # цена создания клана (монеты Vault), 0 — бесплатно
+  max-members: 20           # максимум игроков в клане
+  name-min: 3
+  name-max: 16
+  invite-expire-seconds: 120
+  home-warmup-seconds: 3    # прогрев телепорта домой (сек), 0 — мгновенно; движение отменяет
+
+# Прокачка клана: опыт за действия участников.
+leveling:
+  xp:
+    block-break: 1       # сломанный блок (не в креативе)
+    mob-kill: 2          # убийство моба
+    player-kill: 25      # убийство игрока
+    fish: 5              # пойманная рыба
+
+# Уровни клана: xp — сколько ВСЕГО опыта нужно для уровня,
+# members — слоты игроков, bank — лимит казны (-1 — без лимита),
+# homes — точек клан-дома. Уровень 1 — стартовый.
+levels:
+  1:  { xp: 0,     members: 5,  bank: 50000,   homes: 1 }
+  2:  { xp: 500,   members: 8,  bank: 100000,  homes: 1 }
+  3:  { xp: 1500,  members: 10, bank: 200000,  homes: 1 }
+  4:  { xp: 3000,  members: 12, bank: 350000,  homes: 1 }
+  5:  { xp: 5000,  members: 15, bank: 500000,  homes: 1 }
+  6:  { xp: 8000,  members: 18, bank: 750000,  homes: 1 }
+  7:  { xp: 12000, members: 20, bank: 1000000, homes: 1 }
+  8:  { xp: 18000, members: 23, bank: 1500000, homes: 1 }
+  9:  { xp: 26000, members: 26, bank: 2500000, homes: 1 }
+  10: { xp: 40000, members: 30, bank: -1,      homes: 2 }
+
+# Роли: priority — чем выше, тем главнее (кикать/менять роли можно
+# только игрокам с приоритетом ниже своего). permissions — права
+# по умолчанию для НОВЫХ кланов; дальше каждый клан настраивает сам.
+roles:
+  leader:
+    name: "&#FFD93DЛидер"
+    priority: 100
+    permissions: [invite, kick, withdraw, promote, settings, sethome]
+  deputy:
+    name: "&#FF9A3DЗаместитель"
+    priority: 80
+    permissions: [invite, kick, withdraw, promote, sethome]
+  officer:
+    name: "&#8CE8FFОфицер"
+    priority: 50
+    permissions: [invite]
+  member:
+    name: "&7Боец"
+    priority: 10
+    permissions: []
+default-role: member        # роль новых участников
+
+# Плейсхолдеры PlaceholderAPI для ChatEx и других плагинов:
+# %voidclans_tag% — готовый цветной тег клана, %voidclans_name% — просто название.
+# Полный список: tag, name, role, role_id, leader, level, xp, bank,
+# members, members_online, max_members, homes, has_clan, is_leader.
+placeholders:
+  tag-format: "&8[&#C86BFF{clan}&8]&r"  # &r в конце: тег не красит ник дальше
+  no-clan: ""                            # что вернёт %voidclans_name%, если клана нет
+
+menu:
+  title: "&#C86BFFКлан"
+  title-none: "&#C86BFFКланы"
+  amounts: [100, 1000, 10000]   # кнопки сумм в банке (последняя — "всё")
+
+messages:
+  prefix: "&#C86BFFVoidPE &8» &f"
+  no-permission: "&cУ тебя нет на это прав в клане."
+  plugin-admin-only: "&cТолько для админов."
+  not-in-clan: "&cТы не состоишь в клане. Создай свой: &f/clan create <название>"
+  already-in-clan: "&cТы уже состоишь в клане."
+  clan-not-found: "&cТакого клана нет."
+  name-taken: "&cНазвание занято."
+  name-invalid: "&cНазвание: 3-16 символов, только буквы, цифры и _."
+  no-money: "&cНе хватает монет. Нужно: &f{amount}"
+  economy-off: "&cЭкономика (Vault) недоступна."
+  created: "&#7CFC00Клан &f{clan} &aсоздан! Меню: &f/clan"
+  target-in-clan: "&cЭтот игрок уже в клане."
+  target-offline: "&cИгрок не в сети."
+  invited: "&aПриглашение отправлено игроку &f{player}&a."
+  invite-received: "&#FFD93DТебя пригласили в клан &f{clan}&a. &f/clan accept &7или &f/clan deny"
+  invite-expired: "&cПриглашение истекло или его нет."
+  joined: "&#7CFC00Добро пожаловать в клан &f{clan}&a!"
+  member-joined: "&#7CFC00Игрок &f{player} &aвступил в клан."
+  declined: "&7Приглашение отклонено."
+  left: "&7Ты вышел из клана &f{clan}&7."
+  member-left: "&7Игрок &f{player} &7вышел из клана."
+  leader-cant-leave: "&cЛидер не может выйти. Передай клан: &f/clan transfer <игрок> &cили распусти: &f/clan disband"
+  kicked: "&cТы кикнут из клана &f{clan}&c."
+  kick-done: "&aИгрок &f{player} &aкикнут из клана."
+  member-kicked: "&7Игрок &f{player} &7кикнут из клана."
+  not-member: "&cЭтот игрок не в твоём клане."
+  cant-manage-higher: "&cНельзя трогать игрока с ролью не ниже твоей."
+  role-set: "&aИгроку &f{player} &aвыдана роль &f{role}&a."
+  role-received: "&#FFD93DТвоя новая роль в клане: &f{role}"
+  perm-toggled: "&aПраво &f{perm} &aдля роли &f{role}&a: &f{state}"
+  leader-perms-locked: "&cПрава Лидера не меняются — у него есть все."
+  deposited: "&aВ банк клана внесено: &f{amount}&a. Баланс: &f{bank}"
+  withdrawn: "&aИз банка клана снято: &f{amount}&a. Баланс: &f{bank}"
+  bank-not-enough: "&cВ банке клана не хватает монет."
+  amount-invalid: "&cСумма должна быть числом больше нуля."
+  full: "&cВ клане нет мест."
+  transferred: "&#FFD93DТы передал лидерство игроку &f{player}&a."
+  transfer-received: "&#FFD93DТы теперь лидер клана &f{clan}!"
+  disband-confirm: "&cТочно распустить клан? Деньги банка вернутся лидеру. Подтверждение: &f/clan disband confirm"
+  disbanded: "&7Клан &f{clan} &7распущен."
+  home-set: "&aДом клана №{index} установлен."
+  home-locked: "&cДом №2 ещё закрыт. Нужна прокачка клана (сейчас уровень {level})."
+  home-warmup: "&7Телепорт домой через &f{seconds} сек&7. Не двигайся!"
+  home-cancelled: "&cТелепорт отменён — ты двинулся."
+  bank-full: "&cКазна клана заполнена (лимит уровня). Прокачивай клан: &f/clan level"
+  levelup: "&#FFD93DКлан &f{clan} &aдостиг уровня &f{level}&a! Новые слоты и лимиты открыты."
+  levelup-homes: "&#7CFC00Открыта ВТОРАЯ точка дома клана! &f/clan home"
+  home-none: "&cДом клана не установлен."
+  home-teleport: "&aТелепорт домой…"
+  chat-format: "&#8CE8FF[Клан] &f{player}&7: &f{message}"

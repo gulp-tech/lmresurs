@@ -1,0 +1,183 @@
+# ============================================================
+#  VoidWardenCity — «Город Вардена» как на FunTime (VoidPE, Bedrock)
+#
+#  Данж живёт в обычном древнем городе (Ancient City). Настройка:
+#   1. Найди древний город: /minecraft:locate structure ancient_city
+#   2. Встань в его центре: /wcity setcenter
+#   3. Встань на место появления игроков: /wcity setspawn
+#  Плагин сам наполняет сундуки ВАНИЛЬНЫМ лутом древнего города,
+#  обновляет его по кулдауну (зависит от онлайна, см. chests.online-tiers),
+#  спавнит варденов и платит за их убийство.
+#  Свои предметы поверх ванильных добавляются в игре: /wcity loot
+#  Обновить все сундуки вручную: /wcity refill
+#  Цвета: &a, &#FFB340 и <gradient:#FF5555:#FFB340>текст</gradient>
+# ============================================================
+
+enabled: true
+
+city:
+  # Центр города (ставится командой /wcity setcenter).
+  world: world
+  x: 0
+  y: -51
+  z: 0
+  # Радиус города от центра (по горизонтали).
+  radius: 120
+  # Сколько блоков вниз/вверх от центра считается городом.
+  y-below: 45
+  y-above: 45
+
+announcements:
+  # Приветствие, когда игрок заходит на территорию города.
+  enter-enabled: true
+
+teleport:
+  enabled: true
+  # Точка появления игроков (ставится командой /wcity setspawn).
+  world: world
+  x: 0.5
+  y: -45
+  z: 0.5
+  yaw: 0.0
+  pitch: 0.0
+  # Цена телепорта в осколках PlayerPoints (0 — бесплатно).
+  cost-points: 250
+  # Кулдаун телепорта на игрока, в секундах.
+  cooldown-seconds: 300
+  sound: "minecraft:entity.enderman.teleport"
+
+chests:
+  # Интервал обновления лута в сундуках — ЗАВИСИТ ОТ ОНЛАЙНА:
+  # берётся строка с самым большим min-online, которое <= текущему онлайну.
+  # По умолчанию: 25+ игроков — 5 минут, 10+ — 10 минут, меньше — 20 минут.
+  online-tiers:
+    - {min-online: 25, minutes: 5}
+    - {min-online: 10, minutes: 10}
+    - {min-online: 0, minutes: 20}
+  # Как часто плагин ищет сундуки в загруженных чанках, в секундах.
+  scan-seconds: 60
+  # Сколько наград из списка лута выпадет в один сундук (в ванилле 5-10).
+  # Сундук ВСЕГДА добивается до этого количества: плагин крутит шансы
+  # проходами по списку, пока не наберёт rolls наград.
+  rolls-min: 5
+  rolls-max: 10
+  # ШАНСЫ УДОБНЕЕ КРУТИТЬ В ИГРЕ: /wcity chances (меню со всеми наградами,
+  # кнопки -10/-5/-1/+1/+5/+10). Изменения пишутся в loot-chances.yml
+  # и НЕ слетают при обновлении этого конфига.
+  # ВАНИЛЬНЫЙ лут сундуков древнего города (как в обычном Minecraft):
+  # chance — примерный шанс строки, min/max — количество.
+  # enchantments — зачарования (для ENCHANTED_BOOK — в книгу; random — случайное).
+  # potion — тип зелья для POTION.
+  loot:
+    - {material: ENCHANTED_GOLDEN_APPLE, chance: 6, min: 1, max: 2}
+    - {material: MUSIC_DISC_OTHERSIDE, chance: 6, min: 1, max: 1}
+    - {material: COMPASS, chance: 12, min: 1, max: 1}
+    - {material: SCULK_CATALYST, chance: 12, min: 1, max: 2}
+    - {material: DIAMOND_HOE, chance: 15, min: 1, max: 1, enchantments: {efficiency: 5, unbreaking: 3}}
+    - {material: LEAD, chance: 12, min: 1, max: 1}
+    - {material: DIAMOND_HORSE_ARMOR, chance: 12, min: 1, max: 1}
+    - {material: LEATHER, chance: 12, min: 1, max: 5}
+    - {material: MUSIC_DISC_13, chance: 12, min: 1, max: 1}
+    - {material: MUSIC_DISC_CAT, chance: 12, min: 1, max: 1}
+    - {material: DIAMOND_LEGGINGS, chance: 15, min: 1, max: 1, enchantments: {protection: 4, unbreaking: 3}}
+    - {material: ENCHANTED_BOOK, chance: 20, min: 1, max: 1, enchantments: {swift_sneak: 3}}
+    - {material: SCULK, chance: 18, min: 4, max: 10}
+    - {material: SCULK_SENSOR, chance: 18, min: 1, max: 3}
+    - {material: CANDLE, chance: 18, min: 1, max: 4}
+    - {material: AMETHYST_SHARD, chance: 18, min: 1, max: 15}
+    - {material: EXPERIENCE_BOTTLE, chance: 18, min: 1, max: 3}
+    - {material: GLOW_BERRIES, chance: 18, min: 1, max: 15}
+    - {material: IRON_LEGGINGS, chance: 20, min: 1, max: 1, enchantments: {protection: 3}}
+    - {material: ECHO_SHARD, chance: 24, min: 1, max: 3}
+    - {material: DISC_FRAGMENT_5, chance: 24, min: 1, max: 3}
+    - {material: POTION, chance: 30, min: 1, max: 3, potion: REGENERATION}
+    - {material: ENCHANTED_BOOK, chance: 30, min: 1, max: 1, enchantments: {random: 1}}
+    - {material: BOOK, chance: 30, min: 3, max: 10}
+    - {material: BONE, chance: 30, min: 1, max: 15}
+    - {material: SOUL_TORCH, chance: 30, min: 1, max: 15}
+    - {material: COAL, chance: 42, min: 6, max: 15}
+    - {material: WARD_ARMOR_TRIM_SMITHING_TEMPLATE, chance: 5, min: 1, max: 1}
+    - {material: SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE, chance: 2, min: 1, max: 1}
+    # Свои командные награды поверх ванильных можно раскомментировать:
+    # command выполняется от консоли тому, кто открыл свежий сундук.
+    # - {command: "points give %player% 25", chance: 20}
+    # - {command: "sphere give %player% 1 1", chance: 5}
+
+# Предметы из GUI (/wcity loot): дополнение ПОВЕРХ ванильного лута.
+custom-loot:
+  # Шанс, что каждый сохранённый в GUI предмет попадёт в сундук
+  # (количество — случайно от 1 до размера положенного стака).
+  chance-percent: 30
+
+hologram:
+  # Голограмма над каждым сундуком города: название и время до
+  # следующего обновления лута ({timer} — таймер или текст ready).
+  # Таймер считается от ТЕКУЩЕГО интервала (зависит от онлайна).
+  enabled: true
+  height: 1.3
+  update-seconds: 10
+  text: "&#FFD93DСундук города &8• &f{timer}"
+  ready: "&aможно лутать"
+
+warden:
+  # Доспавнивать варденов рядом с игроками в городе (помимо ванильных
+  # крикунов древнего города).
+  spawn-enabled: true
+  max-in-city: 2
+  check-seconds: 30
+  spawn-chance-percent: 35
+  min-distance: 12
+  max-distance: 24
+  # Награда за убийство вардена в городе: консольные команды.
+  kill-reward-commands:
+    - "eco give %player% 150"
+    # - "points give %player% 10"
+
+protection:
+  # Защита города включена ПО УМОЛЧАНИЮ: город — данж, а не стройплощадка.
+  # false — снять защиту целиком (ломка, взрывы, поршни, огонь, вода).
+  enabled: true
+
+  # Право, дающее обход защиты (админ может строить и ломать в городе).
+  bypass-permission: "voidwardencity.admin"
+
+  # Что именно защищаем. Любой пункт можно выключить отдельно.
+  block-break: true          # нельзя ломать блоки
+  block-place: true          # нельзя ставить блоки
+  explosions: true           # крипер/TNT/кровать/витер не разносят блоки
+  pistons: true              # поршни не двигают блоки города
+  fire: true                 # огонь не появляется и не распространяется
+  entity-change-block: true  # эндермены и прочие не забирают блоки
+  liquid-flow: true          # вода и лава не заливают город
+
+  # Не чаще одного сообщения игроку в N секунд (антиспам в чат).
+  message-cooldown-seconds: 3
+
+messages:
+  prefix: "&#8E6BFFВарден &8» &f"
+  enter-city: "&5Ты зашёл в &fГород Вардена&5. Тише... вардены слышат каждый шаг."
+  warden-near: "&5Ты чувствуешь, как земля дрожит... &cВарден рядом!"
+  warden-killed: "&aВарден повержен! Награда зачислена."
+  protected: "&cВ Городе Вардена нельзя ломать и ставить блоки."
+  teleported: "&aТы в Городе Вардена. &7Удачи с лутом... и с варденами."
+  teleported-paid: "&aТы в Городе Вардена. &7Списано осколков: &f{cost}&7. Удачи!"
+  tp-cooldown: "&cТелепорт в город будет доступен через &f{seconds} сек."
+  tp-disabled: "&cТелепорт в Город Вардена отключён."
+  not-set: "&cГород Вардена ещё не настроен администрацией."
+  center-set: "&aЦентр Города Вардена установлен: &f{x} {y} {z}&a. Теперь поставь точку появления: &f/wcity setspawn"
+  spawn-set: "&aТочка появления в Городе Вардена установлена: &f{x} {y} {z}&a. (сохранено в points.yml)"
+  point-save-error: "&cОШИБКА: точка НЕ сохранилась на диск! Проверь папку плагина (points.yml) и свободное место на сервере."
+  chest-placed: "&aСундук города поставлен и наполнен лутом! Над ним появилась голограмма."
+  chest-city-only: "&cСундук города можно ставить только внутри Города Вардена."
+  chest-no-place: "&cЗдесь нельзя поставить сундук: блок занят. Встань на свободное место."
+  gui-title: "&#8E6BFFЛут Города Вардена (дополнение к ванильному)"
+  gui-open: "&eПоложи сюда предметы — они будут добавляться в сундуки поверх ванильного лута. &cВнимание: предметы из GUI не возвращаются."
+  gui-saved: "&aДополнительный лут сохранён: предметов &f{count}&a."
+  chances-title: "&#8E6BFFШансы лута Города Вардена"
+  chance-edit-title: "&#8E6BFFИзменение шанса"
+  chance-set: "&#7CFC00Шанс установлен: &f{chance}%"
+  refilled: "&aОбновлено сундуков Города Вардена: &f{count}&a."
+  reloaded: "&aVoidWardenCity перезагружен."
+  admin-only: "&cТолько для админов."
+  players-only: "&cКоманда доступна только игроку."
+  info: "&fГород Вардена: центр &7{x} {y} {z}&f, радиус &7{radius}&f, сундуков: &7{chests}&f, варденов: &7{wardens}&f, обновление лута каждые &7{minutes} мин &7(онлайн: {online})"

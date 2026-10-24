@@ -1,0 +1,19 @@
+name: VoidEnchants
+version: '${project.version}'
+main: ru.voidpe.enchants.VoidEnchants
+api-version: '26.2'
+author: VoidPE
+description: 'Кастомные зачарования VoidPE: Автоплавка, Магнит, Бур I/II, кирки шахтёра, книги, умная наковальня.'
+commands:
+  voidenchants:
+    description: Кастомные зачарования VoidPE
+    usage: /vench anvil
+    aliases: [vench]
+    permission: voidenchants.use
+permissions:
+  voidenchants.use:
+    description: Кастомная наковальня /vench anvil
+    default: true
+  voidenchants.admin:
+    description: Админ-команды VoidEnchants (выдача, зачарование, перезагрузка)
+    default: op

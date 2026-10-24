@@ -1,0 +1,425 @@
+# ============================================================
+#  VoidItems — кастомные предметы как на FunTime (VoidPE, Bedrock)
+#
+#  Предметы: трапка, явная пыль, дезориентация, лом спавнеров,
+#  особые зелья (сила 3 / скорость 3 и т.д.) и изумрудная броня.
+#  Всё настраивается:
+#  названия, материалы, лор, радиусы, время, кулдауны, эффекты,
+#  рецепты крафта, тексты. Предмет узнаётся по скрытой метке —
+#  переименованием не подделать.
+#
+#  ПОЛУЧЕНИЕ: админ — /items (клик в меню выдаёт), игроки — крафты,
+#  если у предмета recipe.enabled: true.
+#  Цвета как везде: &a, &#FFB340, <gradient:#..:#..>текст</gradient>
+# ============================================================
+
+# Версия конфига: по ней плагин понимает, что файл на сервере старый и его надо обновить.
+config-version: 2
+
+menu:
+  title: "&#C86BFFКастомные предметы"
+  rows: 2   # слотов хватает на все предметы (9 в ряд)
+
+# ------------------------------------------------------------
+#  ЗАПРЕТНЫЕ ЗОНЫ: тут кастомные предметы НЕ работают, включая особые зелья.
+#  worlds: миры целиком. worldguard-regions: имена регионов WorldGuard,
+#  например регион спавна. allowed-worldguard-regions: исключения, где
+#  предметы разрешены даже в запретном мире (для VoidPE это pvp в world).
+#  Нужен плагин WorldGuard; без него работают только миры.
+# ------------------------------------------------------------
+banned:
+  # По просьбе VoidPE: в мире world кастомные предметы запрещены ВЕЗДЕ,
+  # кроме региона WorldGuard pvp. В остальных мирах всё разрешено.
+  worlds: [world]
+  worldguard-regions: []
+  # Разрешённые регионы важнее запрета мира: внутри pvp предметы работают
+  # даже в запрещённом мире. Регион должен называться именно pvp.
+  allowed-worldguard-regions: [pvp]
+  # Зелья — расходник, поэтому пьются везде, включая спавн и запретные зоны.
+  # false — запрещать зелья там же, где остальные предметы.
+  allow-potions: true
+
+# ------------------------------------------------------------
+#  СТАРЫЕ ПРЕДМЕТЫ. Предметы, выданные до переименования плагина
+#  (FaralItems), несли другую скрытую метку и раньше не узнавались:
+#  око эндера улетало как ванильное, пыль и трапка не срабатывали.
+#  Теперь метка переносится автоматически при первом использовании.
+# ------------------------------------------------------------
+identity:
+  # Читать метки старых версий (faralitems:*).
+  migrate-legacy: true
+  # Если метки нет вовсе — узнавать предмет по названию из конфига.
+  match-by-name: true
+
+messages:
+  prefix: "&#C86BFFVoidPE &8» &f"
+  no-permission: "&cТолько для админов."
+  received: "&aВыдан предмет: {item}"
+  given: "&aИгроку &f{player} &aвыдано: {item} &7x{amount}"
+  player-not-found: "&cИгрок не найден."
+  item-not-found: "&cТакого предмета нет: &f{item}"
+  banned: "&cЗдесь этот предмет запрещён."
+  cooldown: "&cПодожди ещё &f{seconds} сек. &c({item}&c)"
+  trap-used: "&aТрапка поставлена!"
+  no-target: "&7Рядом никого нет — эффект применить не к кому."
+  trapped-you: "&#FF6B6BТы в трапке игрока {player}!"
+  trap-ended: "&7Трапка рассыпалась."
+  trap-unbreakable: "&cТрапку нельзя сломать."
+  trap-no-place: "&cВ трапке нельзя ставить блоки."
+  dust-used: "&aЯвная пыль сработала."
+  revealed-you: "&#FFE082Тебя раскрыла явная пыль!"
+  disorient-used: "&aДезориентация сработала."
+  lom-used: "&aСпавнер добыт (моб: &f{mob}&a), лом потрачен."
+
+# ------------------------------------------------------------
+#  ИЗУМРУДНЫЕ ПРЕДМЕТЫ (kind: ARMOR / GEAR): крафтятся как алмазные,
+#  но вместо алмазов используются изумруды. В результате получается
+#  обычный алмазный предмет: броня — Защита III, меч — Острота III,
+#  инструменты — Эффективность III. На броню сразу наложена изумрудная
+#  отделка (шаблон ковки). Защиту можно объединять на наковальне до V:
+#  III+III=IV, IV+IV=V (кап protection: 5 уже стоит в VoidEnchants).
+# ------------------------------------------------------------
+
+# ------------------------------------------------------------
+#  ПРЕДМЕТЫ. kind — что предмет делает:
+#    TRAP — трапка: ПКМ ловит ближайшего игрока клеткой 3x3
+#    DUST — явная пыль: свечение + снять невидимость в радиусе
+#    DISORIENT — дезориентация: эффекты + разворот экрана врагам
+#    LOM — лом спавнеров: сломать спавнер и забрать с мобом (1 раз)
+#    POTION — зелье: эффекты из списка effects (уровень = amplifier+1)
+#    ARMOR — броня: зачарования из enchants и отделка trim-*
+#    GEAR — меч/инструменты: зачарования из enchants, используются как обычные
+#  recipe: крафт на верстаке напрямую: shape — 3 строки, ingredients — символы.
+# ------------------------------------------------------------
+items:
+
+  trapka:
+    kind: TRAP
+    enabled: true
+    display-name: "&#B388FFКапкан"
+    # ВАЖНО (Bedrock/Geyser): клик по воздуху приходит на сервер только для предметов
+    # с действием. У незеритового скрапа его нет — ПКМ в воздухе просто не доходил.
+    # FIRE_CHARGE "используется" в воздухе, а плагин отменяет ванильный бросок.
+    material: FIRE_CHARGE
+    glow: true
+    lore:
+      - "&7ПКМ: капкан появляется там,"                     
+      - "&7где ты стоишь. Клетка 3×3, внутри пусто."
+    duration-seconds: 20   # сколько держится клетка
+    floor-depth: 2         # толщина пола ВНИЗ в блоках: пол нельзя сломать и под ним не прокопаться
+    cooldown-seconds: 45
+    sound: "block.crying_obsidian.place"
+    # СВОЯ СХЕМАТИКА (WorldEdit): положи .schem в plugins/VoidItems/schematics/
+    # Как сделать: построй трапку, выдели её //pos1 //pos2, встань В СЕРЕДИНУ,
+    # напиши //copy и //schem save trap — файл появится в plugins/WorldEdit/schematics/,
+    # перекинь его в папку выше. Центр схематики = где ты стоял при //copy:
+    # именно туда трапка и встанет при активации. Нет файла — встроенная клетка 3x3.
+    use-schematic: true
+    schematic: "trap.schem"
+    # Скин клетки (красиво и по-игровому):
+    blocks:
+      floor: POLISHED_BLACKSTONE
+      walls: CRYING_OBSIDIAN
+      corners: GILDED_BLACKSTONE
+      ceiling: POLISHED_BLACKSTONE
+      light: SEA_LANTERN   # светильник в потолке по центру
+    recipe:
+      enabled: true
+      shape:
+        - "OCO"
+        - "CEC"
+        - "OCO"
+      ingredients: {O: OBSIDIAN, C: CRYING_OBSIDIAN, E: ENDER_EYE}
+
+  dust:
+    kind: DUST
+    enabled: true
+    display-name: "&#FFE082Пыль обнаружения"
+    # Снежок, как и FIRE_CHARGE, «используется» в воздухе — иначе Bedrock
+    # не отправлял нажатие и пыль работала только по земле.
+    material: SNOWBALL
+    glow: true
+    lore:
+      - "&7ПКМ: все игроки в радиусе светятся"
+      - "&7и теряют невидимость."
+    radius: 15
+    glowing-seconds: 10
+    cooldown-seconds: 30
+    # false — предмет срабатывает и тратится, даже если рядом никого нет
+    # (звук и сообщение будут, эффект — не на кого). true — старый режим:
+    # без игроков в радиусе предмет не тратится.
+    require-target: false
+    sound: "entity.firework_rocket.launch"
+    recipe:
+      enabled: true
+      shape:
+        - "GSG"
+        - "SDS"
+        - "GSG"
+      ingredients: {G: GLOWSTONE_DUST, S: SUGAR, D: GLOW_INK_SAC}
+
+  dezorientation:
+    kind: DISORIENT
+    enabled: true
+    display-name: "&#8CE8FFОко дезориентации"
+    material: ENDER_EYE
+    glow: true
+    lore:
+      - "&7ПКМ: враги в радиусе получают:"
+      - "&cСлепота 5 сек, Тошнота 5 сек,"
+      - "&cЗамедление III 5 сек + разворот экрана."
+    radius: 9
+    cooldown-seconds: 45
+    # false — око используется и тратится всегда, даже в одиночку (см. dust).
+    require-target: false
+    rotate-view: 1         # 1 — разворачивать экран врагам, 0 — нет
+    sound: "entity.wither.ambient"
+    effects:
+      - {type: BLINDNESS, amplifier: 0, duration: 5}
+      - {type: NAUSEA, amplifier: 0, duration: 5}
+      - {type: SLOWNESS, amplifier: 2, duration: 5}
+    recipe:
+      enabled: true
+      shape:
+        - "FEF"
+        - "EDE"
+        - "FEF"
+      ingredients: {F: FERMENTED_SPIDER_EYE, E: ENDER_PEARL, D: DIAMOND}
+
+  spawner_lom:
+    kind: LOM
+    enabled: true
+    display-name: "&#FFB340Лом для спавнеров"
+    material: GOLDEN_PICKAXE
+    glow: false
+    lore:
+      - "&7Сломай ей спавнер — заберёшь его"
+      - "&7вместе с мобом. Кирка одноразовая."
+    spawner-item-name: "&#FFB340Спавнер &7({mob})"
+    recipe:
+      enabled: true
+      shape:
+        - "III"
+        - " S "
+        - " S "
+      ingredients: {I: GOLD_INGOT, S: STICK}
+
+  # ---------------- Зелья (работают и в запретных зонах) ----------------
+  # amplifier: 0 = уровень I, 2 = уровень III. duration — секунды.
+
+  pot_berserk:
+    kind: POTION
+    enabled: true
+    display-name: "&#FF5555Зелье ярости"
+    material: POTION
+    glow: true
+    lore: ["&7Сила III + Скорость III"]
+    color: "#FF3D3D"
+    effects:
+      - {type: STRENGTH, amplifier: 2, duration: 180}
+      - {type: SPEED, amplifier: 2, duration: 180}
+    recipe:
+      enabled: true
+      shape: ["NSN", "SBS", "NSN"]
+      ingredients: {N: NETHER_WART, S: BLAZE_POWDER, B: GLASS_BOTTLE}
+
+  pot_warrior:
+    kind: POTION
+    enabled: true
+    display-name: "&#FF9A3DБоевое зелье"
+    material: POTION
+    glow: true
+    lore: ["&7Сила II + Скорость I"]
+    color: "#FF9A3D"
+    effects:
+      - {type: STRENGTH, amplifier: 1, duration: 180}
+      - {type: SPEED, amplifier: 0, duration: 180}
+    recipe:
+      enabled: true
+      shape: ["N N", "SBS", "N N"]
+      ingredients: {N: NETHER_WART, S: SUGAR, B: GLASS_BOTTLE}
+
+  pot_runner:
+    kind: POTION
+    enabled: true
+    display-name: "&#55E6FFЗелье скорости"
+    material: POTION
+    glow: true
+    lore: ["&7Скорость III + Прыгучесть II"]
+    color: "#55E6FF"
+    effects:
+      - {type: SPEED, amplifier: 2, duration: 180}
+      - {type: JUMP_BOOST, amplifier: 1, duration: 180}
+    recipe:
+      enabled: true
+      shape: ["F F", "SBS", "F F"]
+      ingredients: {F: FEATHER, S: SUGAR, B: GLASS_BOTTLE}
+
+  pot_tank:
+    kind: POTION
+    enabled: true
+    display-name: "&#8FB8FFЗелье защиты"
+    material: POTION
+    glow: true
+    lore: ["&7Сопротивление II + Огнестойкость"]
+    color: "#8FB8FF"
+    effects:
+      - {type: RESISTANCE, amplifier: 1, duration: 180}
+      - {type: FIRE_RESISTANCE, amplifier: 0, duration: 180}
+    recipe:
+      enabled: true
+      shape: ["O O", "MBM", "O O"]
+      ingredients: {O: OBSIDIAN, M: MAGMA_CREAM, B: GLASS_BOTTLE}
+
+  # ---------------- Изумрудные предметы (как на FunTime) ----------------
+  # Крафт как у алмазных вещей, только вместо алмазов — изумруды.
+  # Результат — АЛМАЗНЫЙ предмет: броня Защита III (на наковальне
+  # соединяется дальше: III+III=IV, IV+IV=V), меч Острота III,
+  # инструменты Эффективность III. На броне — изумрудная отделка.
+
+  emerald_helmet:
+    kind: ARMOR
+    enabled: true
+    display-name: "&#2EE66BИзумрудный шлем"
+    material: DIAMOND_HELMET
+    glow: false
+    trim-material: EMERALD
+    trim-pattern: SENTRY
+    lore: []
+    enchants:
+      - {type: PROTECTION, level: 3}
+    recipe:
+      enabled: true
+      shape: ["EEE", "E E", "   "]
+      ingredients: {E: EMERALD}
+
+  emerald_chestplate:
+    kind: ARMOR
+    enabled: true
+    display-name: "&#2EE66BИзумрудный нагрудник"
+    material: DIAMOND_CHESTPLATE
+    glow: false
+    trim-material: EMERALD
+    trim-pattern: SENTRY
+    lore: []
+    enchants:
+      - {type: PROTECTION, level: 3}
+    recipe:
+      enabled: true
+      shape: ["E E", "EEE", "EEE"]
+      ingredients: {E: EMERALD}
+
+  emerald_leggings:
+    kind: ARMOR
+    enabled: true
+    display-name: "&#2EE66BИзумрудные поножи"
+    material: DIAMOND_LEGGINGS
+    glow: false
+    trim-material: EMERALD
+    trim-pattern: SENTRY
+    lore: []
+    enchants:
+      - {type: PROTECTION, level: 3}
+    recipe:
+      enabled: true
+      shape: ["EEE", "E E", "E E"]
+      ingredients: {E: EMERALD}
+
+  emerald_boots:
+    kind: ARMOR
+    enabled: true
+    display-name: "&#2EE66BИзумрудные ботинки"
+    material: DIAMOND_BOOTS
+    glow: false
+    trim-material: EMERALD
+    trim-pattern: SENTRY
+    lore: []
+    enchants:
+      - {type: PROTECTION, level: 3}
+    recipe:
+      enabled: true
+      shape: ["   ", "E E", "E E"]
+      ingredients: {E: EMERALD}
+
+  emerald_sword:
+    kind: GEAR
+    enabled: true
+    display-name: "&#2EE66BИзумрудный меч"
+    material: DIAMOND_SWORD
+    glow: false
+    lore: []
+    enchants:
+      - {type: SHARPNESS, level: 3}
+    recipe:
+      enabled: true
+      shape: [" E ", " E ", " S "]
+      ingredients: {E: EMERALD, S: STICK}
+
+  emerald_pickaxe:
+    kind: GEAR
+    enabled: true
+    display-name: "&#2EE66BИзумрудная кирка"
+    material: DIAMOND_PICKAXE
+    glow: false
+    lore: []
+    enchants:
+      - {type: EFFICIENCY, level: 3}
+    recipe:
+      enabled: true
+      shape: ["EEE", " S ", " S "]
+      ingredients: {E: EMERALD, S: STICK}
+
+  emerald_axe:
+    kind: GEAR
+    enabled: true
+    display-name: "&#2EE66BИзумрудный топор"
+    material: DIAMOND_AXE
+    glow: false
+    lore: []
+    enchants:
+      - {type: EFFICIENCY, level: 3}
+    recipe:
+      enabled: true
+      shape: ["EE ", "ES ", " S "]
+      ingredients: {E: EMERALD, S: STICK}
+
+  emerald_shovel:
+    kind: GEAR
+    enabled: true
+    display-name: "&#2EE66BИзумрудная лопата"
+    material: DIAMOND_SHOVEL
+    glow: false
+    lore: []
+    enchants:
+      - {type: EFFICIENCY, level: 3}
+    recipe:
+      enabled: true
+      shape: [" E ", " S ", " S "]
+      ingredients: {E: EMERALD, S: STICK}
+
+  emerald_hoe:
+    kind: GEAR
+    enabled: true
+    display-name: "&#2EE66BИзумрудная мотыга"
+    material: DIAMOND_HOE
+    glow: false
+    lore: []
+    enchants:
+      - {type: EFFICIENCY, level: 3}
+    recipe:
+      enabled: true
+      shape: ["EE ", " S ", " S "]
+      ingredients: {E: EMERALD, S: STICK}
+
+    # --- Пример своего предмета-зелья (убери # и правь) ---
+    # pot_luck:
+    #   kind: POTION
+    #   enabled: true
+    #   display-name: "&#FFD93DЗелье удачи"
+    #   material: POTION
+    #   glow: true
+    #   lore: ["&7Моё зелье"]
+    #   color: "#FFD93D"
+    #   effects:
+    #     - {type: LUCK, amplifier: 1, duration: 120}
+    #   recipe: {enabled: false, shape: [], ingredients: {}}

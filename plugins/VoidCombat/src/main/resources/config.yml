@@ -1,0 +1,173 @@
+# ============================================================
+#  VoidCombat — PvP-режим (режим боя) сервера VoidPE (Bedrock)
+#
+#  Игрок входит в режим боя, когда наносит или получает PvP-урон.
+#  Пока режим боя активен:
+#   - золотые яблоки, зелья исцеления и кастомные предметы
+#     используются с кулдаунами ниже;
+#   - фейерверки запрещены полностью (и для элитр, и в арбалете).
+#
+#  УПРАВЛЕНИЕ КОМАНДАМИ (админ, право voidcombat.admin):
+#   /combat off | on          — выключить/включить режим боя
+#   /combat settime <сек>     — длительность режима боя
+#   /combat world add [мир]   — безопасный мир (без режима боя)
+#   /combat zone add <имя> [радиус] — безопасная зона вокруг тебя
+#   /combat info              — текущие настройки
+#  Командные настройки пишутся в state.yml и не слетают при
+#  перезапуске и обновлении этого конфига.
+#
+#  Цвета: &a, &#FFB340 и <gradient:#FF5555:#FFB340>текст</gradient>
+# ============================================================
+
+combat:
+  # Включён ли режим боя. Можно выключить и командой /combat off
+  # (команда главнее: её выбор хранится в state.yml).
+  enabled: true
+  # Сколько секунд держится режим боя после последнего PvP-урона.
+  # Меняется и командой: /combat settime <сек>
+  duration-seconds: 30
+  # Не ставить метку боя, если участник в креативе или наблюдателе.
+  ignore-creative-and-spectator: true
+
+  # Безопасные места: режим боя там НЕ ставится, а уже активная
+  # метка снимается (clear-on-enter). Миры и зоны также добавляются
+  # командами /combat world и /combat zone (пишутся в state.yml).
+  safe:
+    # Миры без режима боя (имена миров).
+    worlds: []
+    # Регионы WorldGuard без режима боя (id регионов).
+    worldguard-regions: []
+    # Снимать метку боя при входе в безопасное место.
+    clear-on-enter: true
+    # Радиус зоны по умолчанию для /combat zone add без радиуса.
+    default-zone-radius: 30
+    # Зоны-команды проверяются только по горизонтали (игнорируя высоту).
+    ignore-y: true
+
+  display:
+    # Боссбар сверху экрана, пока игрок в бою: заголовок с обратным
+    # отсчётом и полоса, которая тает по мере окончания режима боя.
+    # На Bedrock через Geyser виден отлично (в отличие от actionbar).
+    bossbar: true
+    # Текст боссбара: {seconds} — осталось секунд.
+    bossbar-format: "&#FF5555Режим боя: &f{seconds} сек."
+    # Цвет боссбара: RED, PINK, BLUE, GREEN, YELLOW, PURPLE, WHITE.
+    bossbar-color: RED
+    # Стиль полосы: PROGRESS (сплошная) или NOTCHED_6, NOTCHED_10,
+    # NOTCHED_12, NOTCHED_20 (с делениями).
+    bossbar-overlay: PROGRESS
+    # Показывать оставшееся время над хотбаром каждую секунду.
+    actionbar: true
+    # Текст в actionbar: {seconds} — осталось секунд, {bar} — полоса.
+    actionbar-format: "&#FF5555Режим боя: &f{seconds} сек. &8[{bar}&8]"
+    # Полоса прогресса в actionbar.
+    bar-length: 10
+    bar-filled: "█"
+    bar-empty: "░"
+
+cooldowns:
+  enabled: true
+  # true — кулдауны работают только пока игрок в режиме боя.
+  # false — кулдауны ниже действуют всегда.
+  only-in-combat: true
+
+  # Обычные предметы (секунды).
+  vanilla:
+    golden-apple: 30
+    enchanted-golden-apple: 180
+    # Питьевые, взрывные и оседающие зелья исцеления.
+    healing-potion: 15
+
+  # Предметы VoidItems (узнаются по скрытой метке плагина).
+  custom-items:
+    enabled: true
+    # Кастомный предмет нельзя поставить на кулдаун меньше этого значения,
+    # если его кулдаун больше нуля.
+    minimum-seconds: 60
+    # Кулдаун, если для конкретного id ниже ничего не указано.
+    default-seconds: 60
+    items:
+      trapka: 60
+      dust: 60
+      dezorientation: 60
+      spawner_lom: 60
+      pot_berserk: 60
+      pot_warrior: 60
+      pot_runner: 60
+      pot_tank: 60
+    # Активные предметы: плагин замечает успешное использование и только
+    # тогда включает кулдаун. Кастомные зелья VoidItems включаются сюда
+    # автоматически при питье, даже если их id нет в списке.
+    tracked-ids:
+      - trapka
+      - dust
+      - dezorientation
+      - spawner_lom
+
+elytra:
+  # Миры, где элитры запрещены полностью: взлететь нельзя, ускорение фейерверком
+  # не работает. Игрок, влетевший в такой мир на элитре, сразу опускается на землю.
+  banned-worlds: [world]
+
+fireworks:
+  # Запрещать фейерверки всеми способами, пока игрок в режиме боя:
+  # запуск рукой, ускорение на элитрах и выстрел из арбалета.
+  block-in-combat: true
+  # Миры, где фейерверки запрещены всегда, даже вне боя (рука, элитра, арбалет).
+  banned-worlds: [world]
+
+messages:
+  prefix: "&#FF5555VoidPE &8» &f"
+  combat-started: "&cВы вошли в режим боя! &7Противник: &f{player}"
+  combat-started-by: "&cВы вошли в режим боя! &7Противник: &f{player}"
+  combat-ended: "&aРежим боя окончен."
+  combat-ended-safe: "&aБезопасная зона — режим боя снят."
+  combat-status-active: "&cВы в режиме боя, осталось: &f{seconds} сек."
+  combat-status-none: "&aВы не в режиме боя."
+  combat-status-off: "&7Режим боя сейчас выключен."
+  elytra-blocked: "&cЭлитры в этом мире запрещены."
+  cooldown: "&c{item} &cбудет доступно через &f{seconds} сек."
+  firework-blocked: "&cФейерверки запрещены в режиме боя."
+  firework-blocked-world: "&cФейерверки в этом мире запрещены."
+  no-permission: "&cТолько для админов."
+  players-only: "&cКоманда доступна только игроку."
+  reloaded: "&aVoidCombat перезагружен."
+  mode-enabled: "&#7CFC00Режим боя включён &7(длительность: &f{seconds} сек.&7)."
+  mode-disabled: "&cРежим боя выключен. &7Метки боя сняты со всех игроков."
+  time-set: "&#7CFC00Длительность режима боя установлена: &f{seconds} сек."
+  invalid-seconds: "&cУкажи длительность цифрой в секундах (1–3600): &f/combat settime 30"
+  info: "&7Режим боя: {state}&7, длительность: &f{seconds} сек.&7, безопасных миров: &f{worlds}&7, зон: &f{zones}&7, игроков в бою: &f{fighting}"
+  state-on: "&#7CFC00включён"
+  state-off: "&cвыключен"
+  zone-added: "&#7CFC00Безопасная зона &f{name} &7(радиус &f{radius}&7) создана. Режим боя здесь не ставится."
+  zone-removed: "&aБезопасная зона &f{name} &aудалена."
+  zone-not-found: "&cЗоны &f{name} &cнет. Список: &f/combat zone list"
+  zone-exists: "&cЗона &f{name} &cуже есть. Сначала удали: &f/combat zone remove {name}"
+  zones-list: "&7Безопасные зоны: &f{zones}"
+  zones-empty: "&7Безопасных зон пока нет. Создать: &f/combat zone add <имя> [радиус]"
+  zone-usage: "&cИспользование: &f/combat zone add <имя> [радиус] &7| &f/combat zone remove <имя> &7| &f/combat zone list"
+  world-added: "&#7CFC00Мир &f{world} &7теперь безопасный: режим боя в нём не ставится."
+  world-removed: "&aМир &f{world} &aбольше не безопасный."
+  world-not-found: "&cМир &f{world} &cне найден (не загружен)."
+  world-not-safe: "&cМир &f{world} &cи так не в безопасных. Список: &f/combat world list"
+  world-in-config: "&cМир &f{world} &cпрописан в config.yml (combat.safe.worlds) — убери его там, команда его не снимет."
+  worlds-list: "&7Безопасные миры: &f{worlds}"
+  worlds-empty: "&7Безопасных миров пока нет. Добавить: &f/combat world add [мир]"
+  world-usage: "&cИспользование: &f/combat world add [мир] &7| &f/combat world remove [мир] &7| &f/combat world list"
+  help:
+    - "&fРежим боя VoidPE:"
+    - "&7/combat &8— проверить, активен ли режим боя"
+    - "&7/combat on &8| &7off &8— включить/выключить режим боя (админ)"
+    - "&7/combat settime <сек> &8— длительность режима боя (админ)"
+    - "&7/combat world add [мир] &8— безопасный мир без режима боя (админ)"
+    - "&7/combat world remove [мир] &8| &7world list &8— убрать/список миров"
+    - "&7/combat zone add <имя> [радиус] &8— безопасная зона вокруг тебя (админ)"
+    - "&7/combat zone remove <имя> &8| &7zone list &8— убрать/список зон"
+    - "&7/combat info &8— текущие настройки (админ)"
+    - "&7/combat reload &8— перезагрузка (админ)"
+
+# Названия обычных предметов в сообщении о кулдауне.
+item-names:
+  golden-apple: "Золотое яблоко"
+  enchanted-golden-apple: "Зачарованное золотое яблоко"
+  healing-potion: "Зелье исцеления"

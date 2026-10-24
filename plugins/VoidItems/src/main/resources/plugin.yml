@@ -1,0 +1,16 @@
+name: VoidItems
+version: '${project.version}'
+main: ru.voidpe.items.VoidItems
+api-version: '26.2'
+author: VoidPE
+description: "Кастомные предметы как на FunTime: трапка, явная пыль, дезориентация, лом спавнеров, особые зелья. Всё настраивается в config.yml."
+softdepend: [WorldGuard, WorldEdit, FastAsyncWorldEdit]
+commands:
+  items:
+    description: "Меню кастомных предметов (только админы): клик выдаёт предмет"
+    usage: /items [give <игрок> <id> [кол-во]]
+    aliases: [fit, предметы]
+permissions:
+  voiditems.admin:
+    description: Команда /items и выдача кастомных предметов
+    default: op

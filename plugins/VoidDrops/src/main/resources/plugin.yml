@@ -1,0 +1,27 @@
+name: VoidDrops
+version: '${project.version}'
+main: ru.voidpe.drops.VoidDrops
+api-version: '26.2'
+author: VoidPE
+description: "Монеты выпадают с мобов и игроков зачарованным золотым слитком; подбор начисляет монеты Vault, сумма — в actionbar. Буст монет с мобов у привилегий."
+softdepend: [Vault]
+commands:
+  vdrops:
+    description: "VoidDrops: статус экономики и /vdrops reload — перезагрузка"
+    usage: /vdrops
+permissions:
+  voiddrops.admin:
+    description: Перезагрузка и статус VoidDrops
+    default: op
+  voiddrops.boost.baron:
+    description: "Буст монет с мобов x1.2 (Барон)"
+    default: false
+  voiddrops.boost.lord:
+    description: "Буст монет с мобов x1.5 (Лорд)"
+    default: false
+  voiddrops.boost.knyaz:
+    description: "Буст монет с мобов x2 (Князь)"
+    default: false
+  voiddrops.boost.imperator:
+    description: "Буст монет с мобов x3 (Император)"
+    default: false

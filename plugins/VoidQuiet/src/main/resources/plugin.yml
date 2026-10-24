@@ -1,0 +1,19 @@
+name: VoidQuiet
+version: '${project.version}'
+main: ru.voidpe.quiet.VoidQuiet
+api-version: '26.2'
+author: VoidPE
+description: "Тишина в чате: скрывает сообщения входа, выхода и смертей (независимо от Essentials и геймрулов)."
+commands:
+  voidquiet:
+    description: "Состояние и перезагрузка скрытия сообщений"
+    usage: /voidquiet [status|reload|test]
+    aliases: [vquiet]
+    permission: voidquiet.use
+permissions:
+  voidquiet.use:
+    description: Команда /voidquiet (статус)
+    default: true
+  voidquiet.admin:
+    description: Перезагрузка VoidQuiet
+    default: op

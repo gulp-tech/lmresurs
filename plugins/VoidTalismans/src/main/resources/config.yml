@@ -1,0 +1,392 @@
+# ============================================================
+#  VoidTalismans — талисманы и сферы для Bedrock (VoidPE)
+#
+#  КАК РАБОТАЕТ: талисман работает ТОЛЬКО в левой руке (вторая рука).
+#  Лежит в инвентаре или хотбаре — ничего не даёт, ноль эффектов.
+#  плюсы и минусы. Убрал — всё пропало. Магазина нет: талисманы
+#  выдаёт админ: команда /talisman, клик по талисману в меню.
+#
+#  ПОД BEDROCK: тут только характеристики, которые есть в Bedrock —
+#  урон, защита, здоровье и скорость. "Твёрдости брони" и "скорости
+#  атаки" в Bedrock нет (кулдауна ударов там нет), поэтому в
+#  стандартных талисманах их нет и в лоре не пишется лишнего.
+#
+#  НАСТРАИВАЕТСЯ ВСЁ: названия, предметы, лор, плюсы/минусы, цены,
+#  место, права, крафт, все тексты и звуки. Отключить талисман —
+#  enabled: false. Добавить свой — скопируй любой блок, дай новый id.
+#  После правок: /talisman reload. Старый config.yml сам НЕ
+#  перезапишется — при обновлении плагина удали старый файл конфига.
+#
+#  Цвета: &a, &#FFB340, <gradient:#55C8FF:#1B6FFF>текст</gradient>
+#  В лоре: {stats} — плюсы/минусы списком (больше ничего не пишем).
+#  Талисман узнаётся по скрытой метке, переименованием не подделать.
+# ============================================================
+
+settings:
+  # Как часто проверять инвентари, в тиках (20 = 1 сек).
+  refresh-interval-ticks: 40
+  # Сколько талисманов работает одновременно (0 = сколько угодно).
+  max-active-talismans: 0
+  # Сами дописывать плюсы/минусы в лор, если в лоре нет {stats}.
+  auto-stats-lore: true
+  # Цвета плюсов и минусов в лоре.
+  stat-plus-color: "&a"
+  stat-minus-color: "&c"
+  # Частицы эффектов (на Bedrock их не видно, лучше выкл).
+  effect-particles: false
+  # Показывать активные талисманы над хотбаром.
+  show-actionbar: false
+
+# Как характеристики называются в лоре. attack_speed и armor_toughness
+# оставлены на всякий случай, но в Bedrock их нет — в стандартных
+# талисманах не используются.
+stat-names:
+  attack_damage: "к урону"
+  armor: "к защите"
+  max_health: "к здоровью"
+  movement_speed: "к скорости"
+  knockback_resistance: "к откидыванию"
+  luck: "к удаче"
+  attack_speed: "к скорости атаки"
+  armor_toughness: "к твёрдости брони"
+
+# Названия эффектов в лоре (если дашь талисману effects).
+effect-names:
+  strength: "Сила"
+  speed: "Скорость"
+  haste: "Спешка"
+  regeneration: "Регенерация"
+  resistance: "Защита"
+  fire_resistance: "Огнестойкость"
+  health_boost: "Здоровье"
+  jump_boost: "Прыжки"
+  night_vision: "Видеть в темноте"
+  saturation: "Сытость"
+
+menu:
+  title: "&#C86BFFТалисманы"
+  rows: 4
+
+messages:
+  prefix: "&#C86BFFVoidPE &8» &f"
+  reloaded: "&aКонфиг перезагружен."
+  no-permission: "&cТолько для админов."
+  player-not-found: "&cИгрок не найден."
+  not-found: "&cТакого талисмана нет. Список: &f/talisman list"
+  received: "&aТы получил: &f{talisman}&a!"
+  exchange-no-item: "&cДля обмена нужно: &fяйцо дракона&c. Сфера не выдана."
+  exchange-success: "&aОбмен завершён! Ты получил: &f{talisman}&a!"
+  given: "&aВыдано игроку {player}: &f{talisman} &7x{amount}"
+  help:
+    - "&f/talisman &7— меню талисманов и сфер"
+    - "&f/talisman give <игрок> <id> [кол-во] &7— выдать (работает из консоли)"
+    - "&f/talisman list &7— список всех id"
+    - "&f/talisman reload &7— перезагрузить конфиг"
+
+# ------------------------------------------------------------
+#  ТАЛИСМАНЫ
+#  id (crusher и т.д.) — внутренний номер талисмана, игрокам не виден. НЕ меняй id, если
+#  талисманы уже выданы игрокам: по id плагин узнаёт предметы.
+#  Менять можно всё остальное: название, предмет, цифры, цену.
+#
+#  attributes: amount у ADD_NUMBER — просто число (здоровье в HP:
+#  +2 = одно сердце), у ADD_SCALAR — доля (0.10 = +10%).
+#  where: OFFHAND — только в левой руке (так сейчас у всех) |
+#         INVENTORY — в инвентаре | HOTBAR — в хотбаре.
+#  recipe — крафт на верстаке (enabled: true + shape + ingredients).
+# ------------------------------------------------------------
+# Обмен в магазине сфер: яйцо дракона -> сфера пустоты одной командой
+# /sphere exchange <игрок> (плагин сам проверяет и забирает яйцо).
+sphere-exchange:
+  material: DRAGON_EGG
+  amount: 1
+  give: sphere4
+
+talismans:
+
+  crusher:
+    enabled: true
+    display-name: "&#FF5555Талисман воина"
+    material: TOTEM_OF_UNDYING
+    glow: true
+    lore:
+      - "{stats}"
+    where: OFFHAND
+    permission: ""
+    effects: []
+    attributes:
+      - {type: attack_damage, amount: 2.0, operation: ADD_NUMBER}
+      - {type: armor, amount: 4.0, operation: ADD_NUMBER}
+      - {type: max_health, amount: 2.0, operation: ADD_NUMBER}
+    recipe: {enabled: false, shape: [], ingredients: {}}
+
+  punisher:
+    enabled: true
+    display-name: "&#FF7847Талисман берсерка"
+    material: TOTEM_OF_UNDYING
+    glow: true
+    lore:
+      - "{stats}"
+    where: OFFHAND
+    permission: ""
+    effects: []
+    attributes:
+      - {type: attack_damage, amount: 4.0, operation: ADD_NUMBER}
+      - {type: max_health, amount: -4.0, operation: ADD_NUMBER}
+    recipe: {enabled: false, shape: [], ingredients: {}}
+
+  absolut:
+    enabled: true
+    display-name: "<gradient:#FFE259:#FFA751>Талисман героя</gradient>"
+    material: TOTEM_OF_UNDYING
+    glow: true
+    lore:
+      - "{stats}"
+    where: OFFHAND
+    permission: ""
+    effects: []
+    attributes:
+      - {type: attack_damage, amount: 2.0, operation: ADD_NUMBER}
+      - {type: armor, amount: 4.0, operation: ADD_NUMBER}
+      - {type: max_health, amount: 4.0, operation: ADD_NUMBER}
+      - {type: movement_speed, amount: 0.10, operation: ADD_SCALAR}
+    recipe: {enabled: false, shape: [], ingredients: {}}
+
+  cobra:
+    enabled: true
+    display-name: "&#7CFC00Талисман убийцы"
+    material: TOTEM_OF_UNDYING
+    glow: true
+    lore:
+      - "{stats}"
+    where: OFFHAND
+    permission: ""
+    effects: []
+    attributes:
+      - {type: attack_damage, amount: 3.0, operation: ADD_NUMBER}
+      - {type: movement_speed, amount: 0.10, operation: ADD_SCALAR}
+      - {type: max_health, amount: -4.0, operation: ADD_NUMBER}
+    recipe: {enabled: false, shape: [], ingredients: {}}
+
+  echidna:
+    enabled: true
+    display-name: "&#FF3D3DТалисман ярости"
+    material: TOTEM_OF_UNDYING
+    glow: true
+    lore:
+      - "{stats}"
+    where: OFFHAND
+    permission: ""
+    effects: []
+    attributes:
+      - {type: attack_damage, amount: 4.0, operation: ADD_NUMBER}
+      - {type: armor, amount: -2.0, operation: ADD_NUMBER}
+      - {type: max_health, amount: -2.0, operation: ADD_NUMBER}
+    recipe: {enabled: false, shape: [], ingredients: {}}
+
+  grani:
+    enabled: true
+    display-name: "&#55E6FFТалисман бегуна"
+    material: TOTEM_OF_UNDYING
+    glow: true
+    lore:
+      - "{stats}"
+    where: OFFHAND
+    permission: ""
+    effects: []
+    attributes:
+      - {type: attack_damage, amount: 1.0, operation: ADD_NUMBER}
+      - {type: movement_speed, amount: 0.20, operation: ADD_SCALAR}
+      - {type: max_health, amount: -2.0, operation: ADD_NUMBER}
+    recipe: {enabled: false, shape: [], ingredients: {}}
+
+  satan:
+    enabled: true
+    display-name: "&#B03060Талисман демона"
+    material: TOTEM_OF_UNDYING
+    glow: true
+    lore:
+      - "{stats}"
+    where: OFFHAND
+    permission: ""
+    effects: []
+    attributes:
+      - {type: attack_damage, amount: 3.0, operation: ADD_NUMBER}
+      - {type: max_health, amount: 4.0, operation: ADD_NUMBER}
+      - {type: armor, amount: -4.0, operation: ADD_NUMBER}
+    recipe: {enabled: false, shape: [], ingredients: {}}
+
+  sources:
+    enabled: true
+    display-name: "&#4DB8FFТалисман танка"
+    material: TOTEM_OF_UNDYING
+    glow: true
+    lore:
+      - "{stats}"
+    where: OFFHAND
+    permission: ""
+    effects: []
+    attributes:
+      - {type: armor, amount: 6.0, operation: ADD_NUMBER}
+      - {type: max_health, amount: 4.0, operation: ADD_NUMBER}
+      - {type: movement_speed, amount: -0.10, operation: ADD_SCALAR}
+    recipe: {enabled: false, shape: [], ingredients: {}}
+
+  triton:
+    enabled: true
+    display-name: "&#7FB2FFТалисман стража"
+    material: TOTEM_OF_UNDYING
+    glow: true
+    lore:
+      - "{stats}"
+    where: OFFHAND
+    permission: ""
+    effects: []
+    attributes:
+      - {type: armor, amount: 5.0, operation: ADD_NUMBER}
+      - {type: max_health, amount: 2.0, operation: ADD_NUMBER}
+      - {type: movement_speed, amount: -0.05, operation: ADD_SCALAR}
+    recipe: {enabled: false, shape: [], ingredients: {}}
+
+  phoenix:
+    enabled: true
+    display-name: "&#FFC46BТалисман жизни"
+    material: TOTEM_OF_UNDYING
+    glow: true
+    lore:
+      - "{stats}"
+    where: OFFHAND
+    permission: ""
+    effects: []
+    attributes:
+      - {type: max_health, amount: 6.0, operation: ADD_NUMBER}
+    recipe: {enabled: false, shape: [], ingredients: {}}
+
+  vepr:
+    enabled: true
+    display-name: "&#C19A6BТалисман охотника"
+    material: TOTEM_OF_UNDYING
+    glow: true
+    lore:
+      - "{stats}"
+    where: OFFHAND
+    permission: ""
+    effects: []
+    attributes:
+      - {type: attack_damage, amount: 2.0, operation: ADD_NUMBER}
+      - {type: movement_speed, amount: 0.10, operation: ADD_SCALAR}
+      - {type: max_health, amount: -2.0, operation: ADD_NUMBER}
+    recipe: {enabled: false, shape: [], ingredients: {}}
+
+  harmony:
+    enabled: true
+    display-name: "&#C86BFFТалисман странника"
+    material: TOTEM_OF_UNDYING
+    glow: true
+    lore:
+      - "{stats}"
+    where: OFFHAND
+    permission: ""
+    effects: []
+    attributes:
+      - {type: attack_damage, amount: 1.0, operation: ADD_NUMBER}
+      - {type: max_health, amount: 2.0, operation: ADD_NUMBER}
+      - {type: movement_speed, amount: 0.05, operation: ADD_SCALAR}
+    recipe: {enabled: false, shape: [], ingredients: {}}
+
+# ------------------------------------------------------------
+  #  СФЕРЫ (FunTime): бумага с item-model voidspheres:sphere1-4 (и custom-model-data 9001-9004 про запас).
+  #  Вид в Bedrock даёт отдельный пак VoidSpheres.mcpack +
+  #  маппинг Geyser configs/Geyser-spheres-mapping.json.
+  #  Работают ТОЛЬКО в левой руке (where: OFFHAND).
+  #  Статы по возрастанию: I уровень слабая -> III уровень сильная.
+  # ------------------------------------------------------------
+
+  sphere1:
+    enabled: true
+    display-name: "&#C86BFFСфера сумерек"
+    material: PAPER
+    custom-model-data: 9001
+    item-model: "voidspheres:sphere1"
+    glow: false
+    lore: ["{stats}"]
+    where: OFFHAND
+    permission: ""
+    effects: []
+    attributes:
+      - {type: attack_damage, amount: 1.0, operation: ADD_NUMBER}
+      - {type: armor, amount: 1.0, operation: ADD_NUMBER}
+      - {type: max_health, amount: 2.0, operation: ADD_NUMBER}
+    recipe: {enabled: false, shape: [], ingredients: {}}
+
+  sphere2:
+    enabled: true
+    display-name: "&#FF7847Сфера пламени"
+    material: PAPER
+    custom-model-data: 9002
+    item-model: "voidspheres:sphere2"
+    glow: false
+    lore: ["{stats}"]
+    where: OFFHAND
+    permission: ""
+    effects: []
+    attributes:
+      - {type: attack_damage, amount: 2.0, operation: ADD_NUMBER}
+      - {type: armor, amount: 2.0, operation: ADD_NUMBER}
+      - {type: max_health, amount: 4.0, operation: ADD_NUMBER}
+      - {type: movement_speed, amount: -0.03, operation: ADD_SCALAR}
+    recipe: {enabled: false, shape: [], ingredients: {}}
+
+  sphere3:
+    enabled: true
+    display-name: "<gradient:#B388FF:#6A1BFF>Сфера бездны</gradient>"
+    material: PAPER
+    custom-model-data: 9003
+    item-model: "voidspheres:sphere3"
+    glow: false
+    lore: ["{stats}"]
+    where: OFFHAND
+    permission: ""
+    effects: []
+    attributes:
+      - {type: attack_damage, amount: 3.0, operation: ADD_NUMBER}
+      - {type: armor, amount: 3.0, operation: ADD_NUMBER}
+      - {type: max_health, amount: 6.0, operation: ADD_NUMBER}
+      - {type: movement_speed, amount: 0.05, operation: ADD_SCALAR}
+    recipe: {enabled: false, shape: [], ingredients: {}}
+
+  sphere4:
+    enabled: true
+    display-name: "<gradient:#16307E:#3D6BFF>Сфера пустоты</gradient>"
+    material: PAPER
+    custom-model-data: 9004
+    item-model: "voidspheres:sphere4"
+    glow: false
+    lore: ["{stats}"]
+    where: OFFHAND
+    permission: ""
+    effects: []
+    attributes:
+      - {type: attack_damage, amount: 4.0, operation: ADD_NUMBER}
+      - {type: armor, amount: 4.0, operation: ADD_NUMBER}
+      - {type: max_health, amount: 4.0, operation: ADD_NUMBER}
+      - {type: movement_speed, amount: 0.05, operation: ADD_SCALAR}
+    recipe: {enabled: false, shape: [], ingredients: {}}
+
+    # --- Пример своего талисмана (убери # и правь под себя) ---
+    # luck:
+    #   enabled: true
+    #   display-name: "&#FFD93DТалисман удачи"
+    #   material: GOLD_INGOT
+    #   glow: true
+    #   lore: ["{stats}"]
+    #   where: INVENTORY
+    #   permission: ""
+    #   effects:
+    #     - {type: HASTE, amplifier: 1}
+    #   attributes:
+    #     - {type: luck, amount: 2.0, operation: ADD_NUMBER}
+    #   recipe:
+    #     enabled: true
+    #     shape: ["GGG", "GEG", "GGG"]
+    #     ingredients: {G: GOLD_INGOT, E: EMERALD}

@@ -1,0 +1,19 @@
+name: VoidAuthSpawn
+version: '${project.version}'
+main: ru.voidpe.authspawn.VoidAuthSpawn
+api-version: '26.2'
+author: VoidPE
+description: "Дополнение к AuthMe: незарегистрированных игроков телепортирует в точку регистрации из config.yml."
+softdepend: [AuthMe]
+commands:
+  authspawn:
+    description: "Точка регистрации VoidAuthSpawn"
+    usage: /authspawn [set|tp|reload]
+    aliases: [voidauthspawn]
+permissions:
+  voidauthspawn.admin:
+    description: Настройка точки регистрации (set/tp/reload)
+    default: op
+  voidauthspawn.bypass:
+    description: Игрока с этим правом плагин никогда не телепортирует
+    default: false

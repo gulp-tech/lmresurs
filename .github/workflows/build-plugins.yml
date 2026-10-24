@@ -1,14 +1,15 @@
 name: build-voidplugins
 
-# Сборка исправленных и оптимизированных плагинов VoidPE.
+# Сборка всех плагинов VoidPE под Paper 26.2 (Java 25).
 # Запуск: вручную (Actions -> build-voidplugins -> Run workflow) или пушем
-# изменений в plugins/**. Готовые jar-файлы кладутся в релиз "voidplugins".
+# изменений в plugins/**. Готовые jar-файлы уходят в релиз "voidplugins".
 
 on:
   workflow_dispatch:
   push:
     paths:
       - 'plugins/**'
+      - 'docs/PLUGINS_FIX_AND_TUNING.md'
       - '.github/workflows/build-plugins.yml'
 
 permissions:
@@ -22,6 +23,19 @@ jobs:
       matrix:
         plugin:
           - VoidAntiCheat
+          - VoidAuthSpawn
+          - VoidCases
+          - VoidClans
+          - VoidCombat
+          - VoidDrops
+          - VoidEnchants
+          - VoidItems
+          - VoidNick
+          - VoidPvP
+          - VoidQuiet
+          - VoidTab
+          - VoidTalismans
+          - VoidWardenCity
     steps:
       - uses: actions/checkout@v4
 
@@ -31,19 +45,12 @@ jobs:
           java-version: '25'
           cache: maven
 
-      - name: Версии инструментов
-        run: |
-          java -version
-          mvn -version
-
       - name: Сборка ${{ matrix.plugin }}
         working-directory: plugins/${{ matrix.plugin }}
         run: |
           set -o pipefail
           mvn -B -DskipTests package 2>&1 | tee build.log
 
-      # Логи прогона недоступны снаружи, поэтому ошибки сборки выносим в
-      # аннотации — они видны в интерфейсе Actions и через API.
       - name: Ошибки сборки в аннотации
         if: failure()
         working-directory: plugins/${{ matrix.plugin }}
@@ -54,22 +61,33 @@ jobs:
             tail -40 build.log
           fi
 
-      - name: Проверка jar
-        working-directory: plugins/${{ matrix.plugin }}
-        run: ls -la target/*.jar
-
       - uses: actions/upload-artifact@v4
+        if: success()
         with:
           name: ${{ matrix.plugin }}-jar
           path: plugins/${{ matrix.plugin }}/target/*.jar
           if-no-files-found: error
 
-      - name: Собрать архив с конфигами
+  publish:
+    needs: build
+    if: always() && needs.build.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: jars
+          merge-multiple: true
+
+      - name: Собрать архив с конфигами и jar-ами
         run: |
-          mkdir -p upload
-          cp -r plugins/configs upload/configs
+          mkdir -p upload/configs upload/jars
+          cp -r plugins/configs/. upload/configs/
           cp docs/PLUGINS_FIX_AND_TUNING.md upload/ 2>/dev/null || true
-          (cd upload && zip -r ../voidplugins-configs.zip .)
+          cp jars/*.jar upload/jars/
+          (cd upload && zip -r ../voidplugins-all.zip .)
+          ls -la upload/jars
 
       - name: Публикация в релиз
         env:
@@ -77,8 +95,6 @@ jobs:
         run: |
           TAG=voidplugins
           if ! gh release view "$TAG" >/dev/null 2>&1; then
-            gh release create "$TAG" \
-              --title "VoidPE plugins: исправленные сборки" \
-              --notes "Автосборка из plugins/. VoidAntiCheat 2.0.5: убран hoverEvent (падал на Paper 26.x), Registry<?> в lookup."
+            gh release create "$TAG" --title "VoidPE plugins: сборки под Paper 26.2" --notes "Автосборка из plugins/."
           fi
-          gh release upload "$TAG" plugins/*/target/*.jar voidplugins-configs.zip --clobber
+          gh release upload "$TAG" jars/*.jar voidplugins-all.zip --clobber

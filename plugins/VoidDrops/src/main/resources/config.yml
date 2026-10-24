@@ -1,0 +1,43 @@
+# ============================================================
+#  VoidDrops — дроп монет (VoidPE, Bedrock)
+#
+#  С мобов и игроков выпадает зачарованный золотой слиток.
+#  Игрок подбирает слиток — монеты (Vault) начисляются ему,
+#  сумма показывается в actionbar над хотбаром.
+# ============================================================
+
+# Дроп с мобов: немного монет.
+mobs:
+  enabled: true
+  only-player-kill: true   # монеты только если моба убил игрок
+  chance: 0.35             # шанс дропа 0..1 (0.35 = 35%)
+  min: 1                   # минимум монет
+  max: 5                   # максимум монет
+
+# Буст монет С МОБОВ у привилегий: множитель суммы дропа.
+# Работает по правам voiddrops.boost.<ключ>; если у игрока несколько
+# прав — берётся наибольший множитель. Выдача группам LuckPerms:
+#   lp group baron permission set voiddrops.boost.baron true
+#   lp group lord permission set voiddrops.boost.lord true
+#   lp group knyaz permission set voiddrops.boost.knyaz true
+#   lp group imperator permission set voiddrops.boost.imperator true
+# На дроп с игроков буст НЕ действует (там процент баланса жертвы).
+boosts:
+  enabled: true
+  values:
+    baron: 1.2
+    lord: 1.5
+    knyaz: 2.0
+    imperator: 3.0
+
+# Дроп с игрока при смерти: процент от его баланса.
+players:
+  enabled: true
+  percent: 10              # падает 10% монет
+  min-balance: 100         # если баланс меньше 100 — ничего не падает
+
+item:
+  name: "&#FFD93DМонеты: &f{amount}"   # имя слитка ({amount} — сумма)
+
+messages:
+  picked: "&#FFD93D+{amount} монет"    # actionbar при подборе

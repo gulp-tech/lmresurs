@@ -1,0 +1,16 @@
+name: VoidClans
+version: '${project.version}'
+main: ru.voidpe.clans.VoidClans
+api-version: '26.2'
+author: VoidPE
+description: "Кланы: создание, банк на монетах (Vault), приглашения, роли с настройкой прав, клан-чат, дом клана и меню. Всё в config.yml."
+softdepend: [Vault, PlaceholderAPI]
+commands:
+  clan:
+    description: "Кланы: /clan — меню, подкоманды в /clan help"
+    usage: /clan
+    aliases: [clans, клан]
+permissions:
+  voidclans.admin:
+    description: Перезагрузка VoidClans
+    default: op

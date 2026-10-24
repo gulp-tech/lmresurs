@@ -1,0 +1,16 @@
+name: VoidNick
+version: '${project.version}'
+main: ru.voidpe.nick.VoidNick
+api-version: '26.2'
+author: VoidPE
+description: "Смена ника «с нуля»: чат, таб, скорборд, вход/выход. Привилегии и данные архивируются, откат возвращает всё. Команды только из консоли."
+softdepend: [LuckPerms, Vault, Essentials, Geyser-Spigot, Floodgate]
+commands:
+  voidnick:
+    description: "Смена ника (только из консоли)"
+    usage: /voidnick <set|revert|info|list|history|reload> ...
+    aliases: [vn, voidrename]
+permissions:
+  voidnick.admin:
+    description: "Доступ к командам VoidNick (работают только из консоли)"
+    default: op

@@ -1,0 +1,19 @@
+name: VoidPvP
+version: '${project.version}'
+main: ru.voidpe.pvp.VoidPvP
+api-version: '26.2'
+author: VoidPE
+description: "Fast crits: нет задержки атаки, крит на удар в прыжке (в том числе в спринте), нет неуязвимости между ударами."
+commands:
+  voidpvp:
+    description: "Fast crits: статус и перезагрузка"
+    usage: /voidpvp [reload|status]
+    aliases: [fastcrits, vpvp]
+    permission: voidpvp.use
+permissions:
+  voidpvp.use:
+    description: Команда /voidpvp (статус, reload — для админов)
+    default: true
+  voidpvp.admin:
+    description: Перезагрузка VoidPvP
+    default: op

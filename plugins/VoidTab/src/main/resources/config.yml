@@ -1,0 +1,244 @@
+# ============================================================
+#  VoidTab — скорборд (таб) сервера VoidPE
+#  Purpur 26.2 + Geyser + Floodgate
+#
+#  Цвета: &a, &#FFB340 (hex), <gradient:#FF7A00:#FFFFFF>Текст</gradient>
+#  Плейсхолдеры плагина:
+#    {player} {group} {group_raw} {coins} {coins_raw} {shards}
+#    {kills} {deaths} {kd} {online} {max} {ping}
+#    {playtime_hours} {playtime_minutes} {playtime} {world}
+#  Иконки (из VoidResourcePack, только для Bedrock-игроков):
+#    {icon:coin} {icon:spark} {icon:sapphire} {icon:shard}
+#    {icon:crown} {icon:sword} {icon:skull} {icon:clock}
+#    {icon:windows} {icon:android} {icon:apple} {icon:device} {icon:coins}
+#  Устройство игрока (Floodgate): {device_icon} — значок его платформы, {device} — её название.
+#  Платформа = DeviceOs + InputMode: телефон с клавиатурой/мышью — отдельная иконка kbmouse.
+#  Плюс любые %плейсхолдеры% PlaceholderAPI (если включён ниже).
+# ============================================================
+
+# СЕРВЕР ТОЛЬКО ДЛЯ BEDROCK (Geyser + Floodgate). Java-игроков плагин кикает — см. bedrock-only ниже.
+# Никаких Java-заглушек вместо иконок нет и не нужно: у всех игроков Bedrock и ресурспак.
+
+# Только Bedrock: игрок без Floodgate (т.е. зашёл с Java напрямую мимо Geyser) будет кикнут.
+bedrock-only:
+  enabled: true
+  # Кикать, только если плагин Floodgate реально стоит на сервере (иначе Bedrock от Java не отличить).
+  # Если Floodgate нет — никто не кикается, в консоль один раз пишется предупреждение.
+  kick-message: |
+    &cVoidPE — сервер только для Bedrock!
+    &7Заходи с телефона/планшета/Windows через Geyser.
+
+# Большой заголовок при входе: синий VoidPE на весь экран (как логотип на фото).
+# Показывается после загрузки мира, время — в тиках (20 = 1 сек).
+join-title:
+  enabled: true
+  title: "&b&lVoidPE"   # просто &-коды: &b — синий, &l — жирный (градиент жирность в Bedrock не даёт)
+  subtitle: "&fДобро пожаловать, &#FFA63D{player}&f!"
+  fade-in-ticks: 10
+  stay-ticks: 70
+  fade-out-ticks: 20
+
+# Как часто обновлять скорборд, в тиках (20 тиков = 1 сек). 40 = раз в 2 сек.
+update-interval-ticks: 40
+
+# LuckPerms — единый источник префикса/титула. Перед каждым обновлением
+# VoidTab сбрасывает кэш метаданных LP и принудительно пересылает Bedrock
+# display/list name, поэтому смена префикса видна без перезахода игрока.
+# Ручное обновление одного игрока: /voidtab refresh <ник>
+luckperms:
+  refresh-cache: true
+  force-name-resend: true
+
+# Задержка перед первым показом после захода, в тиках (дать Floodgate/Geyser прогрузиться).
+join-delay-ticks: 20
+
+scoreboard:
+  enabled: true
+  # Запоминать игроков, скрывших скорборд командой /voidtab toggle (файл hidden.yml).
+  remember-hidden: true
+
+  # Заголовок КАРТИНКОЙ из ресурспака: маленькая надпись VoidPE текстурой
+  # (полоса глифов, высота — одна строка, не большая). Лежит в паке, коды ниже.
+  # Выключи enabled — будет обычный текстовый title под этим комментарием.
+  title-logo:
+    enabled: false
+    start-code: "E120"
+    glyphs: 8
+  # Текстовый заголовок (если title-logo.enabled: false).
+  title: "<gradient:#55C8FF:#1B6FFF>VoidPE</gradient>"
+
+  # Строки скорборда (макс. 15). Пустая строка "" — отступ, как на фото.
+  # Иконка в конце строки занимает ровно 1 символ — таб не раздувается.
+  lines:
+    - "&fИмя: &#FFA63D{player}"
+    - "&fДонат: {group_icon} {group}"
+    - "&fТитул: {title}"
+    - "&fМонеты: &#FFD93D{coins} {icon:coin}"
+    - "&fОсколки: &#54C8FF{shards} {icon:shard}"
+    - ""
+    - "&fУ/С: &#C86BFF{kills}&f/&#FF6B6B{deaths}"
+    - "&fВ игре: &#FFD93D{playtime_hours}ч {icon:clock}"
+
+# ------------------------------------------------------------
+# Иконки Bedrock-ресурспака (VoidResourcePack.mcpack, font/glyph_E1.png)
+# Значение — код символа Unicode (hex) в приватной области.
+# Свои иконки: положите глиф в glyph-лист и пропишите код сюда.
+icons:
+  coin: "E101"      # золотая монета
+  spark: "E102"     # жёлтая искра (как у «Монеты» на фото)
+  sapphire: "E103"  # синий сапфир (как у «Сапфиры» на фото)
+  shard: "E104"     # голубой осколок (валюта PlayerPoints)
+  crown: "E105"     # корона привилегии
+  sword: "E106"     # меч (убийства)
+  skull: "E107"     # череп (смерти)
+  clock: "E108"     # часы (время в игре)
+  windows: "E109"   # ПК (Windows)
+  android: "E10A"   # телефон Android (Google Play)
+  apple: "E10B"     # iPhone / iPad (iOS)
+  device: "E10C"    # остальные устройства
+  coins: "E10D"     # стопка монет (для строки Монеты)
+  kbmouse: "E10E"   # телефон/планшет + клавиатура и мышь (InputMode из Floodgate)
+  mac: "E10F"       # Mac OS
+  amazon: "E110"    # Amazon Fire (Fire OS)
+  xbox: "E111"      # Xbox
+  playstation: "E112" # PlayStation 4/5
+  switch: "E113"    # Nintendo Switch
+  vr: "E114"        # VR-гарнитура (GearVR/HoloLens или режим VR)
+  tv: "E115"        # TV (Apple TV и т.п.)
+  controller: "E116" # геймпад (неизвестная ОС + контроллер)
+  # Значки привилегий (неймтег перед ником; имя иконки = имя группы LuckPerms):
+  strannik: "E117"  # Странник — компас
+  geroy: "E118"     # Герой — зелёный щит
+  rycar: "E119"     # Рыцарь — золотой щит с мечом
+  baron: "E11A"     # Барон — оранжевая корона
+  lord: "E11B"      # Лорд — голубая корона
+  knyaz: "E11C"     # Князь — розовая корона
+  imperator: "E11D" # Император — золотая корона с фиолетовым камнем
+  youtuber: "E11E"  # Ютубер — кнопка Play
+  tiktoker: "E11F"  # Тиктокер — нота
+  helper: "E128"    # Хелпер — зелёный плюс
+  moderator: "E129" # Модератор — синий щит
+  sozdatel: "E12A"  # Создатель — золотая звезда
+  # Иконки берутся из VoidResourcePack.mcpack (plugins/Geyser-Spigot/packs), страница глифов E1 —
+  # специально НЕ E0: страницу E0 занимает пак обводки GeyserJavaGlowing, если бы мы остались
+  # на E0 — он перекрывал наши иконки своими. Поставьте в конфиге Geyser force-resource-packs: true.
+
+# ------------------------------------------------------------
+# Ник над головой: значок устройства + здоровье снизу.
+# Работает через главный скорборд: иконка — в префиксе ника,
+# здоровье — objective below-name. Если игрок в невидимости (invisibility),
+# ник и здоровье не видны — это поведение самой игры.
+nametag:
+  enabled: true
+  # Кастомный значок привилегии перед ником (иконка группы из ресурспака, icons.<группа>).
+  rank-icon: true
+  # Название привилегии текстом после значка (из groups.<группа>.display).
+  rank-name: true
+  # Значок устройства перед ником в неймтеге.
+  device-icon: true
+  prefix-color: "&f" # цвет ника после значка
+  # Для Bedrock (Geyser): дублировать значок в display-name игрока — оттуда Geyser
+  # берёт неймтег над головой. Не выключай, если значка над головой не видно.
+  use-display-name: true
+  # В TAB-списке после ника писать устройство текстом: MUSD38 (Windows) — понятно и без иконок.
+  device-name-in-tab: true
+  title-in-tab: true      # титул (кейс титулов) после ника в TAB
+  # Красное сердечко после числа здоровья под ником (само число ставит игра).
+  health-below-name: true
+  health-suffix: "&c❤"
+  # Если у конкретного игрока устройство определилось неправильно (клиент может
+  # врать), задай вручную: ник: windows | android | apple | device | kbmouse.
+  # Пример:  MUSD38: windows
+  # Определение устройства по данным Bedrock-клиента.
+  device-detect:
+    # Телефоны (и сторонние клиенты) иногда присылают deviceOs=WINDOWS, хотя играют
+    # с телефона. Ввод TOUCH и интерфейс POCKET выдают мобильное устройство надёжнее,
+    # чем строка ОС. true — верить этим признакам (телефон покажется как Android/iOS).
+    touch-is-mobile: true
+  device-overrides: {}
+  device-names:
+    windows: "Windows"
+    android: "Android"
+    apple: "iOS"
+    mac: "Mac OS"
+    amazon: "Amazon Fire"
+    xbox: "Xbox"
+    playstation: "PlayStation"
+    switch: "Nintendo Switch"
+    vr: "VR"
+    tv: "TV"
+    controller: "Геймпад"
+    kbmouse: "Клавиатура+мышь"
+    linux: "Linux"
+    dedicated: "Сервер"
+    device: "Устройство"
+
+# ------------------------------------------------------------
+# Привилегия ({group}). Сначала ищется здесь по имени группы LuckPerms/Vault,
+# иначе — display-name группы LuckPerms (если включено ниже), иначе имя группы с большой буквы.
+groups:
+  # Префикс из LuckPerms (lp ... meta setprefix) — главный: поменял в LP,
+  # поменялось в чате, скорборде и нике над головой. false — брать display ниже.
+  use-luckperms-prefix: true
+  use-luckperms-display-name: false
+
+  default:
+    display: '&#CFCFCFИгрок'
+  strannik:
+    display: '&#CFCFCFСтранник'
+  geroy:
+    display: '&#55FF55Герой'
+  rycar:
+    display: '&#FFFF55Рыцарь'
+  baron:
+    display: '&#FFAA00Барон'
+  lord:
+    display: '&#55FFFFЛорд'
+  knyaz:
+    display: '&#FF55FFКнязь'
+  imperator:
+    display: '<gradient:#FFD93D:#AA00AA>Император</gradient>'
+  youtuber:
+    display: '&#FF5555Ютубер'
+  tiktoker:
+    display: '&#55E6FFТиктокер'
+  helper:
+    display: '&#55FF55Хелпер'
+  moderator:
+    display: '&#5B8CFFМодератор'
+  sozdatel:
+    display: '&#FF5555Создатель'
+  owner:
+    display: "<gradient:#FF6A00:#FFD93D>Владелец</gradient>"
+
+# ------------------------------------------------------------
+# Монеты — баланс Vault Economy. Осколки — PlayerPoints (look).
+coins:
+  decimals: 0          # знаков после запятой
+  grouping: true       # 1 000 000 вместо 1000000
+  use-vault-format: false # true — формат самого Vault (с названием валюты, обычно длиннее)
+shards:
+  grouping: true
+numbers:
+  grouping-separator: " "
+
+# Значения, если Vault/PlayerPoints не установлены.
+defaults:
+  coins: "0"
+  shards: "0"
+
+# Время в игре: {playtime} собирается из шаблона, {h} — часы, {m} — минуты.
+playtime:
+  format: "{h}ч {m}м"
+
+hooks:
+  placeholderapi: true # обрабатывать %...% плейсхолдеры в строках
+
+messages:
+  prefix: "&#FFB340VoidPE &8» &f"
+  reloaded: "&aКонфиг перезагружен."
+  refreshed: "&aПрефикс, скорборд, TAB и ник обновлены."
+  no-permission: "&cУ вас нет прав на эту команду."
+  player-not-found: "&cИгрок не найден."
+  shown: "&aСкорборд включён."
+  hidden: "&eСкорборд скрыт. Включить: &f/voidtab on"

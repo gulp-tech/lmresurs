@@ -1,0 +1,22 @@
+name: VoidTab
+version: '${project.version}'
+main: ru.voidpe.voidtab.VoidTab
+api-version: '26.2'
+author: VoidPE
+description: Bedrock-only скорборд с кастомными иконками для Geyser/Floodgate (монеты, осколки PlayerPoints, привилегия, У/С, время в игре). Java-игроки кикаются.
+softdepend: [Vault, LuckPerms, PlayerPoints, PlaceholderAPI, Geyser-Spigot, floodgate]
+commands:
+  voidtab:
+    description: Управление скорбордом VoidTab
+    usage: /voidtab <reload|refresh [игрок]|debug [игрок]|toggle [игрок]|on|off>
+    aliases: [ftab, VoidTab]
+permissions:
+  voidtab.admin:
+    description: Перезагрузка конфига и управление скорбордом других игроков
+    default: op
+  voidtab.toggle:
+    description: Включать/выключать свой скорборд
+    default: true
+  voidtab.bedrock-bypass:
+    description: Обход bedrock-only (заход с Java, например для тестов админа). По умолчанию нет ни у кого, даже у опов — выдаётся вручную.
+    default: false
